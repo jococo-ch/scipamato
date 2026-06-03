@@ -31,7 +31,7 @@ mockk = "1.14.11"
 openfeign = "13.12"
 # PINNED: com.optravis.jooq.gradle:jooq-gradle:4.0.6 - org.postgresql:postgresql 42.7.5 -> 42.7.11+
 postgresql = "42.7.11"
-sonarqubePlugin = "7.3.0.8198"
+sonarqubePlugin = "7.3.1.8318"
 springBoot = "4.0.6"
 springBootAdmin = "4.0.4"
 springCloud = "2025.1.1"
