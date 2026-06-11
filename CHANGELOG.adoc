@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.1.15++...++main[Full Changelog]
+{url-cl}2.2.1++...++main[Full Changelog]
 
 .Added
 
@@ -84,6 +84,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 ////
 
+
+[[v2.2.1]]
+== {url-tree}2.2.1[2.2.1] -- 2026-06-11
+
+{url-cl}2.2.0++...++2.2.1[Full Changelog]
+
+.Fixed
+- Restore ability to start SciPaMaTo-core using
+  java -jar (unbreaking JasperReport compilation)
 
 
 [[v2.2.0]]
