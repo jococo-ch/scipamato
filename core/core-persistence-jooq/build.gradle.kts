@@ -74,7 +74,6 @@ dependencies {
 
     runtimeOnly(libs.postgresql)
     api(libs.jooq)
-    implementation(libs.commons.compress)
     implementation(libs.postgresql)
 
     implementation(libs.spring.security.core)
