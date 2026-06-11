@@ -9,8 +9,6 @@ import org.apache.wicket.util.resource.IResourceStream
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException
 import java.io.InputStream
 import java.io.Serializable
-import javax.tools.ToolProvider
-import net.sf.jasperreports.engine.DefaultJasperReportsContext
 
 private val log = logger()
 
@@ -49,8 +47,6 @@ abstract class JasperReportResourceReference(
 
     @Throws(JRException::class)
     open fun compileReport() {
-        applyDiagnosticLogging()
-
         report = JasperCompileManager.compileReport(inputStream)
         log.info { "Successfully compiled JasperReport $name..." }
     }
@@ -74,27 +70,6 @@ abstract class JasperReportResourceReference(
 
     open val resourceStreamFromResource: IResourceStream?
         get() = resource.resourceStream
-
-    private fun applyDiagnosticLogging() {
-        val cl = Thread.currentThread().contextClassLoader
-        log.info { "Context CL = $cl" }
-        log.info {
-            cl.getResource(
-                "net/sf/jasperreports/engine/JasperReport.class"
-            )
-        }
-        log.info {
-            JasperCompileManager::class.java.protectionDomain.codeSource.location
-        }
-        log.info {
-            "SystemJavaCompiler = ${ToolProvider.getSystemJavaCompiler()}"
-        }
-        log.info {
-            "JasperCompileManager CL = ${JasperCompileManager::class.java.classLoader}"
-        }
-        Thread.currentThread().contextClassLoader =
-            JasperCompileManager::class.java.classLoader
-    }
 
     companion object {
         private const val serialVersionUID = 1L
