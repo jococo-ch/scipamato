@@ -1,5 +1,5 @@
 [versions]
-# PINNED: spring-cloud-starter-openfeign-4.3.1 - commons-fileupload:commons-fileupload 1.5.0 -> 1.6.0+
+# PINNED: spring-cloud-starter-openfeign-5.0.1 - commons-fileupload:commons-fileupload 1.5.0 -> 1.6.0+
 commonsFileupload = "1.6.0"
 # PINNED: spring-cloud-starter-openfeign-4.3.2 - org.bouncycastle:bcprov-jdk18on 1.80 -> 1.84
 bouncycastle = "1.84"
