@@ -67,16 +67,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.1.14++...++main[Full Changelog]
+{url-cl}2.1.15++...++main[Full Changelog]
 
 .Added
 
-
+////
 .Changed
-- Bumped spring-boot, spring-boot-admin, spring-cloud-starter, spring-mockk,
-  wicket-spring-boot-starter,
-- migrated from undertow to tomcat
-- upgraded postgres from 15.4 to 17.4
 
 .Deprecated
 
@@ -85,6 +81,27 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
+
+////
+
+
+
+[[v2.2.0]]
+== {url-tree}2.2.0[2.2.0] -- 2026-06-11
+
+{url-cl}2.1.14++...++2.2.0[Full Changelog]
+
+.Changed
+- Bumped spring-boot, spring-boot-admin, spring-cloud-starter, spring-mockk,
+  wicket, wicket-spring-boot-starter, wicketstuff, jasperreports,
+  kotlin-logging, lombok, postgresql,
+  kotlinx-coroutines,
+  mockk, jacoco,
+  gradle,
+  gradle license-plugin, sonarqubeplugin,
+  checkout action, gradle action, codeql-action
+- migrated from undertow to tomcat
+- upgraded postgres from 15.4 to 17.4
 
 
 [[v2.1.14]]

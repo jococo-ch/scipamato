@@ -41,8 +41,6 @@ dependencies {
     implementation(project(":core-sync"))
     implementation(project(":common-wicket"))
 
-    implementation(libs.tomcat)
-
     annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("om.vaadin.external.google", "android-json")
     }
@@ -68,7 +66,6 @@ dependencies {
 
     implementation(libs.kris.core)
 
-    implementation(libs.commons.lang3)
     implementation(libs.postgresql)
 
     /** Caching: JCache with ehcache as cache provider */

@@ -1,11 +1,7 @@
 [versions]
-# PINNED: testcontainers-1.21.4: org.apache.commons:commons-compress 1.24.0 -> 1.26.0+
-commonsCompress = "1.28.0"
-# PINNED: spring-cloud-openfeign-core-4.3.1, wicket-bootstrap-7.0.14...: org.apache.commons:commons-lang3 3.17.0 -> 3.18.0+
-commonsLang = "3.20.0"
-# PINNED: spring-cloud-starter-openfeign-4.3.1 - commons-fileupload:commons-fileupload 1.5.0 -> 1.6.0+
+# PINNED: spring-cloud-starter-openfeign-5.0.1 - commons-fileupload:commons-fileupload 1.5.0 -> 1.6.0+
 commonsFileupload = "1.6.0"
-# PINNED: spring-cloud-starter-openfeign-4.3.2 - org.bouncycastle:bcprov-jdk18on 1.80 -> 1.84
+# PINNED: spring-cloud-starter-openfeign-5.0.1 - org.bouncycastle:bcprov-jdk18on 1.81 -> 1.84+
 bouncycastle = "1.84"
 coroutines = "1.11.0"
 detektPlugin = "1.23.8"
@@ -25,21 +21,17 @@ kotest = "6.1.11"
 kotlin = "2.3.21"
 kotlinLogging = "8.0.4"
 kris = "0.5.25"
-licensePlugin = "3.1.3"
+licensePlugin = "3.1.4"
 lombokPlugin = "9.5.0"
 mockk = "1.14.11"
 openfeign = "13.12"
-# PINNED: com.optravis.jooq.gradle:jooq-gradle:4.0.6 - org.postgresql:postgresql 42.7.5 -> 42.7.11+
-postgresql = "42.7.11"
 sonarqubePlugin = "7.3.1.8318"
-springBoot = "4.0.6"
+springBoot = "4.0.7"
 springBootAdmin = "4.0.4"
 springCloud = "2025.1.1"
 springCloudStarter = "5.0.1"
 springDependencyManagementPlugin = "1.1.7"
 springMockk = "5.0.1"
-# PINNED: org.springframework.boot:spring-boot-starter-web:4.0.6 - org.apache.tomcat.embed:tomcat-embed-core 11.0.21 -> 11.0.22
-tomcat = "11.0.22"
 univocityParsers = "2.9.1"
 wicket = "10.9.1"
 wicketBootstrap = "7.0.14"
@@ -50,8 +42,6 @@ wicketstuff = "10.9.2"
 [libraries]
 bouncycastle = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncycastle" }
 cacheApi = { module = "javax.cache:cache-api" }
-commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commonsCompress" }
-commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang" }
 commons-fileupload = { module = "commons-fileupload:commons-fileupload", version.ref = "commonsFileupload" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 ehcache = { module = "org.ehcache:ehcache", version.ref = "ehcache" }
@@ -86,7 +76,7 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 openfeign-jaxb = { module = "io.github.openfeign:feign-jaxb-jakarta", version.ref = "openfeign" }
 openfeign-okhttp = { module = "io.github.openfeign:feign-okhttp", version.ref = "openfeign" }
 openfeign-slf4j = { module = "io.github.openfeign:feign-slf4j", version.ref = "openfeign" }
-postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+postgresql = { module = "org.postgresql:postgresql" }
 slf4j-api = { module = "org.slf4j:slf4j-api" }
 spring-boot-admin-starter-client = { module = "de.codecentric:spring-boot-admin-starter-client", version.ref = "springBootAdmin" }
 spring-boot-configurationprocessor = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "springBoot" }
@@ -110,7 +100,6 @@ springMockk = { module = "com.ninja-squad:springmockk", version.ref = "springMoc
 testcontainers-junitJupiter = { module = "org.testcontainers:testcontainers-junit-jupiter" }
 testcontainers-postgresql = { module = "org.testcontainers:testcontainers-postgresql" }
 testcontainers-testcontainers = { module = "org.testcontainers:testcontainers" }
-tomcat = { module = "org.apache.tomcat.embed:tomcat-embed-core", version.ref = "tomcat" }
 univocity = { module = "com.univocity:univocity-parsers", version.ref = "univocityParsers" }
 validationApi = { module = "jakarta.validation:jakarta.validation-api" }
 wicket-authroles = { module = "org.apache.wicket:wicket-auth-roles", version.ref = "wicket" }
