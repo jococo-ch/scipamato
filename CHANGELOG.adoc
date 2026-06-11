@@ -74,7 +74,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped spring-boot, spring-boot-admin, spring-cloud-starter, spring-mockk,
-  wicket-spring-boot-starter,
+  wicket, wicket-spring-boot-starter, wicketstuff, jasperreports,
+  kotlin-logging, lombok, postgresql,
+  kotlinx-coroutines,
+  mockk, jacoco,
+  gradle,
+  gradle license-plugin, sonarqubeplugin,
+  checkout action, gradle action, codeql-action
 - migrated from undertow to tomcat
 - upgraded postgres from 15.4 to 17.4
 
