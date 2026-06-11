@@ -1,6 +1,4 @@
 [versions]
-# PINNED: spring-cloud-openfeign-core-4.3.1, wicket-bootstrap-7.0.14...: org.apache.commons:commons-lang3 3.17.0 -> 3.18.0+
-commonsLang = "3.20.0"
 # PINNED: spring-cloud-starter-openfeign-4.3.1 - commons-fileupload:commons-fileupload 1.5.0 -> 1.6.0+
 commonsFileupload = "1.6.0"
 # PINNED: spring-cloud-starter-openfeign-4.3.2 - org.bouncycastle:bcprov-jdk18on 1.80 -> 1.84
@@ -48,7 +46,6 @@ wicketstuff = "10.9.2"
 [libraries]
 bouncycastle = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncycastle" }
 cacheApi = { module = "javax.cache:cache-api" }
-commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang" }
 commons-fileupload = { module = "commons-fileupload:commons-fileupload", version.ref = "commonsFileupload" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 ehcache = { module = "org.ehcache:ehcache", version.ref = "ehcache" }

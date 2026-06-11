@@ -68,7 +68,6 @@ dependencies {
 
     implementation(libs.kris.core)
 
-    implementation(libs.commons.lang3)
     implementation(libs.postgresql)
 
     /** Caching: JCache with ehcache as cache provider */
