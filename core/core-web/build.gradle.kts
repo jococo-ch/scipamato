@@ -58,6 +58,7 @@ dependencies {
         exclude("commons-collections", "commons-collections")
         exclude("commons-logging", "commons-logging")
     }
+    implementation(libs.jasperreports.jdt)
     implementation(libs.jasperreports.fonts)
     implementation(libs.jasperreports.pdf)
     implementation(libs.univocity)
