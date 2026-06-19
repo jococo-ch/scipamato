@@ -56,7 +56,7 @@ jooqGenerator {
 testing {
     suites {
         @Suppress("unused")
-        val integrationTest by existing {
+        val integrationTest = named("integrationTest") {
             dependencies {
                 implementation(libs.bundles.dbTest)
                 runtimeOnly(libs.postgresql)
@@ -74,7 +74,6 @@ dependencies {
 
     runtimeOnly(libs.postgresql)
     api(libs.jooq)
-    implementation(libs.commons.compress)
     implementation(libs.postgresql)
 
     implementation(libs.spring.security.core)

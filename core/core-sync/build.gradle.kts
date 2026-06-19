@@ -40,13 +40,13 @@ dependencies {
 
 tasks {
     val path = "build/generated-src/jooq/ch/difty/scipamato"
-    val copyCoreFiles by registering(Copy::class) {
+    val copyCoreFiles = register<Copy>("copyCoreFiles") {
         from("$rootDir/core/core-persistence-jooq/$path/core")
         destinationDir = File("$rootDir/core/core-sync/$path/core")
         dependsOn(":core-persistence-jooq:generateJooq")
     }
 
-    val copyPublicFiles by registering(Copy::class) {
+    val copyPublicFiles = register<Copy>("copyPublicFiles") {
         from("$rootDir/public/public-persistence-jooq/$path/publ")
         destinationDir = File("$rootDir/core/core-sync/$path/publ")
         dependsOn(":public-persistence-jooq:generateJooq")

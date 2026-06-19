@@ -41,8 +41,6 @@ dependencies {
     implementation(project(":core-sync"))
     implementation(project(":common-wicket"))
 
-    implementation(libs.tomcat)
-
     annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("om.vaadin.external.google", "android-json")
     }
@@ -60,6 +58,7 @@ dependencies {
         exclude("commons-collections", "commons-collections")
         exclude("commons-logging", "commons-logging")
     }
+    implementation(libs.jasperreports.jdt)
     implementation(libs.jasperreports.fonts)
     implementation(libs.jasperreports.pdf)
     implementation(libs.univocity)
@@ -68,7 +67,6 @@ dependencies {
 
     implementation(libs.kris.core)
 
-    implementation(libs.commons.lang3)
     implementation(libs.postgresql)
 
     /** Caching: JCache with ehcache as cache provider */

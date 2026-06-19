@@ -10,7 +10,7 @@ plugins {
 
 //testing {
 //    suites {
-//        val integrationTest by existing {
+//        val integrationTest = named("integrationTest") {
 //            dependencies {
 //                implementation(libs.bundles.dbTest)
 //                runtimeOnly(libs.postgresql)
@@ -50,14 +50,11 @@ dependencies {
     implementation(project(":public-persistence-jooq"))
     implementation(project(":common-wicket"))
 
-    implementation(libs.tomcat)
-
     annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("om.vaadin.external.google", "android-json")
     }
     implementation(libs.spring.boot.starter.security)
 
-    implementation(libs.commons.lang3)
     implementation(libs.postgresql)
 
     implementation(libs.bundles.caching)
