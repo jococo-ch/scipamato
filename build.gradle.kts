@@ -26,6 +26,7 @@ plugins {
 }
 
 extra["spring.cloudVersion"] = libs.versions.springCloud.get()
+extra["kotlin-coroutines.version"] = libs.versions.coroutines.get()
 
 dependencyManagement {
     imports {
