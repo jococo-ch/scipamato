@@ -46,7 +46,7 @@ val generatedPackages: Set<String> = setOf(
 testing {
     suites {
         @Suppress("UnstableApiUsage")
-        val test by getting(JvmTestSuite::class) {
+        val test = getByName<JvmTestSuite>("test") {
             useJUnitJupiter()
         }
     }
@@ -93,7 +93,7 @@ subprojects {
     testing {
         suites {
             @Suppress("UnstableApiUsage", "unused")
-            val test by getting(JvmTestSuite::class) {
+            val test = getByName<JvmTestSuite>("test") {
                 useJUnitJupiter()
             }
         }
@@ -151,7 +151,7 @@ subprojects {
                 freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
             }
         }
-        val deleteOutFolderTask by registering(Delete::class) {
+        val deleteOutFolderTask = register<Delete>("deleteOutFolderTask") {
             delete("out")
         }
         named("clean") {
