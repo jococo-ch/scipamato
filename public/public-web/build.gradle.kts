@@ -10,7 +10,7 @@ plugins {
 
 //testing {
 //    suites {
-//        val integrationTest by existing {
+//        val integrationTest = named("integrationTest") {
 //            dependencies {
 //                implementation(libs.bundles.dbTest)
 //                runtimeOnly(libs.postgresql)

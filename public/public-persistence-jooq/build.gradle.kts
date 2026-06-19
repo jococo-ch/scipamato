@@ -26,7 +26,7 @@ fun File.asProperties() = Properties().apply {
 testing {
     suites {
         @Suppress("unused")
-        val integrationTest by existing {
+        val integrationTest = named("integrationTest") {
             dependencies {
                 implementation(libs.bundles.dbTest)
                 runtimeOnly(libs.postgresql)
