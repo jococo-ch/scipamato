@@ -2,7 +2,7 @@
 # PINNED: spring-cloud-starter-openfeign-5.0.1 - commons-fileupload:commons-fileupload 1.5.0 -> 1.6.0+
 commonsFileupload = "1.6.0"
 # PINNED: spring-cloud-starter-openfeign-5.0.1 - org.bouncycastle:bcprov-jdk18on 1.81 -> 1.84+
-bouncycastle = "1.84"
+bouncycastle = "1.85"
 coroutines = "1.11.0"
 detektPlugin = "1.23.8"
 # see https://github.com/detekt/detekt/issues/6198
@@ -27,7 +27,7 @@ mockk = "1.14.11"
 openfeign = "13.13"
 sonarqubePlugin = "7.3.1.8318"
 springBoot = "4.0.7"
-springBootAdmin = "4.1.1"
+springBootAdmin = "4.1.2"
 springCloud = "2025.1.2"
 springCloudStarter = "5.0.2"
 springDependencyManagementPlugin = "1.1.7"
