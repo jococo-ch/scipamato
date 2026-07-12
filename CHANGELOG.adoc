@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.2.1++...++main[Full Changelog]
+{url-cl}2.3.0++...++main[Full Changelog]
 
 .Added
 
@@ -84,6 +84,21 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+[[v2.3.0]]
+== {url-tree}2.3.0[2.3.0] -- 2026-07-12
+
+{url-cl}2.2.1++...++2.3.0[Full Changelog]
+
+.Changed
+- Bumped spring-boot, kotlin, spring-cloud, feign, spring-boot-admin,
+  jOOQ, KRis, bouncycastle,
+  gradle,
+  kotest,
+  actions/cache, actions/checkout, actions/setup-java, docker/login-action, gradle/actions
+
+- Removed
+  CodeQL action
 
 
 [[v2.2.1]]
