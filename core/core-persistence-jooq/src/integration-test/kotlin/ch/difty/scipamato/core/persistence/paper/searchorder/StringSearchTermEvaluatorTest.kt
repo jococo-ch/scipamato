@@ -237,39 +237,29 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotWord_appliesNotContains() {
         expectToken(TokenType.NOTWORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            """not (cast(
-            |  coalesce(
-            |    field_x,
-            |    ''
-            |  )
-            |  as varchar
-            |) ilike (('%' || replace(
-            |  replace(
-            |    replace('foo', '!', '!!'),
-            |    '%',
-            |    '!%'
-            |  ),
-            |  '_',
-            |  '!_'
-            |)) || '%') escape '!')""".trimMargin()
+            """not (contains(
+            |  lower(cast(
+            |    coalesce(
+            |      field_x,
+            |      ''
+            |    )
+            |    as varchar
+            |  )),
+            |  lower('foo')
+            |))""".trimMargin()
     }
 
     @Test
     fun buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            """cast(
-               |  field_x
-               |  as varchar
-               |) ilike (('%' || replace(
-               |  replace(
-               |    replace('foo', '!', '!!'),
-               |    '%',
-               |    '!%'
-               |  ),
-               |  '_',
-               |  '!_'
-               |)) || '%') escape '!'""".trimMargin()
+            """contains(
+               |  lower(cast(
+               |    field_x
+               |    as varchar
+               |  )),
+               |  lower('foo')
+               |)""".trimMargin()
     }
 
     @Test
@@ -1264,127 +1254,87 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.NOTWORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  not (cast(
-               |    coalesce(
-               |      methods,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      method_study_design,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      population_place,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      method_outcome,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      exposure_pollutant,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      exposure_assessment,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      method_statistics,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      method_confounders,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |)""".trimMargin()
+            |  not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        methods,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_study_design,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_place,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_outcome,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        exposure_pollutant,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        exposure_assessment,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_statistics,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_confounders,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |)""".trimMargin()
     }
 
     @Test
@@ -1392,103 +1342,63 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.WORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(
-               |    methods
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(
-               |    method_study_design
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(
-               |    population_place
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(
-               |    method_outcome
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(
-               |    exposure_pollutant
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(
-               |    exposure_assessment
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(
-               |    method_statistics
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(
-               |    method_confounders
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |)""".trimMargin()
+            |  contains(
+            |    lower(cast(
+            |      methods
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      method_study_design
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      population_place
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      method_outcome
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      exposure_pollutant
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      exposure_assessment
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      method_statistics
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      method_confounders
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |)""".trimMargin()
     }
 
     @Test
@@ -1513,225 +1423,145 @@ internal class StringSearchTermEvaluatorTest {
         ) as StringSearchTerm
         evaluator.evaluate(sst).toString() shouldBeEqualTo
             """(
-               |  (
-               |    cast(
-               |      methods
-               |      as varchar
-               |    ) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(
-               |      method_study_design
-               |      as varchar
-               |    ) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(
-               |      population_place
-               |      as varchar
-               |    ) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(
-               |      method_outcome
-               |      as varchar
-               |    ) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(
-               |      exposure_pollutant
-               |      as varchar
-               |    ) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(
-               |      exposure_assessment
-               |      as varchar
-               |    ) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(
-               |      method_statistics
-               |      as varchar
-               |    ) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(
-               |      method_confounders
-               |      as varchar
-               |    ) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |  )
-               |  and not (cast(
-               |    coalesce(
-               |      methods,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      method_study_design,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      population_place,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      method_outcome,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      exposure_pollutant,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      exposure_assessment,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      method_statistics,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      method_confounders,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |)""".trimMargin()
+            |  (
+            |    contains(
+            |      lower(cast(
+            |        methods
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        method_study_design
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        population_place
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        method_outcome
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        exposure_pollutant
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        exposure_assessment
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        method_statistics
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        method_confounders
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |  )
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        methods,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_study_design,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_place,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_outcome,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        exposure_pollutant,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        exposure_assessment,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_statistics,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_confounders,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |)""".trimMargin()
     }
     //endregion
 
@@ -2305,67 +2135,47 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.NOTWORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  not (cast(
-               |    coalesce(
-               |      population,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      population_place,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      population_participants,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      population_duration,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |)""".trimMargin()
+            |  not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_place,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_participants,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_duration,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |)""".trimMargin()
     }
 
     @Test
@@ -2373,55 +2183,35 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.WORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(
-               |    population
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(
-               |    population_place
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(
-               |    population_participants
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(
-               |    population_duration
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |)""".trimMargin()
+            |  contains(
+            |    lower(cast(
+            |      population
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      population_place
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      population_participants
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      population_duration
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |)""".trimMargin()
     }
 
     @Test
@@ -2446,117 +2236,77 @@ internal class StringSearchTermEvaluatorTest {
         ) as StringSearchTerm
         evaluator.evaluate(sst).toString() shouldBeEqualTo
             """(
-               |  (
-               |    cast(
-               |      population
-               |      as varchar
-               |    ) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(
-               |      population_place
-               |      as varchar
-               |    ) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(
-               |      population_participants
-               |      as varchar
-               |    ) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(
-               |      population_duration
-               |      as varchar
-               |    ) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |  )
-               |  and not (cast(
-               |    coalesce(
-               |      population,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      population_place,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      population_participants,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(
-               |    coalesce(
-               |      population_duration,
-               |      ''
-               |    )
-               |    as varchar
-               |  ) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |)""".trimMargin()
+            |  (
+            |    contains(
+            |      lower(cast(
+            |        population
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        population_place
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        population_participants
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        population_duration
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |  )
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_place,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_participants,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_duration,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |)""".trimMargin()
     }
     //endregion
 

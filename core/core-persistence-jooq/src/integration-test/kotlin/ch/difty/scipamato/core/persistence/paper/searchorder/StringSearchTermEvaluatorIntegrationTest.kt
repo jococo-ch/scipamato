@@ -32,37 +32,27 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
     fun stringTests(): List<DynamicTest> = mapOf(
         "foo" to StringExp(
             tokenString = "(WORD foo)",
-            condition = """cast(
-                           |  fn
-                           |  as varchar
-                           |) ilike (('%' || replace(
-                           |  replace(
-                           |    replace('foo', '!', '!!'),
-                           |    '%',
-                           |    '!%'
-                           |  ),
-                           |  '_',
-                           |  '!_'
-                           |)) || '%') escape '!'""".trimMargin(),
+            condition = """contains(
+                           |  lower(cast(
+                           |    fn
+                           |    as varchar
+                           |  )),
+                           |  lower('foo')
+                           |)""".trimMargin(),
             type = CONTAINS),
 
         "-foo" to StringExp(
             tokenString = "(NOTWORD foo)",
-            condition = """not (cast(
-                          |  coalesce(
-                          |    fn,
-                          |    ''
-                          |  )
-                          |  as varchar
-                          |) ilike (('%' || replace(
-                          |  replace(
-                          |    replace('foo', '!', '!!'),
-                          |    '%',
-                          |    '!%'
-                          |  ),
-                          |  '_',
-                          |  '!_'
-                          |)) || '%') escape '!')""".trimMargin(),
+            condition = """not (contains(
+                          |  lower(cast(
+                          |    coalesce(
+                          |      fn,
+                          |      ''
+                          |    )
+                          |    as varchar
+                          |  )),
+                          |  lower('foo')
+                          |))""".trimMargin(),
             type = CONTAINS),
         """"foo"""" to StringExp(
             tokenString = "(QUOTED foo)",
