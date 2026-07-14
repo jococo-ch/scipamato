@@ -72,15 +72,9 @@ jobs:
         sarif_file: build/detekt-merged.sarif
         category: detekt
 
-    - name: Upload failure artifacts
-      if: failure()
-      uses: actions/upload-artifact@v4
-      with:
-        name: reports
-        path: '**/build/reports'
-
     - name: Report analysis to sonar
       run: ./gradlew jacocoTestReport sonar --no-daemon
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
