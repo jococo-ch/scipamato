@@ -11,7 +11,7 @@ import org.apache.wicket.markup.html.SecurePackageResourceGuard
 import org.apache.wicket.request.Request
 import org.apache.wicket.request.Response
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
 import org.springframework.boot.runApplication
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cloud.openfeign.EnableFeignClients
@@ -55,7 +55,7 @@ open class ScipamatoCoreApplication : WicketBootSecuredWebApplication() {
             if (!executorService.awaitTermination(60, TimeUnit.SECONDS))
                 executorService.shutdownNow()
         } catch (e: InterruptedException) {
-            log.error("Unable to shutdown executor service", e)
+            log.error(e) { "Unable to shutdown executor service" }
         }
         super.onDestroy()
     }

@@ -1,17 +1,33 @@
 description = "SciPaMaTo-Common :: Persistence jOOQ Project"
 
+plugins {
+    `java-library`
+    `java-test-fixtures`
+    `maven-publish`
+}
+
 dependencies {
     api(libs.spring.boot.starter.jooq)
-    api(project(Module.scipamatoCommon("persistence-api")))
+    api(project(":common-persistence-api"))
     api(libs.flyway.core)
 
     implementation(libs.flyway.postgresql)
 
     runtimeOnly(libs.postgresql)
 
-    implementation(project(Module.scipamatoCommon("entity")))
-    implementation(project(Module.scipamatoCommon("utils")))
+    implementation(project(":common-entity"))
+    implementation(project(":common-utils"))
 
-    testApi(project(Module.scipamatoCommon("test")))
-    testApi(project(Module.scipamatoCommon("persistence-jooq-test")))
+    api(project(":common-utils"))
+    api(project(":common-entity"))
+
+    testFixturesApi(libs.spring.boot.starter.flyway)
+    testFixturesApi(libs.spring.boot.starter.jooq.test)
+    testFixturesApi(libs.testcontainers.junitJupiter)
+    testFixturesApi(libs.junitJupiter.api)
+    testFixturesApi(project(":common-entity"))
+    testFixturesApi(libs.kluent) {
+        exclude("org.mockito", "mockito-core")
+        exclude("com.nhaarman.mockitokotlin2", "mockito-kotlin")
+    }
 }

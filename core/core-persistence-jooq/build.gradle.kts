@@ -6,8 +6,9 @@ import com.optravis.jooq.gradle.ExperimentalJooqGeneratorConfig
 import com.optravis.jooq.gradle.GeneratorType
 import com.optravis.jooq.gradle.JooqDatabaseConfig
 import com.optravis.jooq.gradle.JooqGeneratorConfig
+import java.util.Properties
+import kotlin.apply
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.jooqPlugin)
     id("scipamato-integration-test")
@@ -17,12 +18,18 @@ description = "SciPaMaTo-Core :: Persistence jOOQ Project"
 
 val props = file("src/integration-test/resources/application.properties").asProperties()
 
+fun File.asProperties() = Properties().apply {
+    inputStream().use { fis ->
+        load(fis)
+    }
+}
+
 @OptIn(ExperimentalJooqGeneratorConfig::class)
 jooqGenerator {
     val dbUserName = props.getProperty("spring.datasource.hikari.username")
     val dbPassword = props.getProperty("spring.datasource.hikari.password")
     containerConfig = ContainerConfig(
-        image = "postgres:15.4",
+        image = "postgres:17.4",
         port = 5432,
         environment = mapOf(
             "POSTGRES_DB" to props.getProperty("db.name"),
@@ -49,7 +56,7 @@ jooqGenerator {
 testing {
     suites {
         @Suppress("unused")
-        val integrationTest by existing {
+        val integrationTest = named("integrationTest") {
             dependencies {
                 implementation(libs.bundles.dbTest)
                 runtimeOnly(libs.postgresql)
@@ -60,26 +67,32 @@ testing {
 }
 
 dependencies {
-    api(project(Module.scipamatoCore("persistence-api")))
-    api(project(Module.scipamatoCommon("persistence-jooq")))
-    implementation(project(Module.scipamatoCore("entity")))
-    implementation(project(Module.scipamatoCommon("utils")))
+    api(project(":core-persistence-api"))
+    api(project(":common-persistence-jooq"))
+    implementation(project(":core-entity"))
+    implementation(project(":common-utils"))
 
     runtimeOnly(libs.postgresql)
     api(libs.jooq)
+    implementation(libs.postgresql)
 
     implementation(libs.spring.security.core)
 
-    testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
-    testImplementation(project(Module.scipamatoCommon("test")))
-    testImplementation(project(Module.scipamatoCore("entity")))
-
+    testImplementation(project(":core-entity"))
+    testImplementation(libs.spring.boot.starter.jooq.test)
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
+
+    testImplementation(testFixtures(project(":common-persistence-jooq")))
+    testImplementation(testFixtures(project(":common-utils")))
 }
 
 idea {
     module {
         inheritOutputDirs = true
     }
+}
+
+tasks.named<Test>("test") {
+    systemProperty("api.version", "1.44")
 }

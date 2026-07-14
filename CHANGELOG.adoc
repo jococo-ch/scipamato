@@ -11,7 +11,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 // Refs:
-:url-repo: https://github.com/ursjoss/scipamato/
+:url-repo: https://github.com/jococo-ch/scipamato/
 :url-issues: {url-repo}issues/
 :url-tree: {url-repo}tree/
 :url-cl: {url-repo}compare/
@@ -67,25 +67,241 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.1.1++...++main[Full Changelog]
+{url-cl}2.3.0++...++main[Full Changelog]
 
 .Added
-- {url-issues}843[#843] Add field "Statistical Method" to Review csv (and PDF) exports
 
-////
 .Changed
 
 .Deprecated
 
 .Removed
+- CodeQL
 
+////
 .Fixed
 
 .Security
+
 ////
+
+[[v2.3.0]]
+== {url-tree}2.3.0[2.3.0] -- 2026-07-12
+
+{url-cl}2.2.1++...++2.3.0[Full Changelog]
+
+.Changed
+- Bumped spring-boot, kotlin, spring-cloud, feign, spring-boot-admin,
+  jOOQ, KRis, bouncycastle,
+  gradle,
+  kotest,
+  actions/cache, actions/checkout, actions/setup-java, docker/login-action, gradle/actions
+
+- Removed
+  CodeQL action
+
+
+[[v2.2.1]]
+== {url-tree}2.2.1[2.2.1] -- 2026-06-11
+
+{url-cl}2.2.0++...++2.2.1[Full Changelog]
+
+.Fixed
+- Restore ability to start SciPaMaTo-core using
+  java -jar (unbreaking JasperReport compilation)
+
+
+[[v2.2.0]]
+== {url-tree}2.2.0[2.2.0] -- 2026-06-11
+
+{url-cl}2.1.14++...++2.2.0[Full Changelog]
+
+.Changed
+- Bumped spring-boot, spring-boot-admin, spring-cloud-starter, spring-mockk,
+  wicket, wicket-spring-boot-starter, wicketstuff, jasperreports,
+  kotlin-logging, lombok, postgresql,
+  kotlinx-coroutines,
+  mockk, jacoco,
+  gradle,
+  gradle license-plugin, sonarqubeplugin,
+  checkout action, gradle action, codeql-action
+- migrated from undertow to tomcat
+- upgraded postgres from 15.4 to 17.4
+
+
+[[v2.1.14]]
+== {url-tree}2.1.14[2.1.14] -- 2026-04-24
+
+{url-cl}2.1.13++...++2.1.14[Full Changelog]
+
+.Changed
+- Bumped spring boot, spring-cloud-dependencies, spring-cloud-starter-openfeign, feign,
+  kotlin, lombok, guava,
+  ehcache,
+  kotest, jacoco, equalsverifier, dependency-license-report,
+  gradle-actions, codeql-action, login-action, upload-artifiact and cache actions
+
+
+[[v2.1.13]]
+== {url-tree}2.1.13[2.1.13] -- 2026-03-24
+
+{url-cl}2.1.12++...++2.1.13[Full Changelog]
+
+.Changed
+- Bumped spring-boot, kotlin-logging,
+  gradle github actions, codeql-action
+
+
+[[v2.1.12]]
+== {url-tree}2.1.12[2.1.12] -- 2026-03-24
+
+{url-cl}2.1.11++...++2.1.12[Full Changelog]
+
+.Changed
+- Moved from github.com/ursjoss to github.com/jococo-ch/
+- Bumped spring-boot, spring-cloud, feign
+  spring-boot-admin-starter-client, gradle, postgresql,
+  kotest, equalsverifier,
+  commons-compress, commons-lang3, commons-fileupload,
+  sonarqube, upload-artifact-action, login-action, codeql-action, gradle-actions
+
+
+[[v2.1.11]]
+== {url-tree}2.1.11[2.1.11] -- 2026-02-20
+
+{url-cl}2.1.10++...++2.1.11[Full Changelog]
+
+.Changed
+- Bumped spring-boot, kotlin, feign,
+  gradle, reckon, dependency-license-report,
+  kotest, mockk, equalsverifier,
+  github actions cache, checkout, docker/login-action, codeql-action, gradle/actions
+- Fixed some typos in README and wiki-pages
+
+
+[[v2.1.10]]
+== {url-tree}2.1.10[2.1.10] -- 2026-01-21
+
+{url-cl}2.1.9++...++2.1.10[Full Changelog]
+
+.Changed
+- Bumped kotlin, spring-boot, spring-cloud-starter-openfeign, spring-boot-admin-starter-client,
+  wicket, wicketbootstrap, wicketstuff,
+  kotest, mockk, equalverifier,
+  gradle,lombok, sonarqube,
+  cache, checkout, setup-java, upload-artifact,codeql-action
+
+.Removed
+- buildSrc
+- modules common-test and commons-persistence-jooq-test
+
+
+[[v2.1.9]]
+== {url-tree}2.1.9[2.1.9] -- 2025-11-23
+
+{url-cl}2.1.8++...++2.1.9[Full Changelog]
+
+.Changed
+- Bump sprint-boot, sprint-boot-admin-starter-client, lombok,
+  gradle,
+  kotest, equalsverifier,
+  dependency-license-report, sonarqube,
+  github actions checkout, code-ql, digest
+
+
+[[v2.1.8]]
+== {url-tree}2.1.8[2.1.8] -- 2025-10-28
+
+{url-cl}2.1.7++...++2.1.8[Full Changelog]
+
+.Changed
+- Bump spring boot, kotlin, wicket, wicketbootstrap, wicketstuff, KRis,
+  kotest, mockk, equalsverifier,
+  lombok gradle plugin, jaxb gradle plugin, sonarqube gradle plugin,
+  cache, gradle-actions, login-action, upload-artifact, codeql-action
+- Migrated from FontAwesome6 to FontAwesome7 icons
+
+
+[[v2.1.7]]
+== {url-tree}2.1.7[2.1.7] -- 2025-09-18
+
+{url-cl}2.1.6++...++2.1.7[Full Changelog]
+
+.Changed
+- Bumped spring-boot, wicket-spring-boot-starter, spring-boot-admin-starter-client,
+  kotlin, guava, jasperreports, ehcache, wicket, wicketstuff, wicket-bootstrap,
+  mockk, equalsverifier, gradle, lombok, sonarqube, reckon,
+  cache, checkout, setup-java, docker-login, codeql-action, gradle-actions
+
+
+[[v2.1.6]]
+== {url-tree}2.1.6[2.1.6] -- 2025-06-23
+
+{url-cl}2.1.5++...++2.1.6[Full Changelog]
+
+.Changed
+- {url-issues}911[#911] Search Order name to indicate excluded papers with an exclamation mark
+- Bumped spring-boot, kotlin, mockk, equalsverifier,
+  lombok plugin,
+  codeql-action, gradle action
+
+
+[[v2.1.5]]
+== {url-tree}2.1.5[2.1.5] -- 2025-06-09
+
+{url-cl}2.1.4++...++2.1.5[Full Changelog]
+
+.Changed
+- Bumped spring-boot, wicket, wicket-boostrap, wicketstuff,
+  kotlin, kotlinx-coroutines,
+  spring-cloud, feign, spring-boot-admin-starter-client, guava,
+  gradle,
+  mockk, equalsverifier,
+  jaxb-gradle-plugin, lombok-gradle-plugin, sonarqube gradle plugin, reckon-gradle-plugin
+
+
+[[v2.1.4]]
+== {url-tree}2.1.4[2.1.4] -- 2025-03-21
+
+{url-cl}2.1.3++...++2.1.4[Full Changelog]
+
+.Changed
+- reconfigured renovate to pin github action digists
+- Bumped kotlin, spring-boot, guava, spring-cloud-starter-openfeign,
+  equalsverifier,
+  actions/cache, actions/upload-artifact, docker/login-action
+
+
+[[v2.1.3]]
+== {url-tree}2.1.3[2.1.3] -- 2025-03-13
+
+{url-cl}2.1.2++...++2.1.3[Full Changelog]
+
+.Changed
+- Bumped lombok, spring-boot-admin-starter-client
+
+.Fixed
+- {url-issues}848[#848] Fix exporting papers to RIS format with very large pages indication
+
+
+[[v2.1.2]]
+== {url-tree}2.1.2[2.1.2] -- 2025-02-27
+
+{url-cl}2.1.1++...++2.1.2[Full Changelog]
+
+.Added
+- {url-issues}843[#843] Add field "Statistical Method" to Review csv (and PDF) exports
+
+.Changed
+- Bumped spring-boot, kotlin, jOOQ, spring-boot-admin-starter-client, lombok, wicketstuff,
+  detekt, mockk, equalsverifier,
+  gradle
+
 
 [[v2.1.1]]
 == {url-tree}2.1.1[2.1.1] -- 2025-01-25
+
+{url-cl}2.1.0++...++2.1.1[Full Changelog]
 
 .Changed
 - Bumped spring-boot, wicket, jOOQ, KRis, lombok,
@@ -98,6 +314,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v2.1.0]]
 == {url-tree}2.1.0[2.1.0] -- 2025-01-08
 
+{url-cl}2.0.11++...++2.1.0[Full Changelog]
+
 .Changed
 - Bumped kotlin, coroutines, wicket-bootstrap, wicketstuff,
   mockk, equalsverifier,
@@ -107,12 +325,16 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v2.0.11]]
 == {url-tree}2.0.11[2.0.11] -- 2024-12-19
 
+{url-cl}2.0.10++...++2.0.11[Full Changelog]
+
 .Changed
 - Bumped spring-boot, spring-dependency-management, wicket, jOOQ, KRis, guava
 
 
 [[v2.0.10]]
 == {url-tree}2.0.10[2.0.10] -- 2024-12-07
+
+{url-cl}2.0.9++...++2.0.10[Full Changelog]
 
 .Changed
 - Bumped spring-boot, spring-cloud-starter-openfeign, spring-boot-admin-starter-client,
@@ -123,12 +345,16 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v2.0.9]]
 == {url-tree}2.0.9[2.0.9] -- 2024-11-15
 
+{url-cl}2.0.8++...++2.0.9[Full Changelog]
+
 .Fixed
 - reverted gradle update due to issue on server
 
 
 [[v2.0.8]]
 == {url-tree}2.0.8[2.0.8] -- 2024-11-15
+
+{url-cl}2.0.7++...++2.0.8[Full Changelog]
 
 .Changed
 - Bumped spring-boot-admin-starter-client,
@@ -139,9 +365,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - avoid a null poiner exception
 
 
-
 [[v2.0.7]]
 == {url-tree}2.0.7[2.0.7] -- 2024-10-31
+
+{url-cl}2.0.6++...++2.0.7[Full Changelog]
 
 .Changed
 
@@ -151,6 +378,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 [[v2.0.6]]
 == {url-tree}2.0.6[2.0.6] -- 2024-10-29
+
+{url-cl}2.0.5++...++2.0.6[Full Changelog]
 
 .Changed
 - bumped jooq-gradle-plugin
@@ -162,6 +391,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v2.0.5]]
 == {url-tree}2.0.5[2.0.5] -- 2024-10-24
 
+{url-cl}2.0.4++...++2.0.5[Full Changelog]
+
 .Changed
 - bumped spring-boot, spring-boot-admin-starter-client,
   wicket, wicketbootstrap, wicketstuff,
@@ -172,6 +403,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 [[v2.0.4]]
 == {url-tree}2.0.4[2.0.4] -- 2024-09-19
+
+{url-cl}2.0.3++...++2.0.4[Full Changelog]
 
 .Changed
 - {url-issues}718[#718] Switch license plugin
@@ -186,6 +419,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v2.0.3]]
 == {url-tree}2.0.3[2.0.3] -- 2024-06-20
 
+{url-cl}2.0.2++...++2.0.3[Full Changelog]
+
 .Changed
 - {url-issues}712[#712] Use Optravis jooq-plugin instead of jooqModelator
 - Bumped spring-boot, wicketstuff, feign
@@ -196,6 +431,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 [[v2.0.2]]
 == {url-tree}2.0.2[2.0.2] -- 2024-06-09
+
+{url-cl}2.0.1++...++2.0.2[Full Changelog]
 
 .Changed
 - Bumped
@@ -210,6 +447,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 [[v2.0.1]]
 == {url-tree}2.0.1[2.0.1] -- 2024-06-02
+
+{url-cl}2.0.0++...++2.0.1[Full Changelog]
 
 .Changed
 - Bumped
@@ -227,6 +466,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 [[v2.0.0]]
 == {url-tree}2.0.0[2.0.0] -- 2024-03-28
+
+{url-cl}1.10.3++...++2.0.0[Full Changelog]
 
 .Changed
 - {url-issues}669[#669] Bump Java version to 21

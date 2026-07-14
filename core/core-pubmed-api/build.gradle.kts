@@ -1,6 +1,5 @@
 description = "SciPaMaTo-Core :: Pubmed API Project"
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.jaxb)
     id("scipamato-integration-test")
@@ -10,7 +9,7 @@ plugins {
 testing {
     suites {
         @Suppress("UNUSED_VARIABLE")
-        val integrationTest by existing {
+        val integrationTest = named("integrationTest") {
             dependencies {
                 annotationProcessor(libs.lombok)
                 runtimeOnly(libs.lombok)
@@ -20,22 +19,24 @@ testing {
 }
 
 dependencies {
-    implementation(project(Module.scipamatoCommon("utils")))
+    implementation(project(":common-utils"))
 
     // Cloud access
     api(libs.spring.cloud.starter.openfeign) {
         exclude("com.netflix.archaius", "archaius-core")
     }
+    implementation(libs.commons.fileupload)
     implementation(libs.openfeign.jaxb)
     implementation(libs.openfeign.okhttp)
     implementation(libs.openfeign.slf4j)
+    implementation(libs.bouncycastle)
 
     // Object/XML mapping
     implementation(libs.spring.oxm)
     implementation(libs.jakarta.bind.api)
     runtimeOnly(libs.jaxb.runtime)
 
-    testImplementation(project(Module.scipamatoCommon("test")))
+    testImplementation(testFixtures(project(":common-utils")))
 }
 
 /**

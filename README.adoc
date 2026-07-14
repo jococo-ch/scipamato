@@ -1,22 +1,21 @@
-image:https://img.shields.io/github/license/ursjoss/scipamato.svg[LICENSE, link=https://github.com/ursjoss/scipamato/blob/main/LICENSE.adoc] image:https://github.com/ursjoss/scipamato/actions/workflows/check.yml/badge.svg?branch=main[Build Status, link=https://github.com/ursjoss/scipamato/actions] image:https://sonarcloud.io/api/project_badges/measure?project=ursjoss_scipamato&metric=alert_status[Quality Gate, link=https://sonarcloud.io/dashboard?id=ursjoss_scipamato]
-image:https://sonarcloud.io/api/project_badges/measure?project=ursjoss_scipamato&metric=coverage[Coverage, link=https://sonarcloud.io/dashboard?id=ursjoss_scipamato]
-image:https://github.com/ursjoss/scipamato/actions/workflows/codeql.yml/badge.svg?branch=main&event=push[CodeQL, link=https://github.com/ursjoss/scipamato/actions/workflows/codeql.yml]
+image:https://img.shields.io/github/license/jococo-ch/scipamato.svg[LICENSE, link=https://github.com/jococo-ch/scipamato/blob/main/LICENSE.adoc] image:https://github.com/jococo-ch/scipamato/actions/workflows/check.yml/badge.svg?branch=main[Build Status, link=https://github.com/jococo-ch/scipamato/actions] image:https://sonarcloud.io/api/project_badges/measure?project=jococo-ch_scipamato&metric=alert_status[Quality Gate, link=https://sonarcloud.io/dashboard?id=jococo-ch_scipamato]
+image:https://sonarcloud.io/api/project_badges/measure?project=jococo-ch_scipamato&metric=coverage[Coverage, link=https://sonarcloud.io/dashboard?id=jococo-ch_scipamato]
 
 [[scipamato]]
 == SciPaMaTo
 
-SciPaMaTo (Scientific Paper Management Tool) is a database centric application that was developed for and with the LUDOK team of the Swiss Tropical and Public Health Institute (https://www.swisstph.ch/[Swiss TPH]) located in Basel, Switzerland.
+SciPaMaTo (Scientific Paper Management Tool) is a database-centric application that was developed for and with the LUDOK team of the Swiss Tropical and Public Health Institute (https://www.swisstph.ch/[Swiss TPH]) located in Basel, Switzerland.
 
 https://www.swisstph.ch/en/projects/ludok/[LUDOK] (in German: "Dokumentationsstelle Luftverschmutzung und Gesundheit") is a documentation office that has been collecting and cataloguing scientific literature regarding the effects of air pollution on human health for over 30 years. This is a service LUDOK provides on behalf of the Swiss Federal Office for the Environment (https://www.bafu.admin.ch/bafu/en/home.html[FOEN]).
 
-SciPaMaTo was developed under the BSD-3 license to replace the former Filemaker Database that has been serving its purpose for many years.
+SciPaMaTo was developed under the BSD-3 license to replace the former FileMaker database that has been serving its purpose for many years.
 
 SciPaMaTo consists of two main components:
 
-* SciPaMaTo-Core is used by the LUDOK team internally. The team, upon scanning new literature from various sources, adds the relevant items of information about relevant studies into the application, supplemented with keywords, codes, PDFs and with a short summary in German. The tools assists the process of selecting relevant studies for the bi-monthly newsletter addressing newest findings regarding air pollution and health.
-* SciPaMaTo-Public is part of the public web-page of SwissTPH and provides a public https://www.swisstph.ch/en/projects/ludok/datenbanksuche/[database search] facility on the LUDOK database and displays a German summary. In addition, it also provides an overview on the studies that were selected for the various newsletters (the https://www.swisstph.ch/en/projects/ludok/neue-studien/[New Study page]).
+* SciPaMaTo-Core is used by the LUDOK team internally. The team, upon scanning new literature from various sources, adds the relevant items of information about relevant studies into the application, supplemented with keywords, codes, PDFs and with a short summary in German. The tool assists the process of selecting relevant studies for the bi-monthly newsletter addressing the newest findings regarding air pollution and health.
+* SciPaMaTo-Public is part of the public web page of Swiss TPH and provides a public https://www.swisstph.ch/en/projects/ludok/datenbanksuche/[database search] facility on the LUDOK database and displays a German summary. In addition, it also provides an overview of the studies that were selected for the various newsletters (the https://www.swisstph.ch/en/projects/ludok/neue-studien/[New Study page]).
 
-SciPaMaTo is a Spring Boot web-application using Apache Wicket as front-end and stores the data in PostgreSQL-Databases. It offers simplified ways of importing relevant items of information from Pubmed. SciPaMaTo offers quite extensive search facilities that allow scrutinizing the database. Parts of the data managed within ScipMaTo-Core can be synchronized into SciPaMaTo-Public, which is accessible for the interested public over the internet.
+SciPaMaTo is a Spring Boot web application using Apache Wicket as the front end and stores the data in PostgreSQL databases. It offers simplified ways of importing relevant items of information from PubMed. SciPaMaTo offers quite extensive search facilities that allow scrutinizing the database. Parts of the data managed within SciPaMaTo-Core can be synchronized into SciPaMaTo-Public, which is accessible to the interested public over the internet.
 
 === C4-Diagrams
 
@@ -199,26 +198,26 @@ image:https://structure101.com/images/s101_170.png[Structure101]
 [[user-docu-scipamato-core]]
 === SciPaMaTo-Core Documentation
 
-* https://github.com/ursjoss/scipamato/wiki/Entering-Papers[Entering Papers]
-* https://github.com/ursjoss/scipamato/wiki/Filtering-Papers[Filtering Papers]
-* https://github.com/ursjoss/scipamato/wiki/Searches[Complex Searches on Papers]
-* https://github.com/ursjoss/scipamato/wiki/Newsletters[Newsletters]
-* https://github.com/ursjoss/scipamato/wiki/New-Studies[New Studies]
-* https://github.com/ursjoss/scipamato/wiki/ReferenceData[Reference Data]
+* https://github.com/jococo-ch/scipamato/wiki/Entering-Papers[Entering Papers]
+* https://github.com/jococo-ch/scipamato/wiki/Filtering-Papers[Filtering Papers]
+* https://github.com/jococo-ch/scipamato/wiki/Searches[Complex Searches on Papers]
+* https://github.com/jococo-ch/scipamato/wiki/Newsletters[Newsletters]
+* https://github.com/jococo-ch/scipamato/wiki/New-Studies[New Studies]
+* https://github.com/jococo-ch/scipamato/wiki/ReferenceData[Reference Data]
 
 [[user-docu-scipamato-public]]
 === SciPaMaTo-Public Documentation
 
-* https://github.com/ursjoss/scipamato/wiki/Filtering-Papers-Public[Filtering Papers]
+* https://github.com/jococo-ch/scipamato/wiki/Filtering-Papers-Public[Filtering Papers]
 
 [[information-for-developers]]
 == Information for Developers
 
-Refer to the https://github.com/ursjoss/scipamato/wiki/QuickStart[Quick-Start Guide] to get the project up and running as quickly as possible.
+Refer to the https://github.com/jococo-ch/scipamato/wiki/QuickStart[Quick-Start Guide] to get the project up and running as quickly as possible.
 
-See https://github.com/ursjoss/scipamato/wiki/Developer-Information[Developer Wiki]
+See https://github.com/jococo-ch/scipamato/wiki/Developer-Information[Developer Wiki]
 
 [[information-for-operations]]
 == Information for Operations
 
-See https://github.com/ursjoss/scipamato/wiki/Operations[Operations Wiki]
+See https://github.com/jococo-ch/scipamato/wiki/Operations[Operations Wiki]

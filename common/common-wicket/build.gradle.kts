@@ -1,5 +1,11 @@
 description = "SciPaMaTo-Common :: Wicket Project"
 
+plugins {
+    `java-library`
+    `java-test-fixtures`
+    `maven-publish`
+}
+
 /**
  * Make the static wicket resources that reside next to the kotlin classes in src{main,test} available.
  */
@@ -19,11 +25,10 @@ sourceSets {
 }
 
 dependencies {
-    implementation(project(Module.scipamatoCommon("utils")))
-    implementation(project(Module.scipamatoCommon("entity")))
-    implementation(project(Module.scipamatoCommon("persistence-api")))
+    implementation(project(":common-utils"))
+    implementation(project(":common-entity"))
+    implementation(project(":common-persistence-api"))
 
-    api(libs.spring.boot.starter.undertow)
     api(libs.spring.boot.starter.actuator)
     api(libs.spring.boot.starter.security)
     annotationProcessor(libs.spring.boot.configurationprocessor) {
@@ -32,12 +37,8 @@ dependencies {
     api(libs.spring.boot.admin.starter.client)
     api(libs.spring.core)
 
-    api(libs.spring.boot.starter.web) {
-        exclude("org.springframework.boot", "spring-boot-starter-tomcat")
-    }
-    api(libs.spring.boot.starter.wicket) {
-        exclude("org.springframework.boot", "spring-boot-starter-tomcat")
-    }
+    api(libs.spring.boot.starter.web)
+    api(libs.spring.boot.starter.wicket)
     api(libs.wicket.core)
     api(libs.wicket.ioc)
     api(libs.wicket.extensions)
@@ -58,11 +59,12 @@ dependencies {
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 
-    testImplementation(project(Module.scipamatoCommon("test")))
-
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 
     testImplementation(libs.jakarta.servletApi)
     testImplementation(libs.validationApi)
+
+    testFixturesApi(testFixtures(project(":common-utils")))
+    testFixturesApi(libs.wicket.core)
 }

@@ -30,12 +30,14 @@ plugins {
     alias(libs.plugins.lombok)
     idea
     jacoco
+    alias(libs.plugins.kotest)
     alias(libs.plugins.detekt)
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.licenseReport)
 }
 
 extra["spring.cloudVersion"] = libs.versions.springCloud.get()
+extra["kotlin-coroutines.version"] = libs.versions.coroutines.get()
 
 dependencyManagement {
     imports {
@@ -54,8 +56,8 @@ val generatedPackages: Set<String> = setOf(
 
 testing {
     suites {
-        @Suppress("UnstableApiUsage", "unused")
-        val test by getting(JvmTestSuite::class) {
+        @Suppress("UnstableApiUsage")
+        val test = getByName<JvmTestSuite>("test") {
             useJUnitJupiter()
         }
     }
@@ -71,8 +73,8 @@ val genPkg = generatedPackages.joinToString(",")
 sonarqube {
     properties {
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.projectKey", "ursjoss_${project.name}")
-        property("sonar.organization", "ursjoss-github")
+        property("sonar.projectKey", "jococo-ch_${project.name}")
+        property("sonar.organization", "jococo-ch")
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,$genPkg")
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
     }
@@ -112,7 +114,7 @@ subprojects {
     testing {
         suites {
             @Suppress("UnstableApiUsage", "unused")
-            val test by getting(JvmTestSuite::class) {
+            val test = getByName<JvmTestSuite>("test") {
                 useJUnitJupiter()
             }
         }
@@ -152,7 +154,7 @@ subprojects {
             exclude("org.hamcrest", "hamcrest")
             exclude("org.assertj", "assertj-core")
         }
-        testImplementation(rootProject.libs.kotest.framework.api)
+        testImplementation(rootProject.libs.kotest.framework.engine)
         testImplementation(rootProject.libs.kotest.property)
         testImplementation(rootProject.libs.kluent) {
             exclude("org.mockito", "mockito-core")
@@ -170,7 +172,7 @@ subprojects {
                 freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
             }
         }
-        val deleteOutFolderTask by registering(Delete::class) {
+        val deleteOutFolderTask = register<Delete>("deleteOutFolderTask") {
             delete("out")
         }
         named("clean") {

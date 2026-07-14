@@ -2,7 +2,6 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 description = "SciPaMaTo-Core :: Web GUI Project"
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.springBoot).apply(true)
     id("application-properties-filter")
@@ -30,18 +29,17 @@ tasks {
     withType<BootJar> {
         enabled = true
         mainClass.set("ch.difty.scipamato.core.ScipamatoCoreApplicationKt")
-        launchScript()
     }
 }
 
 dependencies {
-    implementation(project(Module.scipamatoCommon("utils")))
-    implementation(project(Module.scipamatoCore("entity")))
-    implementation(project(Module.scipamatoCore("logic")))
-    implementation(project(Module.scipamatoCore("persistence-jooq")))
-    implementation(project(Module.scipamatoCore("pubmed-api")))
-    implementation(project(Module.scipamatoCore("sync")))
-    implementation(project(Module.scipamatoCommon("wicket")))
+    implementation(project(":common-utils"))
+    implementation(project(":core-entity"))
+    implementation(project(":core-logic"))
+    implementation(project(":core-persistence-jooq"))
+    implementation(project(":core-pubmed-api"))
+    implementation(project(":core-sync"))
+    implementation(project(":common-wicket"))
 
     annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("om.vaadin.external.google", "android-json")
@@ -60,12 +58,16 @@ dependencies {
         exclude("commons-collections", "commons-collections")
         exclude("commons-logging", "commons-logging")
     }
+    implementation(libs.jasperreports.jdt)
     implementation(libs.jasperreports.fonts)
+    implementation(libs.jasperreports.pdf)
     implementation(libs.univocity)
     // temporarily needed until guava has been fully removed from wicket-bootstrap
-    implementation("com.google.guava:guava:33.4.0-jre")
+    implementation("com.google.guava:guava:33.6.0-jre")
 
     implementation(libs.kris.core)
+
+    implementation(libs.postgresql)
 
     /** Caching: JCache with ehcache as cache provider */
     implementation(libs.bundles.caching)
@@ -74,8 +76,8 @@ dependencies {
             requireCapability("org.ehcache:ehcache-jakarta")
         }
     }
-    testImplementation(project(Module.scipamatoCommon("test")))
-    testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
+    testImplementation(testFixtures(project(":common-wicket")))
+    testImplementation(testFixtures(project(":common-persistence-jooq")))
     testImplementation(libs.jakarta.servletApi)
     testImplementation(libs.validationApi)
     testImplementation(libs.lombok)
@@ -87,3 +89,4 @@ idea {
         inheritOutputDirs = true
     }
 }
+

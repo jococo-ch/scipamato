@@ -2,7 +2,6 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 description = "SciPaMaTo-Public :: Web Project"
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.springBoot).apply(true)
     id("application-properties-filter")
@@ -11,7 +10,7 @@ plugins {
 
 //testing {
 //    suites {
-//        val integrationTest by existing {
+//        val integrationTest = named("integrationTest") {
 //            dependencies {
 //                implementation(libs.bundles.dbTest)
 //                runtimeOnly(libs.postgresql)
@@ -42,20 +41,21 @@ tasks {
     withType<BootJar> {
         enabled = true
         mainClass.set("ch.difty.scipamato.publ.ScipamatoPublicApplicationKt")
-        launchScript()
     }
 }
 
 dependencies {
-    implementation(project(Module.scipamatoCommon("utils")))
-    implementation(project(Module.scipamatoPublic("entity")))
-    implementation(project(Module.scipamatoPublic("persistence-jooq")))
-    implementation(project(Module.scipamatoCommon("wicket")))
+    implementation(project(":common-utils"))
+    implementation(project(":public-entity"))
+    implementation(project(":public-persistence-jooq"))
+    implementation(project(":common-wicket"))
 
     annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("om.vaadin.external.google", "android-json")
     }
     implementation(libs.spring.boot.starter.security)
+
+    implementation(libs.postgresql)
 
     implementation(libs.bundles.caching)
     implementation(libs.ehcache) {
@@ -64,5 +64,6 @@ dependencies {
         }
     }
 
-    testImplementation(project(Module.scipamatoCommon("test")))
+    testImplementation(testFixtures(project(":common-wicket")))
+    testImplementation(testFixtures(project(":common-persistence-jooq")))
 }

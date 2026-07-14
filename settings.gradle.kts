@@ -4,12 +4,13 @@ import org.ajoberstar.reckon.gradle.ReckonExtension
 
 pluginManagement {
     repositories {
+        mavenCentral()
         gradlePluginPortal()
     }
 }
 
 plugins {
-    id("org.ajoberstar.reckon.settings") version "0.19.1"
+    id("org.ajoberstar.reckon.settings") version "2.0.0"
 }
 
 configure<ReckonExtension> {
@@ -32,7 +33,7 @@ dependencyResolutionManagement {
 rootProject.name = "scipamato"
 
 val commonProjects = listOf(
-    "test", "utils", "entity", "persistence-api", "persistence-jooq-test", "persistence-jooq", "wicket"
+    "utils", "entity", "persistence-api", "persistence-jooq", "wicket"
 )
 val coreProjects = listOf(
     "entity", "logic", "pubmed-api", "persistence-api", "persistence-jooq", "sync", "web"

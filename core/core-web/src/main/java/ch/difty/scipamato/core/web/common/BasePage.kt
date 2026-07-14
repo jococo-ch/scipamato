@@ -8,7 +8,7 @@ import ch.difty.scipamato.core.config.ApplicationCoreProperties
 import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.web.resources.MainCssResourceReference
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6CdnCssReference
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome7CdnCssReference
 import org.apache.wicket.markup.head.CssHeaderItem
 import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.model.IModel
@@ -32,7 +32,7 @@ abstract class BasePage<T> : AbstractPage<T> {
         get() = applicationProperties
 
     private val authentication: Authentication
-        get() = SecurityContextHolder.getContext().authentication
+        get() = SecurityContextHolder.getContext().authentication!!
 
     protected val activeUser: User
         get() = authentication.principal as User
@@ -49,7 +49,7 @@ abstract class BasePage<T> : AbstractPage<T> {
     override fun renderHead(response: IHeaderResponse) {
         super.renderHead(response)
         response.render(CssHeaderItem.forReference(MainCssResourceReference.get()))
-        response.render(CssHeaderItem.forReference(FontAwesome6CdnCssReference.instance()))
+        response.render(CssHeaderItem.forReference(FontAwesome7CdnCssReference.instance()))
     }
 
     override fun addLinksTo(nb: Navbar) {

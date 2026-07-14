@@ -61,7 +61,10 @@ internal class StringSearchTermEvaluatorTest {
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
                |  field_x is not null
-               |  and char_length(cast(field_x as varchar)) > 0
+               |  and char_length(cast(
+               |    field_x
+               |    as varchar
+               |  )) > 0
                |)""".trimMargin()
     }
 
@@ -71,7 +74,10 @@ internal class StringSearchTermEvaluatorTest {
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
                |  field_x is null
-               |  or char_length(cast(field_x as varchar)) = 0
+               |  or char_length(cast(
+               |    field_x
+               |    as varchar
+               |  )) = 0
                |)""".trimMargin()
     }
 
@@ -79,143 +85,181 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotOpenLeftRightQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENLEFTRIGHTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            """cast(coalesce(
-                   |  field_x,
-                   |  ''
-                   |) as varchar) not ilike '%foo%'""".trimMargin()
+            """cast(
+                |  coalesce(
+                |    field_x,
+                |    ''
+                |  )
+                |  as varchar
+                |) not ilike '%foo%'""".trimMargin()
     }
 
     @Test
     fun buildingConditionForOpenLeftRightQuoted_appliesLike() {
         expectToken(TokenType.OPENLEFTRIGHTQUOTED, "foo")
-        evaluator.evaluate(stMock).toString() shouldBeEqualTo "cast(field_x as varchar) ilike '%foo%'"
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo """cast(
+            |  field_x
+            |  as varchar
+            |) ilike '%foo%'""".trimMargin()
     }
 
     @Test
     fun buildingConditionForNotOpenLeftRight_appliesNotLike() {
         expectToken(TokenType.NOTOPENLEFTRIGHT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            """cast(coalesce(
-                   |  field_x,
-                   |  ''
-                   |) as varchar) not ilike '%foo%'""".trimMargin()
+            """cast(
+                |  coalesce(
+                |    field_x,
+                |    ''
+                |  )
+                |  as varchar
+                |) not ilike '%foo%'""".trimMargin()
     }
 
     @Test
     fun buildingConditionForOpenLeftRight_appliesLike() {
         expectToken(TokenType.OPENLEFTRIGHT, "foo")
-        evaluator.evaluate(stMock).toString() shouldBeEqualTo "cast(field_x as varchar) ilike '%foo%'"
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo """cast(
+            |  field_x
+            |  as varchar
+            |) ilike '%foo%'""".trimMargin()
     }
 
     @Test
     fun buildingConditionForNotOpenRightQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENRIGHTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            """cast(coalesce(
-                   |  field_x,
-                   |  ''
-                   |) as varchar) not ilike 'foo%'""".trimMargin()
+            """cast(
+                |  coalesce(
+                |    field_x,
+                |    ''
+                |  )
+                |  as varchar
+                |) not ilike 'foo%'""".trimMargin()
     }
 
     @Test
     fun buildingConditionForOpenRightQuoted_appliesLike() {
         expectToken(TokenType.OPENRIGHTQUOTED, "foo")
-        evaluator.evaluate(stMock).toString() shouldBeEqualTo "cast(field_x as varchar) ilike 'foo%'"
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo """cast(
+            |  field_x
+            |  as varchar
+            |) ilike 'foo%'""".trimMargin()
     }
 
     @Test
     fun buildingConditionForNotOpenRight_appliesNotLike() {
         expectToken(TokenType.NOTOPENRIGHT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            """cast(coalesce(
-                   |  field_x,
-                   |  ''
-                   |) as varchar) not ilike 'foo%'""".trimMargin()
+            """cast(
+                |  coalesce(
+                |    field_x,
+                |    ''
+                |  )
+                |  as varchar
+                |) not ilike 'foo%'""".trimMargin()
     }
 
     @Test
     fun buildingConditionForOpenRight_appliesLike() {
         expectToken(TokenType.OPENRIGHT, "foo")
-        evaluator.evaluate(stMock).toString() shouldBeEqualTo "cast(field_x as varchar) ilike 'foo%'"
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo """cast(
+            |  field_x
+            |  as varchar
+            |) ilike 'foo%'""".trimMargin()
     }
 
     @Test
     fun buildingConditionForNotOpenLeftQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENLEFTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            """cast(coalesce(
-                   |  field_x,
-                   |  ''
-                   |) as varchar) not ilike '%foo'""".trimMargin()
+            """cast(
+                |  coalesce(
+                |    field_x,
+                |    ''
+                |  )
+                |  as varchar
+                |) not ilike '%foo'""".trimMargin()
     }
 
     @Test
     fun buildingConditionForOpenLeftQuoted_appliesLike() {
         expectToken(TokenType.OPENLEFTQUOTED, "foo")
-        evaluator.evaluate(stMock).toString() shouldBeEqualTo "cast(field_x as varchar) ilike '%foo'"
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo """cast(
+            |  field_x
+            |  as varchar
+            |) ilike '%foo'""".trimMargin()
     }
 
     @Test
     fun buildingConditionForNotOpenLeft_appliesNotLike() {
         expectToken(TokenType.NOTOPENLEFT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            """cast(coalesce(
-                   |  field_x,
-                   |  ''
-                   |) as varchar) not ilike '%foo'""".trimMargin()
+            """cast(
+                |  coalesce(
+                |    field_x,
+                |    ''
+                |  )
+                |  as varchar
+                |) not ilike '%foo'""".trimMargin()
     }
 
     @Test
     fun buildingConditionForOpenLeft_appliesLike() {
         expectToken(TokenType.OPENLEFT, "foo")
-        evaluator.evaluate(stMock).toString() shouldBeEqualTo "cast(field_x as varchar) ilike '%foo'"
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo """cast(
+            |  field_x
+            |  as varchar
+            |) ilike '%foo'""".trimMargin()
     }
 
     @Test
     fun buildingConditionForNotQuoted_appliesUnequal() {
         expectToken(TokenType.NOTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            "lower(cast(field_x as varchar)) <> lower('foo')"
+            """lower(cast(
+                |  field_x
+                |  as varchar
+                |)) <> lower('foo')""".trimMargin()
     }
 
     @Test
     fun buildingConditionForQuoted_appliesEqual() {
         expectToken(TokenType.QUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            "lower(cast(field_x as varchar)) = lower('foo')"
+            """lower(cast(
+                |  field_x
+                |  as varchar
+                |)) = lower('foo')""".trimMargin()
     }
 
     @Test
     fun buildingConditionForNotWord_appliesNotContains() {
         expectToken(TokenType.NOTWORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            """not (cast(coalesce(
-               |  field_x,
-               |  ''
-               |) as varchar) ilike (('%' || replace(
-               |  replace(
-               |    replace('foo', '!', '!!'),
-               |    '%',
-               |    '!%'
-               |  ),
-               |  '_',
-               |  '!_'
-               |)) || '%') escape '!')""".trimMargin()
+            """not (contains(
+            |  lower(cast(
+            |    coalesce(
+            |      field_x,
+            |      ''
+            |    )
+            |    as varchar
+            |  )),
+            |  lower('foo')
+            |))""".trimMargin()
     }
 
     @Test
     fun buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            """cast(field_x as varchar) ilike (('%' || replace(
-               |  replace(
-               |    replace('foo', '!', '!!'),
-               |    '%',
-               |    '!%'
-               |  ),
-               |  '_',
-               |  '!_'
-               |)) || '%') escape '!'""".trimMargin()
+            """contains(
+               |  lower(cast(
+               |    field_x
+               |    as varchar
+               |  )),
+               |  lower('foo')
+               |)""".trimMargin()
     }
 
     @Test
@@ -244,38 +288,62 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.NOTREGEX, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  not ((lower(cast(coalesce(
-               |    methods,
-               |    ''
-               |  ) as varchar)) like_regex 'foo'))
-               |  and not ((lower(cast(coalesce(
-               |    method_study_design,
-               |    ''
-               |  ) as varchar)) like_regex 'foo'))
-               |  and not ((lower(cast(coalesce(
-               |    population_place,
-               |    ''
-               |  ) as varchar)) like_regex 'foo'))
-               |  and not ((lower(cast(coalesce(
-               |    method_outcome,
-               |    ''
-               |  ) as varchar)) like_regex 'foo'))
-               |  and not ((lower(cast(coalesce(
-               |    exposure_pollutant,
-               |    ''
-               |  ) as varchar)) like_regex 'foo'))
-               |  and not ((lower(cast(coalesce(
-               |    exposure_assessment,
-               |    ''
-               |  ) as varchar)) like_regex 'foo'))
-               |  and not ((lower(cast(coalesce(
-               |    method_statistics,
-               |    ''
-               |  ) as varchar)) like_regex 'foo'))
-               |  and not ((lower(cast(coalesce(
-               |    method_confounders,
-               |    ''
-               |  ) as varchar)) like_regex 'foo'))
+               |  not ((lower(cast(
+               |    coalesce(
+               |      methods,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo'))
+               |  and not ((lower(cast(
+               |    coalesce(
+               |      method_study_design,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo'))
+               |  and not ((lower(cast(
+               |    coalesce(
+               |      population_place,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo'))
+               |  and not ((lower(cast(
+               |    coalesce(
+               |      method_outcome,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo'))
+               |  and not ((lower(cast(
+               |    coalesce(
+               |      exposure_pollutant,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo'))
+               |  and not ((lower(cast(
+               |    coalesce(
+               |      exposure_assessment,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo'))
+               |  and not ((lower(cast(
+               |    coalesce(
+               |      method_statistics,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo'))
+               |  and not ((lower(cast(
+               |    coalesce(
+               |      method_confounders,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo'))
                |)""".trimMargin()
     }
 
@@ -284,38 +352,62 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.REGEX, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  (lower(cast(coalesce(
-               |    methods,
-               |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  or (lower(cast(coalesce(
-               |    method_study_design,
-               |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  or (lower(cast(coalesce(
-               |    population_place,
-               |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  or (lower(cast(coalesce(
-               |    method_outcome,
-               |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  or (lower(cast(coalesce(
-               |    exposure_pollutant,
-               |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  or (lower(cast(coalesce(
-               |    exposure_assessment,
-               |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  or (lower(cast(coalesce(
-               |    method_statistics,
-               |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  or (lower(cast(coalesce(
-               |    method_confounders,
-               |    ''
-               |  ) as varchar)) like_regex 'foo')
+               |  (lower(cast(
+               |    coalesce(
+               |      methods,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo')
+               |  or (lower(cast(
+               |    coalesce(
+               |      method_study_design,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo')
+               |  or (lower(cast(
+               |    coalesce(
+               |      population_place,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo')
+               |  or (lower(cast(
+               |    coalesce(
+               |      method_outcome,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo')
+               |  or (lower(cast(
+               |    coalesce(
+               |      exposure_pollutant,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo')
+               |  or (lower(cast(
+               |    coalesce(
+               |      exposure_assessment,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo')
+               |  or (lower(cast(
+               |    coalesce(
+               |      method_statistics,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo')
+               |  or (lower(cast(
+               |    coalesce(
+               |      method_confounders,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo')
                |)""".trimMargin()
     }
 
@@ -332,35 +424,59 @@ internal class StringSearchTermEvaluatorTest {
             """(
                    |  (
                    |    methods is not null
-                   |    and char_length(cast(methods as varchar)) > 0
+                   |    and char_length(cast(
+                   |      methods
+                   |      as varchar
+                   |    )) > 0
                    |  )
                    |  or (
                    |    method_study_design is not null
-                   |    and char_length(cast(method_study_design as varchar)) > 0
+                   |    and char_length(cast(
+                   |      method_study_design
+                   |      as varchar
+                   |    )) > 0
                    |  )
                    |  or (
                    |    population_place is not null
-                   |    and char_length(cast(population_place as varchar)) > 0
+                   |    and char_length(cast(
+                   |      population_place
+                   |      as varchar
+                   |    )) > 0
                    |  )
                    |  or (
                    |    method_outcome is not null
-                   |    and char_length(cast(method_outcome as varchar)) > 0
+                   |    and char_length(cast(
+                   |      method_outcome
+                   |      as varchar
+                   |    )) > 0
                    |  )
                    |  or (
                    |    exposure_pollutant is not null
-                   |    and char_length(cast(exposure_pollutant as varchar)) > 0
+                   |    and char_length(cast(
+                   |      exposure_pollutant
+                   |      as varchar
+                   |    )) > 0
                    |  )
                    |  or (
                    |    exposure_assessment is not null
-                   |    and char_length(cast(exposure_assessment as varchar)) > 0
+                   |    and char_length(cast(
+                   |      exposure_assessment
+                   |      as varchar
+                   |    )) > 0
                    |  )
                    |  or (
                    |    method_statistics is not null
-                   |    and char_length(cast(method_statistics as varchar)) > 0
+                   |    and char_length(cast(
+                   |      method_statistics
+                   |      as varchar
+                   |    )) > 0
                    |  )
                    |  or (
                    |    method_confounders is not null
-                   |    and char_length(cast(method_confounders as varchar)) > 0
+                   |    and char_length(cast(
+                   |      method_confounders
+                   |      as varchar
+                   |    )) > 0
                    |  )
                    |)""".trimMargin()
     }
@@ -372,35 +488,59 @@ internal class StringSearchTermEvaluatorTest {
             """(
                |  (
                |    methods is null
-               |    or char_length(cast(methods as varchar)) = 0
+               |    or char_length(cast(
+               |      methods
+               |      as varchar
+               |    )) = 0
                |  )
                |  and (
                |    method_study_design is null
-               |    or char_length(cast(method_study_design as varchar)) = 0
+               |    or char_length(cast(
+               |      method_study_design
+               |      as varchar
+               |    )) = 0
                |  )
                |  and (
                |    population_place is null
-               |    or char_length(cast(population_place as varchar)) = 0
+               |    or char_length(cast(
+               |      population_place
+               |      as varchar
+               |    )) = 0
                |  )
                |  and (
                |    method_outcome is null
-               |    or char_length(cast(method_outcome as varchar)) = 0
+               |    or char_length(cast(
+               |      method_outcome
+               |      as varchar
+               |    )) = 0
                |  )
                |  and (
                |    exposure_pollutant is null
-               |    or char_length(cast(exposure_pollutant as varchar)) = 0
+               |    or char_length(cast(
+               |      exposure_pollutant
+               |      as varchar
+               |    )) = 0
                |  )
                |  and (
                |    exposure_assessment is null
-               |    or char_length(cast(exposure_assessment as varchar)) = 0
+               |    or char_length(cast(
+               |      exposure_assessment
+               |      as varchar
+               |    )) = 0
                |  )
                |  and (
                |    method_statistics is null
-               |    or char_length(cast(method_statistics as varchar)) = 0
+               |    or char_length(cast(
+               |      method_statistics
+               |      as varchar
+               |    )) = 0
                |  )
                |  and (
                |    method_confounders is null
-               |    or char_length(cast(method_confounders as varchar)) = 0
+               |    or char_length(cast(
+               |      method_confounders
+               |      as varchar
+               |    )) = 0
                |  )
                |)""".trimMargin()
     }
@@ -410,38 +550,62 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.NOTOPENLEFTRIGHTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(coalesce(
-               |    methods,
-               |    ''
-               |  ) as varchar) not ilike '%foo%'
-               |  and cast(coalesce(
-               |    method_study_design,
-               |    ''
-               |  ) as varchar) not ilike '%foo%'
-               |  and cast(coalesce(
-               |    population_place,
-               |    ''
-               |  ) as varchar) not ilike '%foo%'
-               |  and cast(coalesce(
-               |    method_outcome,
-               |    ''
-               |  ) as varchar) not ilike '%foo%'
-               |  and cast(coalesce(
-               |    exposure_pollutant,
-               |    ''
-               |  ) as varchar) not ilike '%foo%'
-               |  and cast(coalesce(
-               |    exposure_assessment,
-               |    ''
-               |  ) as varchar) not ilike '%foo%'
-               |  and cast(coalesce(
-               |    method_statistics,
-               |    ''
-               |  ) as varchar) not ilike '%foo%'
-               |  and cast(coalesce(
-               |    method_confounders,
-               |    ''
-               |  ) as varchar) not ilike '%foo%'
+               |  cast(
+               |    coalesce(
+               |      methods,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo%'
+               |  and cast(
+               |    coalesce(
+               |      method_study_design,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo%'
+               |  and cast(
+               |    coalesce(
+               |      population_place,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo%'
+               |  and cast(
+               |    coalesce(
+               |      method_outcome,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo%'
+               |  and cast(
+               |    coalesce(
+               |      exposure_pollutant,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo%'
+               |  and cast(
+               |    coalesce(
+               |      exposure_assessment,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo%'
+               |  and cast(
+               |    coalesce(
+               |      method_statistics,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo%'
+               |  and cast(
+               |    coalesce(
+               |      method_confounders,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo%'
                |)""".trimMargin()
     }
 
@@ -450,14 +614,38 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.OPENLEFTRIGHTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(methods as varchar) ilike '%foo%'
-                   |  or cast(method_study_design as varchar) ilike '%foo%'
-                   |  or cast(population_place as varchar) ilike '%foo%'
-                   |  or cast(method_outcome as varchar) ilike '%foo%'
-                   |  or cast(exposure_pollutant as varchar) ilike '%foo%'
-                   |  or cast(exposure_assessment as varchar) ilike '%foo%'
-                   |  or cast(method_statistics as varchar) ilike '%foo%'
-                   |  or cast(method_confounders as varchar) ilike '%foo%'
+                   |  cast(
+                   |    methods
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    method_study_design
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    population_place
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    method_outcome
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    exposure_pollutant
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    exposure_assessment
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    method_statistics
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    method_confounders
+                   |    as varchar
+                   |  ) ilike '%foo%'
                    |)""".trimMargin()
     }
 
@@ -466,38 +654,62 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.NOTOPENLEFTRIGHT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(coalesce(
-                   |    methods,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo%'
-                   |  and cast(coalesce(
-                   |    method_study_design,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo%'
-                   |  and cast(coalesce(
-                   |    population_place,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo%'
-                   |  and cast(coalesce(
-                   |    method_outcome,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo%'
-                   |  and cast(coalesce(
-                   |    exposure_pollutant,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo%'
-                   |  and cast(coalesce(
-                   |    exposure_assessment,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo%'
-                   |  and cast(coalesce(
-                   |    method_statistics,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo%'
-                   |  and cast(coalesce(
-                   |    method_confounders,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo%'
+                   |  cast(
+                   |    coalesce(
+                   |      methods,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_study_design,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_place,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_outcome,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      exposure_pollutant,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      exposure_assessment,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_statistics,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_confounders,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo%'
                    |)""".trimMargin()
     }
 
@@ -506,14 +718,38 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.OPENLEFTRIGHT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(methods as varchar) ilike '%foo%'
-                   |  or cast(method_study_design as varchar) ilike '%foo%'
-                   |  or cast(population_place as varchar) ilike '%foo%'
-                   |  or cast(method_outcome as varchar) ilike '%foo%'
-                   |  or cast(exposure_pollutant as varchar) ilike '%foo%'
-                   |  or cast(exposure_assessment as varchar) ilike '%foo%'
-                   |  or cast(method_statistics as varchar) ilike '%foo%'
-                   |  or cast(method_confounders as varchar) ilike '%foo%'
+                   |  cast(
+                   |    methods
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    method_study_design
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    population_place
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    method_outcome
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    exposure_pollutant
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    exposure_assessment
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    method_statistics
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    method_confounders
+                   |    as varchar
+                   |  ) ilike '%foo%'
                    |)""".trimMargin()
     }
 
@@ -522,38 +758,62 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.NOTOPENRIGHTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(coalesce(
-                   |    methods,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    method_study_design,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    population_place,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    method_outcome,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    exposure_pollutant,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    exposure_assessment,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    method_statistics,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    method_confounders,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
+                   |  cast(
+                   |    coalesce(
+                   |      methods,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_study_design,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_place,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_outcome,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      exposure_pollutant,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      exposure_assessment,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_statistics,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_confounders,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
                    |)""".trimMargin()
     }
 
@@ -562,14 +822,38 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.OPENRIGHTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(methods as varchar) ilike 'foo%'
-                   |  or cast(method_study_design as varchar) ilike 'foo%'
-                   |  or cast(population_place as varchar) ilike 'foo%'
-                   |  or cast(method_outcome as varchar) ilike 'foo%'
-                   |  or cast(exposure_pollutant as varchar) ilike 'foo%'
-                   |  or cast(exposure_assessment as varchar) ilike 'foo%'
-                   |  or cast(method_statistics as varchar) ilike 'foo%'
-                   |  or cast(method_confounders as varchar) ilike 'foo%'
+                   |  cast(
+                   |    methods
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    method_study_design
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    population_place
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    method_outcome
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    exposure_pollutant
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    exposure_assessment
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    method_statistics
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    method_confounders
+                   |    as varchar
+                   |  ) ilike 'foo%'
                    |)""".trimMargin()
     }
 
@@ -578,38 +862,62 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.NOTOPENRIGHT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(coalesce(
-                   |    methods,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    method_study_design,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    population_place,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    method_outcome,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    exposure_pollutant,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    exposure_assessment,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    method_statistics,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    method_confounders,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
+                   |  cast(
+                   |    coalesce(
+                   |      methods,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_study_design,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_place,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_outcome,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      exposure_pollutant,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      exposure_assessment,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_statistics,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_confounders,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
                    |)""".trimMargin()
     }
 
@@ -618,14 +926,38 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.OPENRIGHT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(methods as varchar) ilike 'foo%'
-                   |  or cast(method_study_design as varchar) ilike 'foo%'
-                   |  or cast(population_place as varchar) ilike 'foo%'
-                   |  or cast(method_outcome as varchar) ilike 'foo%'
-                   |  or cast(exposure_pollutant as varchar) ilike 'foo%'
-                   |  or cast(exposure_assessment as varchar) ilike 'foo%'
-                   |  or cast(method_statistics as varchar) ilike 'foo%'
-                   |  or cast(method_confounders as varchar) ilike 'foo%'
+                   |  cast(
+                   |    methods
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    method_study_design
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    population_place
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    method_outcome
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    exposure_pollutant
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    exposure_assessment
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    method_statistics
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    method_confounders
+                   |    as varchar
+                   |  ) ilike 'foo%'
                    |)""".trimMargin()
     }
 
@@ -634,38 +966,62 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.NOTOPENLEFTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(coalesce(
-                   |    methods,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo'
-                   |  and cast(coalesce(
-                   |    method_study_design,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo'
-                   |  and cast(coalesce(
-                   |    population_place,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo'
-                   |  and cast(coalesce(
-                   |    method_outcome,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo'
-                   |  and cast(coalesce(
-                   |    exposure_pollutant,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo'
-                   |  and cast(coalesce(
-                   |    exposure_assessment,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo'
-                   |  and cast(coalesce(
-                   |    method_statistics,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo'
-                   |  and cast(coalesce(
-                   |    method_confounders,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo'
+                   |  cast(
+                   |    coalesce(
+                   |      methods,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_study_design,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_place,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_outcome,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo'
+                   |  and cast(
+                   |    coalesce(
+                   |      exposure_pollutant,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo'
+                   |  and cast(
+                   |    coalesce(
+                   |      exposure_assessment,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_statistics,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo'
+                   |  and cast(
+                   |    coalesce(
+                   |      method_confounders,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo'
                    |)""".trimMargin()
     }
 
@@ -674,14 +1030,38 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.OPENLEFTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(methods as varchar) ilike '%foo'
-               |  or cast(method_study_design as varchar) ilike '%foo'
-               |  or cast(population_place as varchar) ilike '%foo'
-               |  or cast(method_outcome as varchar) ilike '%foo'
-               |  or cast(exposure_pollutant as varchar) ilike '%foo'
-               |  or cast(exposure_assessment as varchar) ilike '%foo'
-               |  or cast(method_statistics as varchar) ilike '%foo'
-               |  or cast(method_confounders as varchar) ilike '%foo'
+               |  cast(
+               |    methods
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    method_study_design
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    population_place
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    method_outcome
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    exposure_pollutant
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    exposure_assessment
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    method_statistics
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    method_confounders
+               |    as varchar
+               |  ) ilike '%foo'
                |)""".trimMargin()
     }
 
@@ -690,38 +1070,62 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.NOTOPENLEFT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(coalesce(
-               |    methods,
-               |    ''
-               |  ) as varchar) not ilike '%foo'
-               |  and cast(coalesce(
-               |    method_study_design,
-               |    ''
-               |  ) as varchar) not ilike '%foo'
-               |  and cast(coalesce(
-               |    population_place,
-               |    ''
-               |  ) as varchar) not ilike '%foo'
-               |  and cast(coalesce(
-               |    method_outcome,
-               |    ''
-               |  ) as varchar) not ilike '%foo'
-               |  and cast(coalesce(
-               |    exposure_pollutant,
-               |    ''
-               |  ) as varchar) not ilike '%foo'
-               |  and cast(coalesce(
-               |    exposure_assessment,
-               |    ''
-               |  ) as varchar) not ilike '%foo'
-               |  and cast(coalesce(
-               |    method_statistics,
-               |    ''
-               |  ) as varchar) not ilike '%foo'
-               |  and cast(coalesce(
-               |    method_confounders,
-               |    ''
-               |  ) as varchar) not ilike '%foo'
+               |  cast(
+               |    coalesce(
+               |      methods,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo'
+               |  and cast(
+               |    coalesce(
+               |      method_study_design,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo'
+               |  and cast(
+               |    coalesce(
+               |      population_place,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo'
+               |  and cast(
+               |    coalesce(
+               |      method_outcome,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo'
+               |  and cast(
+               |    coalesce(
+               |      exposure_pollutant,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo'
+               |  and cast(
+               |    coalesce(
+               |      exposure_assessment,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo'
+               |  and cast(
+               |    coalesce(
+               |      method_statistics,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo'
+               |  and cast(
+               |    coalesce(
+               |      method_confounders,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo'
                |)""".trimMargin()
     }
 
@@ -730,14 +1134,38 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.OPENLEFT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(methods as varchar) ilike '%foo'
-               |  or cast(method_study_design as varchar) ilike '%foo'
-               |  or cast(population_place as varchar) ilike '%foo'
-               |  or cast(method_outcome as varchar) ilike '%foo'
-               |  or cast(exposure_pollutant as varchar) ilike '%foo'
-               |  or cast(exposure_assessment as varchar) ilike '%foo'
-               |  or cast(method_statistics as varchar) ilike '%foo'
-               |  or cast(method_confounders as varchar) ilike '%foo'
+               |  cast(
+               |    methods
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    method_study_design
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    population_place
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    method_outcome
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    exposure_pollutant
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    exposure_assessment
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    method_statistics
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    method_confounders
+               |    as varchar
+               |  ) ilike '%foo'
                |)""".trimMargin()
     }
 
@@ -746,14 +1174,38 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.NOTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  lower(cast(methods as varchar)) <> lower('foo')
-                   |  and lower(cast(method_study_design as varchar)) <> lower('foo')
-                   |  and lower(cast(population_place as varchar)) <> lower('foo')
-                   |  and lower(cast(method_outcome as varchar)) <> lower('foo')
-                   |  and lower(cast(exposure_pollutant as varchar)) <> lower('foo')
-                   |  and lower(cast(exposure_assessment as varchar)) <> lower('foo')
-                   |  and lower(cast(method_statistics as varchar)) <> lower('foo')
-                   |  and lower(cast(method_confounders as varchar)) <> lower('foo')
+                   |  lower(cast(
+                   |    methods
+                   |    as varchar
+                   |  )) <> lower('foo')
+                   |  and lower(cast(
+                   |    method_study_design
+                   |    as varchar
+                   |  )) <> lower('foo')
+                   |  and lower(cast(
+                   |    population_place
+                   |    as varchar
+                   |  )) <> lower('foo')
+                   |  and lower(cast(
+                   |    method_outcome
+                   |    as varchar
+                   |  )) <> lower('foo')
+                   |  and lower(cast(
+                   |    exposure_pollutant
+                   |    as varchar
+                   |  )) <> lower('foo')
+                   |  and lower(cast(
+                   |    exposure_assessment
+                   |    as varchar
+                   |  )) <> lower('foo')
+                   |  and lower(cast(
+                   |    method_statistics
+                   |    as varchar
+                   |  )) <> lower('foo')
+                   |  and lower(cast(
+                   |    method_confounders
+                   |    as varchar
+                   |  )) <> lower('foo')
                    |)""".trimMargin()
     }
 
@@ -762,14 +1214,38 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.QUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  lower(cast(methods as varchar)) = lower('foo')
-                   |  or lower(cast(method_study_design as varchar)) = lower('foo')
-                   |  or lower(cast(population_place as varchar)) = lower('foo')
-                   |  or lower(cast(method_outcome as varchar)) = lower('foo')
-                   |  or lower(cast(exposure_pollutant as varchar)) = lower('foo')
-                   |  or lower(cast(exposure_assessment as varchar)) = lower('foo')
-                   |  or lower(cast(method_statistics as varchar)) = lower('foo')
-                   |  or lower(cast(method_confounders as varchar)) = lower('foo')
+                   |  lower(cast(
+                   |    methods
+                   |    as varchar
+                   |  )) = lower('foo')
+                   |  or lower(cast(
+                   |    method_study_design
+                   |    as varchar
+                   |  )) = lower('foo')
+                   |  or lower(cast(
+                   |    population_place
+                   |    as varchar
+                   |  )) = lower('foo')
+                   |  or lower(cast(
+                   |    method_outcome
+                   |    as varchar
+                   |  )) = lower('foo')
+                   |  or lower(cast(
+                   |    exposure_pollutant
+                   |    as varchar
+                   |  )) = lower('foo')
+                   |  or lower(cast(
+                   |    exposure_assessment
+                   |    as varchar
+                   |  )) = lower('foo')
+                   |  or lower(cast(
+                   |    method_statistics
+                   |    as varchar
+                   |  )) = lower('foo')
+                   |  or lower(cast(
+                   |    method_confounders
+                   |    as varchar
+                   |  )) = lower('foo')
                    |)""".trimMargin()
     }
 
@@ -778,103 +1254,87 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.NOTWORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  not (cast(coalesce(
-               |    methods,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    method_study_design,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    population_place,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    method_outcome,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    exposure_pollutant,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    exposure_assessment,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    method_statistics,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    method_confounders,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |)""".trimMargin()
+            |  not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        methods,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_study_design,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_place,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_outcome,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        exposure_pollutant,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        exposure_assessment,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_statistics,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_confounders,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |)""".trimMargin()
     }
 
     @Test
@@ -882,79 +1342,63 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.WORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(methods as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(method_study_design as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(population_place as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(method_outcome as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(exposure_pollutant as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(exposure_assessment as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(method_statistics as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(method_confounders as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |)""".trimMargin()
+            |  contains(
+            |    lower(cast(
+            |      methods
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      method_study_design
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      population_place
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      method_outcome
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      exposure_pollutant
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      exposure_assessment
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      method_statistics
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      method_confounders
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |)""".trimMargin()
     }
 
     @Test
@@ -979,177 +1423,145 @@ internal class StringSearchTermEvaluatorTest {
         ) as StringSearchTerm
         evaluator.evaluate(sst).toString() shouldBeEqualTo
             """(
-               |  (
-               |    cast(methods as varchar) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(method_study_design as varchar) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(population_place as varchar) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(method_outcome as varchar) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(exposure_pollutant as varchar) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(exposure_assessment as varchar) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(method_statistics as varchar) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(method_confounders as varchar) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |  )
-               |  and not (cast(coalesce(
-               |    methods,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    method_study_design,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    population_place,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    method_outcome,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    exposure_pollutant,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    exposure_assessment,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    method_statistics,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    method_confounders,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |)""".trimMargin()
+            |  (
+            |    contains(
+            |      lower(cast(
+            |        methods
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        method_study_design
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        population_place
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        method_outcome
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        exposure_pollutant
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        exposure_assessment
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        method_statistics
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        method_confounders
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |  )
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        methods,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_study_design,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_place,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_outcome,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        exposure_pollutant,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        exposure_assessment,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_statistics,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        method_confounders,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |)""".trimMargin()
     }
     //endregion
 
@@ -1165,22 +1577,34 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.NOTREGEX, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  not ((lower(cast(coalesce(
-               |    population,
-               |    ''
-               |  ) as varchar)) like_regex 'foo'))
-               |  and not ((lower(cast(coalesce(
-               |    population_place,
-               |    ''
-               |  ) as varchar)) like_regex 'foo'))
-               |  and not ((lower(cast(coalesce(
-               |    population_participants,
-               |    ''
-               |  ) as varchar)) like_regex 'foo'))
-               |  and not ((lower(cast(coalesce(
-               |    population_duration,
-               |    ''
-               |  ) as varchar)) like_regex 'foo'))
+               |  not ((lower(cast(
+               |    coalesce(
+               |      population,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo'))
+               |  and not ((lower(cast(
+               |    coalesce(
+               |      population_place,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo'))
+               |  and not ((lower(cast(
+               |    coalesce(
+               |      population_participants,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo'))
+               |  and not ((lower(cast(
+               |    coalesce(
+               |      population_duration,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo'))
                |)""".trimMargin()
     }
 
@@ -1189,22 +1613,34 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.REGEX, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  (lower(cast(coalesce(
-               |    population,
-               |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  or (lower(cast(coalesce(
-               |    population_place,
-               |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  or (lower(cast(coalesce(
-               |    population_participants,
-               |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  or (lower(cast(coalesce(
-               |    population_duration,
-               |    ''
-               |  ) as varchar)) like_regex 'foo')
+               |  (lower(cast(
+               |    coalesce(
+               |      population,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo')
+               |  or (lower(cast(
+               |    coalesce(
+               |      population_place,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo')
+               |  or (lower(cast(
+               |    coalesce(
+               |      population_participants,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo')
+               |  or (lower(cast(
+               |    coalesce(
+               |      population_duration,
+               |      ''
+               |    )
+               |    as varchar
+               |  )) like_regex 'foo')
                |)""".trimMargin()
     }
 
@@ -1221,19 +1657,31 @@ internal class StringSearchTermEvaluatorTest {
             """(
                    |  (
                    |    population is not null
-                   |    and char_length(cast(population as varchar)) > 0
+                   |    and char_length(cast(
+                   |      population
+                   |      as varchar
+                   |    )) > 0
                    |  )
                    |  or (
                    |    population_place is not null
-                   |    and char_length(cast(population_place as varchar)) > 0
+                   |    and char_length(cast(
+                   |      population_place
+                   |      as varchar
+                   |    )) > 0
                    |  )
                    |  or (
                    |    population_participants is not null
-                   |    and char_length(cast(population_participants as varchar)) > 0
+                   |    and char_length(cast(
+                   |      population_participants
+                   |      as varchar
+                   |    )) > 0
                    |  )
                    |  or (
                    |    population_duration is not null
-                   |    and char_length(cast(population_duration as varchar)) > 0
+                   |    and char_length(cast(
+                   |      population_duration
+                   |      as varchar
+                   |    )) > 0
                    |  )
                    |)""".trimMargin()
     }
@@ -1245,19 +1693,31 @@ internal class StringSearchTermEvaluatorTest {
             """(
                |  (
                |    population is null
-               |    or char_length(cast(population as varchar)) = 0
+               |    or char_length(cast(
+               |      population
+               |      as varchar
+               |    )) = 0
                |  )
                |  and (
                |    population_place is null
-               |    or char_length(cast(population_place as varchar)) = 0
+               |    or char_length(cast(
+               |      population_place
+               |      as varchar
+               |    )) = 0
                |  )
                |  and (
                |    population_participants is null
-               |    or char_length(cast(population_participants as varchar)) = 0
+               |    or char_length(cast(
+               |      population_participants
+               |      as varchar
+               |    )) = 0
                |  )
                |  and (
                |    population_duration is null
-               |    or char_length(cast(population_duration as varchar)) = 0
+               |    or char_length(cast(
+               |      population_duration
+               |      as varchar
+               |    )) = 0
                |  )
                |)""".trimMargin()
     }
@@ -1267,22 +1727,34 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.NOTOPENLEFTRIGHTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(coalesce(
-               |    population,
-               |    ''
-               |  ) as varchar) not ilike '%foo%'
-               |  and cast(coalesce(
-               |    population_place,
-               |    ''
-               |  ) as varchar) not ilike '%foo%'
-               |  and cast(coalesce(
-               |    population_participants,
-               |    ''
-               |  ) as varchar) not ilike '%foo%'
-               |  and cast(coalesce(
-               |    population_duration,
-               |    ''
-               |  ) as varchar) not ilike '%foo%'
+               |  cast(
+               |    coalesce(
+               |      population,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo%'
+               |  and cast(
+               |    coalesce(
+               |      population_place,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo%'
+               |  and cast(
+               |    coalesce(
+               |      population_participants,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo%'
+               |  and cast(
+               |    coalesce(
+               |      population_duration,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo%'
                |)""".trimMargin()
     }
 
@@ -1291,10 +1763,22 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.OPENLEFTRIGHTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(population as varchar) ilike '%foo%'
-                   |  or cast(population_place as varchar) ilike '%foo%'
-                   |  or cast(population_participants as varchar) ilike '%foo%'
-                   |  or cast(population_duration as varchar) ilike '%foo%'
+                   |  cast(
+                   |    population
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    population_place
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    population_participants
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    population_duration
+                   |    as varchar
+                   |  ) ilike '%foo%'
                    |)""".trimMargin()
     }
 
@@ -1303,22 +1787,34 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.NOTOPENLEFTRIGHT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(coalesce(
-                   |    population,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo%'
-                   |  and cast(coalesce(
-                   |    population_place,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo%'
-                   |  and cast(coalesce(
-                   |    population_participants,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo%'
-                   |  and cast(coalesce(
-                   |    population_duration,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo%'
+                   |  cast(
+                   |    coalesce(
+                   |      population,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_place,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_participants,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_duration,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo%'
                    |)""".trimMargin()
     }
 
@@ -1327,10 +1823,22 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.OPENLEFTRIGHT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(population as varchar) ilike '%foo%'
-                   |  or cast(population_place as varchar) ilike '%foo%'
-                   |  or cast(population_participants as varchar) ilike '%foo%'
-                   |  or cast(population_duration as varchar) ilike '%foo%'
+                   |  cast(
+                   |    population
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    population_place
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    population_participants
+                   |    as varchar
+                   |  ) ilike '%foo%'
+                   |  or cast(
+                   |    population_duration
+                   |    as varchar
+                   |  ) ilike '%foo%'
                    |)""".trimMargin()
     }
 
@@ -1339,22 +1847,34 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.NOTOPENRIGHTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(coalesce(
-                   |    population,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    population_place,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    population_participants,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    population_duration,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
+                   |  cast(
+                   |    coalesce(
+                   |      population,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_place,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_participants,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_duration,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
                    |)""".trimMargin()
     }
 
@@ -1363,10 +1883,22 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.OPENRIGHTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(population as varchar) ilike 'foo%'
-                   |  or cast(population_place as varchar) ilike 'foo%'
-                   |  or cast(population_participants as varchar) ilike 'foo%'
-                   |  or cast(population_duration as varchar) ilike 'foo%'
+                   |  cast(
+                   |    population
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    population_place
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    population_participants
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    population_duration
+                   |    as varchar
+                   |  ) ilike 'foo%'
                    |)""".trimMargin()
     }
 
@@ -1375,22 +1907,34 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.NOTOPENRIGHT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(coalesce(
-                   |    population,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    population_place,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    population_participants,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
-                   |  and cast(coalesce(
-                   |    population_duration,
-                   |    ''
-                   |  ) as varchar) not ilike 'foo%'
+                   |  cast(
+                   |    coalesce(
+                   |      population,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_place,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_participants,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_duration,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike 'foo%'
                    |)""".trimMargin()
     }
 
@@ -1399,10 +1943,22 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.OPENRIGHT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(population as varchar) ilike 'foo%'
-                   |  or cast(population_place as varchar) ilike 'foo%'
-                   |  or cast(population_participants as varchar) ilike 'foo%'
-                   |  or cast(population_duration as varchar) ilike 'foo%'
+                   |  cast(
+                   |    population
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    population_place
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    population_participants
+                   |    as varchar
+                   |  ) ilike 'foo%'
+                   |  or cast(
+                   |    population_duration
+                   |    as varchar
+                   |  ) ilike 'foo%'
                    |)""".trimMargin()
     }
 
@@ -1411,22 +1967,34 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.NOTOPENLEFTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  cast(coalesce(
-                   |    population,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo'
-                   |  and cast(coalesce(
-                   |    population_place,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo'
-                   |  and cast(coalesce(
-                   |    population_participants,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo'
-                   |  and cast(coalesce(
-                   |    population_duration,
-                   |    ''
-                   |  ) as varchar) not ilike '%foo'
+                   |  cast(
+                   |    coalesce(
+                   |      population,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_place,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_participants,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo'
+                   |  and cast(
+                   |    coalesce(
+                   |      population_duration,
+                   |      ''
+                   |    )
+                   |    as varchar
+                   |  ) not ilike '%foo'
                    |)""".trimMargin()
     }
 
@@ -1435,10 +2003,22 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.OPENLEFTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(population as varchar) ilike '%foo'
-               |  or cast(population_place as varchar) ilike '%foo'
-               |  or cast(population_participants as varchar) ilike '%foo'
-               |  or cast(population_duration as varchar) ilike '%foo'
+               |  cast(
+               |    population
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    population_place
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    population_participants
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    population_duration
+               |    as varchar
+               |  ) ilike '%foo'
                |)""".trimMargin()
     }
 
@@ -1447,22 +2027,34 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.NOTOPENLEFT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(coalesce(
-               |    population,
-               |    ''
-               |  ) as varchar) not ilike '%foo'
-               |  and cast(coalesce(
-               |    population_place,
-               |    ''
-               |  ) as varchar) not ilike '%foo'
-               |  and cast(coalesce(
-               |    population_participants,
-               |    ''
-               |  ) as varchar) not ilike '%foo'
-               |  and cast(coalesce(
-               |    population_duration,
-               |    ''
-               |  ) as varchar) not ilike '%foo'
+               |  cast(
+               |    coalesce(
+               |      population,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo'
+               |  and cast(
+               |    coalesce(
+               |      population_place,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo'
+               |  and cast(
+               |    coalesce(
+               |      population_participants,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo'
+               |  and cast(
+               |    coalesce(
+               |      population_duration,
+               |      ''
+               |    )
+               |    as varchar
+               |  ) not ilike '%foo'
                |)""".trimMargin()
     }
 
@@ -1471,10 +2063,22 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.OPENLEFT, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(population as varchar) ilike '%foo'
-               |  or cast(population_place as varchar) ilike '%foo'
-               |  or cast(population_participants as varchar) ilike '%foo'
-               |  or cast(population_duration as varchar) ilike '%foo'
+               |  cast(
+               |    population
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    population_place
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    population_participants
+               |    as varchar
+               |  ) ilike '%foo'
+               |  or cast(
+               |    population_duration
+               |    as varchar
+               |  ) ilike '%foo'
                |)""".trimMargin()
     }
 
@@ -1483,10 +2087,22 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.NOTQUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  lower(cast(population as varchar)) <> lower('foo')
-                   |  and lower(cast(population_place as varchar)) <> lower('foo')
-                   |  and lower(cast(population_participants as varchar)) <> lower('foo')
-                   |  and lower(cast(population_duration as varchar)) <> lower('foo')
+                   |  lower(cast(
+                   |    population
+                   |    as varchar
+                   |  )) <> lower('foo')
+                   |  and lower(cast(
+                   |    population_place
+                   |    as varchar
+                   |  )) <> lower('foo')
+                   |  and lower(cast(
+                   |    population_participants
+                   |    as varchar
+                   |  )) <> lower('foo')
+                   |  and lower(cast(
+                   |    population_duration
+                   |    as varchar
+                   |  )) <> lower('foo')
                    |)""".trimMargin()
     }
 
@@ -1495,10 +2111,22 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.QUOTED, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-                   |  lower(cast(population as varchar)) = lower('foo')
-                   |  or lower(cast(population_place as varchar)) = lower('foo')
-                   |  or lower(cast(population_participants as varchar)) = lower('foo')
-                   |  or lower(cast(population_duration as varchar)) = lower('foo')
+                   |  lower(cast(
+                   |    population
+                   |    as varchar
+                   |  )) = lower('foo')
+                   |  or lower(cast(
+                   |    population_place
+                   |    as varchar
+                   |  )) = lower('foo')
+                   |  or lower(cast(
+                   |    population_participants
+                   |    as varchar
+                   |  )) = lower('foo')
+                   |  or lower(cast(
+                   |    population_duration
+                   |    as varchar
+                   |  )) = lower('foo')
                    |)""".trimMargin()
     }
 
@@ -1507,55 +2135,47 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.NOTWORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  not (cast(coalesce(
-               |    population,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    population_place,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    population_participants,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    population_duration,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |)""".trimMargin()
+            |  not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_place,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_participants,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_duration,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  ))
+            |)""".trimMargin()
     }
 
     @Test
@@ -1563,43 +2183,35 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.WORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(population as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(population_place as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(population_participants as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |  or cast(population_duration as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('foo', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!'
-               |)""".trimMargin()
+            |  contains(
+            |    lower(cast(
+            |      population
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      population_place
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      population_participants
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |  or contains(
+            |    lower(cast(
+            |      population_duration
+            |      as varchar
+            |    )),
+            |    lower('foo')
+            |  )
+            |)""".trimMargin()
     }
 
     @Test
@@ -1624,93 +2236,77 @@ internal class StringSearchTermEvaluatorTest {
         ) as StringSearchTerm
         evaluator.evaluate(sst).toString() shouldBeEqualTo
             """(
-               |  (
-               |    cast(population as varchar) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(population_place as varchar) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(population_participants as varchar) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |    or cast(population_duration as varchar) ilike (('%' || replace(
-               |      replace(
-               |        replace('foo', '!', '!!'),
-               |        '%',
-               |        '!%'
-               |      ),
-               |      '_',
-               |      '!_'
-               |    )) || '%') escape '!'
-               |  )
-               |  and not (cast(coalesce(
-               |    population,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    population_place,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    population_participants,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |  and not (cast(coalesce(
-               |    population_duration,
-               |    ''
-               |  ) as varchar) ilike (('%' || replace(
-               |    replace(
-               |      replace('bar', '!', '!!'),
-               |      '%',
-               |      '!%'
-               |    ),
-               |    '_',
-               |    '!_'
-               |  )) || '%') escape '!')
-               |)""".trimMargin()
+            |  (
+            |    contains(
+            |      lower(cast(
+            |        population
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        population_place
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        population_participants
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |    or contains(
+            |      lower(cast(
+            |        population_duration
+            |        as varchar
+            |      )),
+            |      lower('foo')
+            |    )
+            |  )
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_place,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_participants,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |  and not (contains(
+            |    lower(cast(
+            |      coalesce(
+            |        population_duration,
+            |        ''
+            |      )
+            |      as varchar
+            |    )),
+            |    lower('bar')
+            |  ))
+            |)""".trimMargin()
     }
     //endregion
 
