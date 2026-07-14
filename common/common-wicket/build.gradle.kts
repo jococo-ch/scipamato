@@ -25,18 +25,10 @@ sourceSets {
 }
 
 dependencies {
-    implementation(project(":common-utils"))
-    implementation(project(":common-entity"))
-    implementation(project(":common-persistence-api"))
-
     api(libs.spring.boot.starter.actuator)
     api(libs.spring.boot.starter.security)
-    annotationProcessor(libs.spring.boot.configurationprocessor) {
-        exclude("com.vaadin.external.google", "android-json")
-    }
     api(libs.spring.boot.admin.starter.client)
     api(libs.spring.core)
-
     api(libs.spring.boot.starter.web)
     api(libs.spring.boot.starter.wicket)
     api(libs.wicket.core)
@@ -56,15 +48,19 @@ dependencies {
     api(libs.wicketBootstrap.themes)
     api(libs.fontAwesome)
 
-    testImplementation(libs.lombok)
-    testAnnotationProcessor(libs.lombok)
+    implementation(project(":common-utils"))
+    implementation(project(":common-entity"))
+    implementation(project(":common-persistence-api"))
+
+    annotationProcessor(libs.spring.boot.configurationprocessor) {
+        exclude("com.vaadin.external.google", "android-json")
+    }
 
     testImplementation(libs.lombok)
-    testAnnotationProcessor(libs.lombok)
-
     testImplementation(libs.jakarta.servletApi)
     testImplementation(libs.validationApi)
 
+    testAnnotationProcessor(libs.lombok)
+
     testFixturesApi(testFixtures(project(":common-utils")))
-    testFixturesApi(libs.wicket.core)
 }

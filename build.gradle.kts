@@ -134,15 +134,15 @@ subprojects {
     }
 
     dependencies {
+        api(rootProject.libs.slf4j.api)
         implementation(rootProject.libs.kotlin.reflect)
+        implementation(rootProject.libs.kotlinLogging)
 
-        compileOnly(rootProject.libs.lombok)
         annotationProcessor(rootProject.libs.lombok)
 
-        api(rootProject.libs.slf4j.api)
-        implementation(rootProject.libs.kotlinLogging)
         runtimeOnly(rootProject.libs.logback.core)
 
+        compileOnly(rootProject.libs.lombok)
         compileOnly(rootProject.libs.jsr305)
 
         testImplementation(rootProject.libs.spring.boot.starter.test) {
