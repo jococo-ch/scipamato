@@ -964,7 +964,7 @@ abstract class PaperPanel<T>(
         override fun validate(form: Form<*>) {
             val codeClass1 = components[0] as BootstrapMultiSelect<Code>
             val mainCode = components[1]
-            if (!codeClass1.modelObject.isEmpty() && mainCode.modelObject == null) {
+            if (codeClass1.modelObject.isNotEmpty() && mainCode.modelObject == null) {
                 val key = resourceKey()
                 error(mainCode, "$key.mainCodeOfCodeclass1Required")
             }
