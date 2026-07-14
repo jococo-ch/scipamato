@@ -198,7 +198,7 @@ public class JooqSearchOrderRepo extends
      * Taking care of searchConditions that do not have searchTerms
      */
     private void addSearchTermLessConditionsOf(@NotNull final SearchOrder searchOrder, @NotNull final Map<Long, SearchCondition> idToSc,
-        @NotNull final String languageCode) {
+        @Nullable final String languageCode) {
         assert (searchOrder.getId() != null);
         final Long searchOrderId = searchOrder.getId();
         final List<Long> conditionIdsWithSearchTerms = findConditionIdsWithSearchTerms(searchOrderId);
