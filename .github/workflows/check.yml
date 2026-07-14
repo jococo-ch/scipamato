@@ -80,7 +80,7 @@ jobs:
         path: '**/build/reports'
 
     - name: Report analysis to sonar
-      run: ./gradlew sonar
+      run: ./gradlew jacocoTestReport sonar --no-daemon
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
