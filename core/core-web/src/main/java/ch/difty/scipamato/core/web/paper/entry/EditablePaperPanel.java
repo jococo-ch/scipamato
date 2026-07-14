@@ -503,9 +503,10 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     private void addTargets(@NotNull final AjaxRequestTarget target, @Nullable final FormComponent<?>... fcs) {
-        for (final FormComponent<?> fc : fcs)
-            if (fc != null)
-                target.add(fc);
+        if (fcs != null)
+            for (final FormComponent<?> fc : fcs)
+                if (fc != null)
+                    target.add(fc);
     }
 
     /**
