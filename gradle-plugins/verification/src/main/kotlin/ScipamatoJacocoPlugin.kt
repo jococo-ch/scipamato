@@ -14,9 +14,9 @@ class ScipamatoJacocoPlugin : Plugin<Project> {
             apply<JacocoPlugin>()
             val test = tasks.named("test")
             tasks.withType<JacocoReport> {
-                val execFiles = project.fileTree(project.rootDir) {
-                    include("**/build/jacoco/*.exec")
-                }
+                val execFiles = project.objects.fileTree()
+                    .from(project.layout.buildDirectory.dir("jacoco"))
+                    .apply { include("*.exec") }
                 executionData(execFiles)
                 sourceSets(project.extensions.getByType(SourceSetContainer::class.java).getByName("main"))
                 reports {
