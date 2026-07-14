@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import com.github.jk1.license.render.ReportRenderer
 import com.github.jk1.license.render.InventoryHtmlReportRenderer
 import com.github.jk1.license.filter.DependencyFilter
@@ -7,8 +9,18 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED
+import org.sonarqube.gradle.SonarQubePlugin
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath(libs.plugin.kotlin)
+    }
+}
 
 plugins {
     kotlin("jvm") version libs.versions.kotlin.get()
@@ -36,7 +48,6 @@ dependencyManagement {
 }
 
 val testModuleDirs = setOf("common/common-test", "common/common-persistence-jooq-test")
-val testModules = testModuleDirs.map { it.substringAfter("/") }
 val testPackages = testModuleDirs.map { "$it/**/*" }
 val generatedPackages: Set<String> = setOf(
     "**/ch/difty/scipamato/core/db/**",
@@ -46,8 +57,7 @@ val generatedPackages: Set<String> = setOf(
 
 testing {
     suites {
-        @Suppress("UnstableApiUsage")
-        val test = getByName<JvmTestSuite>("test") {
+        named<JvmTestSuite>("test") {
             useJUnitJupiter()
         }
     }
@@ -57,10 +67,8 @@ jacoco {
     toolVersion = libs.versions.jacoco.get()
 }
 
-val jacocoTestReportFile = layout.buildDirectory.get().asFile.resolve("reports/jacoco/test/jacocoTestReport.xml")
 val jacocoTestPattern = "**/build/jacoco/*.exec"
 val genPkg = generatedPackages.joinToString(",")
-val detektReportFile = layout.buildDirectory.get().asFile.resolve("reports/detekt/detekt.xml")
 
 sonarqube {
     properties {
@@ -69,8 +77,6 @@ sonarqube {
         property("sonar.organization", "jococo-ch")
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,$genPkg")
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
-        property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)
-        property("sonar.kotlin.detekt.reportPaths", detektReportFile)
     }
 }
 
@@ -90,11 +96,24 @@ subprojects {
     apply<JavaPlugin>()
     apply<IdeaPlugin>()
     apply<JacocoPlugin>()
+    apply<SonarQubePlugin>()
+
+    sonarqube {
+        properties {
+            property(
+                "sonar.kotlin.detekt.reportPaths",
+                layout.buildDirectory.get().asFile.resolve("reports/detekt/detekt.xml")
+            )
+            property(
+                "sonar.coverage.jacoco.xmlReportPaths",
+                layout.buildDirectory.get().asFile.resolve("reports/jacoco/test/jacocoTestReport.xml")
+            )
+        }
+    }
 
     testing {
         suites {
-            @Suppress("UnstableApiUsage", "unused")
-            val test = getByName<JvmTestSuite>("test") {
+            named<JvmTestSuite>("test") {
                 useJUnitJupiter()
             }
         }

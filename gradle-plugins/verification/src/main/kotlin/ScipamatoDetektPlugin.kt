@@ -42,7 +42,7 @@ class ScipamatoDetektPlugin : Plugin<Project> {
             }
         }
         target.rootProject.tasks.named("sonar") {
-            dependsOn(target.tasks.getByName("detekt"))
+            dependsOn(target.tasks.named("detekt"))
         }
     }
 }

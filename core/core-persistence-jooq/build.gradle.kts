@@ -72,13 +72,11 @@ dependencies {
     implementation(project(":core-entity"))
     implementation(project(":common-utils"))
 
-    runtimeOnly(libs.postgresql)
     api(libs.jooq)
     implementation(libs.postgresql)
 
     implementation(libs.spring.security.core)
 
-    testImplementation(project(":core-entity"))
     testImplementation(libs.spring.boot.starter.jooq.test)
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
