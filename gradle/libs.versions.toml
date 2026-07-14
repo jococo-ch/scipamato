@@ -22,6 +22,8 @@ kotlin = "2.4.10"
 kotlinLogging = "8.0.4"
 kris = "0.5.26"
 licensePlugin = "3.1.4"
+# PINNED: org.springframework.boot:spring-boot-starte-4.1.0 - ch.qos.logback:logback-core 1.5.32 -> 1.5.35+
+logback = "1.5.35"
 lombokPlugin = "9.5.0"
 mockk = "1.14.11"
 openfeign = "13.13"
@@ -71,7 +73,7 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinLogging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlinLogging" }
 kris-core = { module = "ch.difty.kris:kris-core", version.ref = "kris" }
-logback-core = { module = "ch.qos.logback:logback-core" }
+logback-core = { module = "ch.qos.logback:logback-core", version.ref = "logback" }
 lombok = { module = "org.projectlombok:lombok" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 openfeign-jaxb = { module = "io.github.openfeign:feign-jaxb-jakarta", version.ref = "openfeign" }
