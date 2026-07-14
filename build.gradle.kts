@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import com.github.jk1.license.render.ReportRenderer
 import com.github.jk1.license.render.InventoryHtmlReportRenderer
 import com.github.jk1.license.filter.DependencyFilter
@@ -7,7 +9,6 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.sonarqube.gradle.SonarQubePlugin
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
@@ -56,8 +57,7 @@ val generatedPackages: Set<String> = setOf(
 
 testing {
     suites {
-        @Suppress("UnstableApiUsage")
-        val test = getByName<JvmTestSuite>("test") {
+        named<JvmTestSuite>("test") {
             useJUnitJupiter()
         }
     }
@@ -113,8 +113,7 @@ subprojects {
 
     testing {
         suites {
-            @Suppress("UnstableApiUsage", "unused")
-            val test = getByName<JvmTestSuite>("test") {
+            named<JvmTestSuite>("test") {
                 useJUnitJupiter()
             }
         }

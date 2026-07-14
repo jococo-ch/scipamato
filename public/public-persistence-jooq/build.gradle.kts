@@ -72,8 +72,6 @@ dependencies {
     implementation(project(":public-entity"))
     implementation(project(":common-utils"))
 
-    runtimeOnly(libs.postgresql)
-
     api(libs.jooq)
     implementation(libs.postgresql)
 
