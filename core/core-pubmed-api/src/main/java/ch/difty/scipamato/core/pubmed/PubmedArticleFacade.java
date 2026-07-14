@@ -23,11 +23,11 @@ public interface PubmedArticleFacade {
      *     managed ones.
      */
     static PubmedArticleFacade newPubmedArticleFrom(@NotNull final java.lang.Object pubmedArticleOrPubmedBookArticle) {
-        if (pubmedArticleOrPubmedBookArticle instanceof PubmedArticle)
-            return new ScipamatoPubmedArticle((PubmedArticle) pubmedArticleOrPubmedBookArticle);
-        else if (pubmedArticleOrPubmedBookArticle instanceof PubmedBookArticle)
-            return new ScipamatoPubmedBookArticle((PubmedBookArticle) pubmedArticleOrPubmedBookArticle);
-        throw new IllegalArgumentException("Cannot instantiate ScipamatoArticle from provided object " + pubmedArticleOrPubmedBookArticle.toString());
+        if (pubmedArticleOrPubmedBookArticle instanceof final PubmedArticle pubmedArticle)
+            return new ScipamatoPubmedArticle(pubmedArticle);
+        else if (pubmedArticleOrPubmedBookArticle instanceof final PubmedBookArticle pubmedBookArticle)
+            return new ScipamatoPubmedBookArticle(pubmedBookArticle);
+        throw new IllegalArgumentException("Cannot instantiate ScipamatoArticle from provided object " + pubmedArticleOrPubmedBookArticle);
     }
 
     @Nullable

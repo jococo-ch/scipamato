@@ -59,10 +59,10 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
                 continue;
             if (!asb.isEmpty())
                 asb.append(" ");
-            if (o instanceof LastName)
-                asb.append(((LastName) o).getvalue());
-            else if (o instanceof Initials)
-                asb.append(((Initials) o).getvalue());
+            if (o instanceof LastName lastName)
+                asb.append(lastName.getvalue());
+            else if (o instanceof Initials initials)
+                asb.append(initials.getvalue());
             else
                 asb.append(((Suffix) o).getvalue());
         }
@@ -84,8 +84,8 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
     private StringBuilder parseCollectiveAuthor(@NotNull final Author author) {
         final StringBuilder asb = new StringBuilder();
         for (final java.lang.Object o : author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()) {
-            if (o instanceof CollectiveName)
-                asb.append(((CollectiveName) o).getvalue());
+            if (o instanceof CollectiveName collectiveName)
+                asb.append(collectiveName.getvalue());
         }
         return asb;
     }
