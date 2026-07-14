@@ -14,8 +14,10 @@ class ScipamatoJacocoPlugin : Plugin<Project> {
             apply<JacocoPlugin>()
             val test = tasks.named("test")
             tasks.withType<JacocoReport> {
+                doFirst {
+                    executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
+                }
                 sourceSets(project.extensions.getByType(SourceSetContainer::class.java).getByName("main"))
-                executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
                 reports {
                     xml.required.set(true)
                     html.required.set(false)
