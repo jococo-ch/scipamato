@@ -79,9 +79,6 @@ jobs:
         name: reports
         path: '**/build/reports'
 
-    - name: Re-run all tests with Gradle
-      run: ./gradlew check
-
     - name: Report analysis to sonar
       run: ./gradlew sonar
       env:
