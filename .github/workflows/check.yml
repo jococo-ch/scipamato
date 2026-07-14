@@ -73,6 +73,7 @@ jobs:
         category: detekt
 
     - name: Report analysis to sonar
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: ./gradlew jacocoTestReport sonar --no-daemon
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
