@@ -1,6 +1,7 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSetContainer
+import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.withType
 import org.gradle.testing.jacoco.plugins.JacocoPlugin
@@ -12,7 +13,6 @@ class ScipamatoJacocoPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             apply<JacocoPlugin>()
-            val test = tasks.named("test")
             tasks.withType<JacocoReport> {
                 val execFiles = project.objects.fileTree()
                     .from(project.layout.buildDirectory.dir("jacoco"))
@@ -23,7 +23,7 @@ class ScipamatoJacocoPlugin : Plugin<Project> {
                     xml.required.set(true)
                     html.required.set(false)
                 }
-                dependsOn(test)
+                dependsOn(tasks.withType<Test>())
             }
             target.rootProject.tasks.named("sonar") {
                 dependsOn(tasks.named("check"))
