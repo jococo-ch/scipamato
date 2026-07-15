@@ -198,7 +198,7 @@ public class JooqSearchOrderRepo extends
      * Taking care of searchConditions that do not have searchTerms
      */
     private void addSearchTermLessConditionsOf(@NotNull final SearchOrder searchOrder, @NotNull final Map<Long, SearchCondition> idToSc,
-        @NotNull final String languageCode) {
+        @Nullable final String languageCode) {
         assert (searchOrder.getId() != null);
         final Long searchOrderId = searchOrder.getId();
         final List<Long> conditionIdsWithSearchTerms = findConditionIdsWithSearchTerms(searchOrderId);
@@ -228,7 +228,7 @@ public class JooqSearchOrderRepo extends
             .values()
             .stream()
             .filter(sc -> sc.getSearchConditionId() != null && !conditionIdsWithSearchTerms.contains(sc.getSearchConditionId()))
-            .collect(toList());
+            .toList();
     }
 
     private void fillExcludedPaperIdsInto(@NotNull final SearchOrder searchOrder) {
@@ -301,7 +301,7 @@ public class JooqSearchOrderRepo extends
             .getSearchConditions()
             .stream()
             .map(SearchCondition::getSearchConditionId)
-            .collect(toList());
+            .toList();
         getDsl()
             .deleteFrom(SEARCH_CONDITION)
             .where(SEARCH_CONDITION.SEARCH_ORDER_ID
@@ -590,7 +590,7 @@ public class JooqSearchOrderRepo extends
             .getCodes()
             .stream()
             .map(Code::getCode)
-            .collect(toList());
+            .toList();
         getDsl()
             .deleteFrom(SEARCH_CONDITION_CODE)
             .where(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID

@@ -213,7 +213,7 @@ open class JooqNewsletterTopicRepo(
         val persistedTranslations = persistTranslations(entity, userId, ntId)
         val persistedEntity = toTopicDefinition(
             id = ntId,
-            version = ntRecord.get(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION),
+            version = ntRecord[ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION],
             persistedTranslations = persistedTranslations
         )
         log.info { "${activeUser.userName} inserted 1 record: $name with id $ntId." }
@@ -252,7 +252,7 @@ open class JooqNewsletterTopicRepo(
             val persistedTranslations = updateOrInsertAndLoadNewsletterTopicTranslations(entity, userId)
             val updatedEntity = toTopicDefinition(
                 id = entity.id,
-                version = rcd.get(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION),
+                version = rcd[ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION],
                 persistedTranslations = persistedTranslations)
             log.info { "${activeUser.userName} updated 1 record: $name with id ${updatedEntity.id}." }
             return updatedEntity
@@ -350,10 +350,10 @@ open class JooqNewsletterTopicRepo(
 
     private fun toTopicTranslation(rcd: NewsletterTopicTrRecord): NewsletterTopicTranslation =
         NewsletterTopicTranslation(
-            rcd.get(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.ID),
-            rcd.get(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE),
-            rcd.get(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE),
-            rcd.get(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION)
+            rcd[NewsletterTopicTr.NEWSLETTER_TOPIC_TR.ID],
+            rcd[NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE],
+            rcd[NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE],
+            rcd[NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION]
         )
 
     override fun delete(id: Int, version: Int): NewsletterTopicDefinition? {

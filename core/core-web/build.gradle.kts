@@ -40,13 +40,8 @@ dependencies {
     implementation(project(":core-pubmed-api"))
     implementation(project(":core-sync"))
     implementation(project(":common-wicket"))
-
-    annotationProcessor(libs.spring.boot.configurationprocessor) {
-        exclude("om.vaadin.external.google", "android-json")
-    }
     implementation(libs.spring.boot.starter.security)
     implementation(libs.coroutines.core)
-
     implementation(libs.wicketJqueryUi)
     implementation(libs.wicketJqueryUi.theme.uilightness)
     implementation(libs.wicketstuff.jasperreports) {
@@ -64,11 +59,8 @@ dependencies {
     implementation(libs.univocity)
     // temporarily needed until guava has been fully removed from wicket-bootstrap
     implementation("com.google.guava:guava:33.6.0-jre")
-
     implementation(libs.kris.core)
-
     implementation(libs.postgresql)
-
     /** Caching: JCache with ehcache as cache provider */
     implementation(libs.bundles.caching)
     implementation(libs.ehcache) {
@@ -76,11 +68,17 @@ dependencies {
             requireCapability("org.ehcache:ehcache-jakarta")
         }
     }
+
+    annotationProcessor(libs.spring.boot.configurationprocessor) {
+        exclude("om.vaadin.external.google", "android-json")
+    }
+
     testImplementation(testFixtures(project(":common-wicket")))
     testImplementation(testFixtures(project(":common-persistence-jooq")))
     testImplementation(libs.jakarta.servletApi)
     testImplementation(libs.validationApi)
     testImplementation(libs.lombok)
+
     testAnnotationProcessor(libs.lombok)
 }
 

@@ -92,7 +92,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             .stream()
             .skip(pc.getOffset())
             .limit(pc.getPageSize())
-            .collect(toList());
+            .toList();
     }
 
     @NotNull
@@ -115,7 +115,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             .fetchInto(String.class)
             .stream()
             .map(lc -> new CodeClassTranslation(null, lc, null, null, 0))
-            .collect(toList());
+            .toList();
         return toCodeClassDefinition(null, 0, translations);
     }
 
@@ -186,7 +186,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
                 .stream()
                 .map(r -> new CodeClassTranslation(r.getValue(CODE_CLASS_TR.ID), r.getValue(LANGUAGE.CODE), r.getValue(CODE_CLASS_TR.NAME),
                     r.getValue(CODE_CLASS_TR.DESCRIPTION), r.getValue(CODE_CLASS_TR.VERSION)))
-                .collect(toList());
+                .toList();
             final Record r = entry
                 .getValue()
                 .stream()

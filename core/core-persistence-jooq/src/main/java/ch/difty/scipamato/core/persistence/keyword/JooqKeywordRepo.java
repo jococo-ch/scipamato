@@ -83,7 +83,7 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
             .stream()
             .skip(pc.getOffset())
             .limit(pc.getPageSize())
-            .collect(toList());
+            .toList();
     }
 
     @NotNull
@@ -134,7 +134,7 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
                 .stream()
                 .map(r -> new KeywordTranslation(r.getValue(KEYWORD_TR.ID), r.getValue(LANGUAGE.CODE), r.getValue(KEYWORD_TR.NAME),
                     r.getValue(KEYWORD_TR.VERSION)))
-                .collect(toList());
+                .toList();
             final Record r = entry
                 .getValue()
                 .stream()
@@ -165,7 +165,7 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
             .fetchInto(String.class)
             .stream()
             .map(lc -> new KeywordTranslation(null, lc, null, 0))
-            .collect(toList());
+            .toList();
         return toKeywordDefinition(null, null, 0, translations);
     }
 

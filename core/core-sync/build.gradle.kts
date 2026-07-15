@@ -20,20 +20,19 @@ dependencies {
     implementation(project(":common-utils"))
     implementation(libs.spring.boot.starter.batch.jdbc)
     implementation(libs.spring.boot.starter.jooq)
+    implementation(libs.jooq)
+
     annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("com.vaadin.external.google", "android-json")
     }
 
     runtimeOnly(libs.postgresql)
-    implementation(libs.jooq)
-
-    testImplementation(libs.jooq)
 
     testImplementation(libs.lombok)
-    testAnnotationProcessor(libs.lombok)
-
     testImplementation(testFixtures(project(":common-persistence-jooq")))
     testImplementation(testFixtures(project(":common-utils")))
+
+    testAnnotationProcessor(libs.lombok)
 
 //    integrationTestRuntimeOnly(libs.postgresql)
 }
