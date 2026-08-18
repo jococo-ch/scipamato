@@ -58,7 +58,7 @@ dependencies {
     implementation(libs.jasperreports.pdf)
     implementation(libs.univocity)
     // temporarily needed until guava has been fully removed from wicket-bootstrap
-    implementation("com.google.guava:guava:33.7.0-jre")
+    implementation("com.google.guava:guava:33.7.1-jre")
     implementation(libs.kris.core)
     implementation(libs.postgresql)
     /** Caching: JCache with ehcache as cache provider */
