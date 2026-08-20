@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.3.0++...++main[Full Changelog]
+{url-cl}2.3.1++...++main[Full Changelog]
 
 .Added
 
@@ -84,6 +84,23 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+[[v2.3.1]]
+== {url-tree}2.3.1[2.3.1] -- 2026-08-20
+
+{url-cl}2.3.0++...++2.3.1[Full Changelog]
+
+.Changed
+- Bumped spring-boot, feign, jasperreports, wicket, wicketstuff,
+  kotlin,
+  logback, guava, jooq, bouncycastle
+  gradle,
+  kotest,
+  github actions checkout, setup-java, login, codeql, gradle, sonarqube
+
+.Fixed
+- {url-issues}231[#231] Restore code coverage n SonarCloud
+
 
 [[v2.3.0]]
 == {url-tree}2.3.0[2.3.0] -- 2026-07-12
