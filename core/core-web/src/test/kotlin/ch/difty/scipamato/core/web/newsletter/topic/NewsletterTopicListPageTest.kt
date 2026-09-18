@@ -2,11 +2,11 @@
 
 package ch.difty.scipamato.core.web.newsletter.topic
 
-import ch.difty.scipamato.clickLinkSameSite
+import ch.difty.scipamato.clickLinkSameOrigin
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation
 import ch.difty.scipamato.core.web.common.BasePageTest
-import ch.difty.scipamato.newFormTesterSameSite
+import ch.difty.scipamato.newFormTesterSameOrigin
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
@@ -89,7 +89,7 @@ internal class NewsletterTopicListPageTest : BasePageTest<NewsletterTopicListPag
     @Test
     fun clickingOnNewsletterTopicTitle_forwardsToNewsletterTopicEditPage_withModelLoaded() {
         tester.startPage(pageClass)
-        tester.clickLinkSameSite("resultPanel:results:body:rows:1:cells:1:cell:link")
+        tester.clickLinkSameOrigin("resultPanel:results:body:rows:1:cells:1:cell:link")
         tester.assertRenderedPage(NewsletterTopicEditPage::class.java)
 
         // verify the newsletter was loaded into the target page
@@ -110,7 +110,7 @@ internal class NewsletterTopicListPageTest : BasePageTest<NewsletterTopicListPag
 
         tester.startPage(pageClass)
         tester.assertRenderedPage(pageClass)
-        val formTester = tester.newFormTesterSameSite("filterPanel:filterForm")
+        val formTester = tester.newFormTesterSameOrigin("filterPanel:filterForm")
         formTester.submit("newNewsletterTopic")
         tester.assertRenderedPage(NewsletterTopicEditPage::class.java)
 

@@ -3,7 +3,7 @@ package ch.difty.scipamato.publ.web.paper.browse
 import ch.difty.scipamato.publ.entity.PublicPaper
 import ch.difty.scipamato.publ.web.PublicPageParameters
 import ch.difty.scipamato.publ.web.common.BasePageTest
-import ch.difty.scipamato.publ.web.newFormTesterSameSite
+import ch.difty.scipamato.publ.web.newFormTesterSameOrigin
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink
 import io.mockk.confirmVerified
@@ -221,7 +221,7 @@ class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPage>() {
             "goals", "methods", "population", "result", "comment"
         )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
-        val formTester = tester.newFormTesterSameSite("form")
+        val formTester = tester.newFormTesterSameOrigin("form")
         formTester.submit("previous")
         tester.assertRenderedPage(PublicPaperDetailPage::class.java)
 
@@ -242,7 +242,7 @@ class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPage>() {
             "goals", "methods", "population", "result", "comment"
         )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
-        val formTester = tester.newFormTesterSameSite("form")
+        val formTester = tester.newFormTesterSameOrigin("form")
         formTester.submit("next")
         tester.assertRenderedPage(PublicPaperDetailPage::class.java)
 
@@ -262,7 +262,7 @@ class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPage>() {
             "goals", "methods", "population", "result", "comment"
         )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
-        val formTester = tester.newFormTesterSameSite("form")
+        val formTester = tester.newFormTesterSameOrigin("form")
         formTester.submit("next")
         tester.assertRenderedPage(PublicPaperDetailPage::class.java)
 
@@ -279,7 +279,7 @@ class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPage>() {
             "goals", "methods", "population", "result", "comment"
         )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
-        val formTester = tester.newFormTesterSameSite("form")
+        val formTester = tester.newFormTesterSameOrigin("form")
         formTester.submit("back")
         tester.assertRenderedPage(PublicPage::class.java)
 

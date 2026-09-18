@@ -4,9 +4,9 @@ import ch.difty.scipamato.publ.entity.CodeClass
 import ch.difty.scipamato.publ.entity.PublicPaper
 import ch.difty.scipamato.publ.persistence.api.CodeClassService
 import ch.difty.scipamato.publ.persistence.api.CodeService
-import ch.difty.scipamato.publ.web.clickLinkSameSite
+import ch.difty.scipamato.publ.web.clickLinkSameOrigin
 import ch.difty.scipamato.publ.web.common.BasePageTest
-import ch.difty.scipamato.publ.web.newFormTesterSameSite
+import ch.difty.scipamato.publ.web.newFormTesterSameOrigin
 import com.ninjasquad.springmockk.MockkBean
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink
@@ -135,7 +135,7 @@ class PublicPageTest : BasePageTest<PublicPage>() {
         // trigger the round-trip to get the data by clicking 'query'
         // this should make the result panel visible
         tester
-            .newFormTesterSameSite("searchForm")
+            .newFormTesterSameOrigin("searchForm")
             .submit("query")
         val b = "searchForm"
         tester.assertComponent(b, Form::class.java)
@@ -173,7 +173,7 @@ class PublicPageTest : BasePageTest<PublicPage>() {
         val b = "searchForm"
         val bb = "$b:tabs"
         // Switch to the second tab
-        tester.clickLinkSameSite("$bb:tabs-container:tabs:1:link")
+        tester.clickLinkSameOrigin("$bb:tabs-container:tabs:1:link")
         assertTabPanelWithSecondTabVisible(bb)
 
         verify { codeClassServiceMock.find("en_us") }
@@ -212,8 +212,8 @@ class PublicPageTest : BasePageTest<PublicPage>() {
     fun clickingTitle_forwardsToDetailsPage_whichHasNoBackButton() {
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)
-        tester.newFormTesterSameSite("searchForm").submit("query")
-        tester.clickLinkSameSite("results:body:rows:1:cells:2:cell:link")
+        tester.newFormTesterSameOrigin("searchForm").submit("query")
+        tester.clickLinkSameOrigin("results:body:rows:1:cells:2:cell:link")
         tester.assertRenderedPage(PublicPaperDetailPage::class.java)
 
         tester.assertInvisible("form:back")
@@ -228,7 +228,7 @@ class PublicPageTest : BasePageTest<PublicPage>() {
     fun clickingClearSearch() {
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)
-        val formTester = tester.newFormTesterSameSite("searchForm")
+        val formTester = tester.newFormTesterSameOrigin("searchForm")
         formTester.setValue("tabs:panel:tab1Form:simpleFilterPanel:methodsSearch", "foo")
         formTester.submit("clear")
         tester.assertRenderedPage(PublicPage::class.java)

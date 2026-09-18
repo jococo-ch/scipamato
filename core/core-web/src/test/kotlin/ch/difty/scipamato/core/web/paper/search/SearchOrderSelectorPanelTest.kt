@@ -4,7 +4,7 @@ import ch.difty.scipamato.common.web.Mode
 import ch.difty.scipamato.core.entity.search.SearchCondition
 import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.web.common.PanelTest
-import ch.difty.scipamato.newFormTesterSameSite
+import ch.difty.scipamato.newFormTesterSameOrigin
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import io.mockk.every
@@ -103,7 +103,7 @@ internal abstract class SearchOrderSelectorPanelTest : PanelTest<SearchOrderSele
     @Test
     fun testSubmittingWithNewButton_createsNewSearchOrder() {
         tester.startComponentInPage(makePanel())
-        val formTester = tester.newFormTesterSameSite("$PANEL_ID:form")
+        val formTester = tester.newFormTesterSameOrigin("$PANEL_ID:form")
         formTester.submit("new")
         val b = "$PANEL_ID:form:"
         tester.assertComponentOnAjaxResponse("${b}global")
@@ -118,7 +118,7 @@ internal abstract class SearchOrderSelectorPanelTest : PanelTest<SearchOrderSele
     fun testSubmittingWithDeleteButton_deletesSearchOrder() {
         tester.startComponentInPage(makePanel())
         val b = "$PANEL_ID:form"
-        val formTester = tester.newFormTesterSameSite(b)
+        val formTester = tester.newFormTesterSameOrigin(b)
         formTester.submit("delete")
         tester.assertRenderedPage(PaperSearchPage::class.java)
         verify(exactly = 3) { searchOrderServiceMock.findPageByFilter(any(), any()) }
