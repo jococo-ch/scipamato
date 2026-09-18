@@ -5,7 +5,7 @@ import ch.difty.scipamato.core.auth.Roles
 import ch.difty.scipamato.core.web.authentication.LoginPage
 import ch.difty.scipamato.core.web.paper.list.PaperListPage
 import ch.difty.scipamato.core.web.security.TestUserDetailsService
-import ch.difty.scipamato.newFormTesterSameSite
+import ch.difty.scipamato.newFormTesterSameOrigin
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
@@ -131,7 +131,7 @@ abstract class WicketTest : AbstractWicketTest() {
         val session = tester.session as SecureWebSession
         session.signOut()
         tester.startPage(LoginPage::class.java)
-        val formTester = tester.newFormTesterSameSite("form")
+        val formTester = tester.newFormTesterSameOrigin("form")
         formTester.setValue("username", username)
         formTester.setValue("password", password)
         formTester.submit()

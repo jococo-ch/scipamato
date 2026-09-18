@@ -2,7 +2,7 @@ package ch.difty.scipamato.common.web.component.table.column
 
 import ch.difty.scipamato.common.web.TestRecord
 import ch.difty.scipamato.common.web.WicketBaseTest
-import ch.difty.scipamato.common.web.clickLinkSameSite
+import ch.difty.scipamato.common.web.clickLinkSameOrigin
 import ch.difty.scipamato.common.web.component.SerializableConsumer
 import io.mockk.mockk
 import io.mockk.verify
@@ -71,7 +71,7 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
         tester.startComponentInPage(
             ClickablePropertyColumnTestPanel("panel", ::setVariable, false)
         )
-        tester.clickLinkSameSite("panel:table:body:rows:1:cells:2:cell:link")
+        tester.clickLinkSameOrigin("panel:table:body:rows:1:cells:2:cell:link")
         clickPerformed shouldBeEqualTo "TestRecord(id=1, name=foo)"
     }
 
@@ -80,7 +80,7 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
         tester.startComponentInPage(
             ClickablePropertyColumnTestPanel("panel", ::setVariable, true)
         )
-        tester.clickLinkSameSite("panel:table:body:rows:1:cells:2:cell:link")
+        tester.clickLinkSameOrigin("panel:table:body:rows:1:cells:2:cell:link")
         clickPerformed shouldBeEqualTo "TestRecord(id=1, name=foo)"
     }
 

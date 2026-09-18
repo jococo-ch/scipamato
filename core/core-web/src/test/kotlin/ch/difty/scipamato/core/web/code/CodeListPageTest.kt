@@ -1,11 +1,11 @@
 package ch.difty.scipamato.core.web.code
 
-import ch.difty.scipamato.clickLinkSameSite
+import ch.difty.scipamato.clickLinkSameOrigin
 import ch.difty.scipamato.core.entity.CodeClass
 import ch.difty.scipamato.core.entity.code.CodeDefinition
 import ch.difty.scipamato.core.entity.code.CodeTranslation
 import ch.difty.scipamato.core.web.common.BasePageTest
-import ch.difty.scipamato.newFormTesterSameSite
+import ch.difty.scipamato.newFormTesterSameOrigin
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
@@ -108,7 +108,7 @@ internal class CodeListPageTest : BasePageTest<CodeListPage>() {
     @Test
     fun clickingOnCodeTitle_forwardsToCodeEditPage_withModelLoaded() {
         tester.startPage(pageClass)
-        tester.clickLinkSameSite("resultPanel:results:body:rows:1:cells:$COLUMN_ID_WITH_LINK:cell:link")
+        tester.clickLinkSameOrigin("resultPanel:results:body:rows:1:cells:$COLUMN_ID_WITH_LINK:cell:link")
         tester.assertRenderedPage(CodeEditPage::class.java)
 
         // verify the codes were loaded into the target page
@@ -128,7 +128,7 @@ internal class CodeListPageTest : BasePageTest<CodeListPage>() {
         every { codeServiceMock.newUnpersistedCodeDefinition() } returns kd
         tester.startPage(pageClass)
         tester.assertRenderedPage(pageClass)
-        val formTester = tester.newFormTesterSameSite("filterPanel:filterForm")
+        val formTester = tester.newFormTesterSameOrigin("filterPanel:filterForm")
         formTester.submit("newCode")
         tester.assertRenderedPage(CodeEditPage::class.java)
         verify { codeServiceMock.getCodeClass1("en_us") }

@@ -1,7 +1,7 @@
 package ch.difty.scipamato.publ.web.authentication
 
 import ch.difty.scipamato.publ.web.WicketTest
-import ch.difty.scipamato.publ.web.newFormTesterSameSite
+import ch.difty.scipamato.publ.web.newFormTesterSameOrigin
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import org.apache.wicket.markup.html.form.Form
@@ -40,7 +40,7 @@ class LoginPageTest : WicketTest() {
         val session = tester.session as SecureWebSession
         session.signOut()
         tester.startPage(LoginPage::class.java)
-        val formTester = tester.newFormTesterSameSite("form")
+        val formTester = tester.newFormTesterSameOrigin("form")
         formTester.setValue("username", "testuser")
         formTester.setValue("password", "wrongpw")
         formTester.submit()

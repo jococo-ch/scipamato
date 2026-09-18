@@ -4,7 +4,7 @@ import ch.difty.scipamato.core.entity.search.SearchCondition
 import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.web.common.BasePageTest
 import ch.difty.scipamato.core.web.paper.common.SearchablePaperPanel
-import ch.difty.scipamato.newFormTesterSameSite
+import ch.difty.scipamato.newFormTesterSameOrigin
 import io.mockk.every
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.CheckBox
@@ -45,7 +45,7 @@ internal class PaperSearchCriteriaPageTest : BasePageTest<PaperSearchCriteriaPag
     fun submittingForm_savesSearchCondition_andRemainsOnPagePage() {
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)
-        val formTester = tester.newFormTesterSameSite("contentPanel:form")
+        val formTester = tester.newFormTesterSameOrigin("contentPanel:form")
         formTester.submit()
         tester.assertRenderedPage(pageClass)
         tester.assertNoErrorMessage()
@@ -57,7 +57,7 @@ internal class PaperSearchCriteriaPageTest : BasePageTest<PaperSearchCriteriaPag
     fun submittingForm_andClickingSubmitButton_savesSearchConditionAndForwardsToPaperSearchPage() {
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)
-        val formTester = tester.newFormTesterSameSite("contentPanel:form")
+        val formTester = tester.newFormTesterSameOrigin("contentPanel:form")
         formTester.submit("submit")
         tester.assertRenderedPage(PaperSearchPage::class.java)
         tester.assertNoErrorMessage()
@@ -72,7 +72,7 @@ internal class PaperSearchCriteriaPageTest : BasePageTest<PaperSearchCriteriaPag
         } throws RuntimeException("foo")
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)
-        val formTester = tester.newFormTesterSameSite("contentPanel:form")
+        val formTester = tester.newFormTesterSameOrigin("contentPanel:form")
         formTester.submit()
         tester.assertErrorMessages(
             "An unexpected error occurred when trying to save Search Order [id ]: foo",
