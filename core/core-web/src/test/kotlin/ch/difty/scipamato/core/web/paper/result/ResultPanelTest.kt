@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.paper.result
 
-import ch.difty.scipamato.clickLinkSameSite
+import ch.difty.scipamato.clickLinkSameOrigin
 import ch.difty.scipamato.common.web.Mode
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.entity.projection.PaperSlim
@@ -97,7 +97,7 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
     fun assertClickingDeleteIconLink() {
         tester.startComponentInPage(makePanel())
 
-        tester.clickLinkSameSite("$PANEL_ID:table:body:rows:1:cells:5:cell:link")
+        tester.clickLinkSameOrigin("$PANEL_ID:table:body:rows:1:cells:5:cell:link")
         tester.assertComponentOnAjaxResponse("$PANEL_ID:table")
 
         verify(exactly = 2) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
@@ -145,7 +145,7 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
 
         tester.startComponentInPage(makePanel())
 
-        tester.clickLinkSameSite("$PANEL_ID:$EDIT_LINK")
+        tester.clickLinkSameOrigin("$PANEL_ID:$EDIT_LINK")
         tester.assertRenderedPage(PaperEntryPage::class.java)
 
         verify { paperSlimServiceMock.countBySearchOrder(searchOrder) }
@@ -173,28 +173,28 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
     @Test
     fun clickingSummaryLink_succeeds() {
         tester.startComponentInPage(makePanel())
-        tester.clickLinkSameSite("$PANEL_ID:summaryLink")
+        tester.clickLinkSameOrigin("$PANEL_ID:summaryLink")
         verifyPdfExport()
     }
 
     @Test
     fun clickingSummaryShortLink_succeeds() {
         tester.startComponentInPage(makePanel())
-        tester.clickLinkSameSite("$PANEL_ID:summaryShortLink")
+        tester.clickLinkSameOrigin("$PANEL_ID:summaryShortLink")
         verifyPdfExport()
     }
 
     @Test
     fun clickingReviewLink_succeeds() {
         tester.startComponentInPage(makePanel())
-        tester.clickLinkSameSite("$PANEL_ID:reviewLink")
+        tester.clickLinkSameOrigin("$PANEL_ID:reviewLink")
         verifyPdfExport()
     }
 
     @Test
     fun clickingReviewCsvLink_succeeds() {
         tester.startComponentInPage(makePanel())
-        tester.clickLinkSameSite("$PANEL_ID:reviewCsvLink")
+        tester.clickLinkSameOrigin("$PANEL_ID:reviewCsvLink")
         verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
         verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
@@ -203,35 +203,35 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
     @Test
     fun clickingLiteratureReviewLink_succeeds() {
         tester.startComponentInPage(makePanel())
-        tester.clickLinkSameSite("$PANEL_ID:literatureReviewLink")
+        tester.clickLinkSameOrigin("$PANEL_ID:literatureReviewLink")
         verifyPdfExport()
     }
 
     @Test
     fun clickingLiteratureReviewPlusLink_succeeds() {
         tester.startComponentInPage(makePanel())
-        tester.clickLinkSameSite("$PANEL_ID:literatureReviewPlusLink")
+        tester.clickLinkSameOrigin("$PANEL_ID:literatureReviewPlusLink")
         verifyPdfExport()
     }
 
     @Test
     fun clickingSummaryTableLink_succeeds() {
         tester.startComponentInPage(makePanel())
-        tester.clickLinkSameSite("$PANEL_ID:summaryTableLink")
+        tester.clickLinkSameOrigin("$PANEL_ID:summaryTableLink")
         verifyPdfExport()
     }
 
     @Test
     fun clickingReferenceAbstractLink_succeeds() {
         tester.startComponentInPage(makePanel())
-        tester.clickLinkSameSite("$PANEL_ID:referenceAbstractLink")
+        tester.clickLinkSameOrigin("$PANEL_ID:referenceAbstractLink")
         verifyPdfExport()
     }
 
     @Test
     fun clickingExportRisLink_succeeds() {
         tester.startComponentInPage(makePanel())
-        tester.clickLinkSameSite("$PANEL_ID:exportRisLink")
+        tester.clickLinkSameOrigin("$PANEL_ID:exportRisLink")
         verifyRisExport()
     }
 

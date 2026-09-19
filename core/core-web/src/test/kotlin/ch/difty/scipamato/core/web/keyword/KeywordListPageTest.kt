@@ -1,10 +1,10 @@
 package ch.difty.scipamato.core.web.keyword
 
-import ch.difty.scipamato.clickLinkSameSite
+import ch.difty.scipamato.clickLinkSameOrigin
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation
 import ch.difty.scipamato.core.web.common.BasePageTest
-import ch.difty.scipamato.newFormTesterSameSite
+import ch.difty.scipamato.newFormTesterSameOrigin
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
@@ -89,7 +89,7 @@ internal class KeywordListPageTest : BasePageTest<KeywordListPage>() {
     @Test
     fun clickingOnKeywordTitle_forwardsToKeywordEditPage_withModelLoaded() {
         tester.startPage(pageClass)
-        tester.clickLinkSameSite("resultPanel:results:body:rows:1:cells:$COLUMN_ID_WITH_LINK:cell:link")
+        tester.clickLinkSameOrigin("resultPanel:results:body:rows:1:cells:$COLUMN_ID_WITH_LINK:cell:link")
         tester.assertRenderedPage(KeywordEditPage::class.java)
 
         // verify the keywords were loaded into the target page
@@ -107,7 +107,7 @@ internal class KeywordListPageTest : BasePageTest<KeywordListPage>() {
         every { keywordServiceMock.newUnpersistedKeywordDefinition() } returns kd
         tester.startPage(pageClass)
         tester.assertRenderedPage(pageClass)
-        val formTester = tester.newFormTesterSameSite("filterPanel:filterForm")
+        val formTester = tester.newFormTesterSameOrigin("filterPanel:filterForm")
         formTester.submit("newKeyword")
         tester.assertRenderedPage(KeywordEditPage::class.java)
         verify { keywordServiceMock.countByFilter(any()) }

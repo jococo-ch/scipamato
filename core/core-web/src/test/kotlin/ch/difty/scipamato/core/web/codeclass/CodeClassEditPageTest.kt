@@ -8,7 +8,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException
 import ch.difty.scipamato.core.web.authentication.LogoutPage
 import ch.difty.scipamato.core.web.code.CodeListPage
 import ch.difty.scipamato.core.web.common.BasePageTest
-import ch.difty.scipamato.newFormTesterSameSite
+import ch.difty.scipamato.newFormTesterSameOrigin
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -93,7 +93,7 @@ internal class CodeClassEditPageTest : BasePageTest<CodeClassEditPage>() {
 
     private fun runSubmitTest() {
         tester.startPage(CodeClassEditPage(Model.of(ccd), null))
-        val formTester = tester.newFormTesterSameSite("form")
+        val formTester = tester.newFormTesterSameOrigin("form")
         formTester.setValue("translationsPanel:translations:1:name", "foo")
         assertTranslation("form:translationsPanel:translations:", 1, "de", "Name1", "some description")
         formTester.submit("headerPanel:submit")
@@ -152,7 +152,7 @@ internal class CodeClassEditPageTest : BasePageTest<CodeClassEditPage>() {
             CodeDefinition("c1", "en", cc1, 1, false, 1)
         ).iterator()
         tester.startPage(CodeClassEditPage(Model.of(ccd), null))
-        val formTester = tester.newFormTesterSameSite("form")
+        val formTester = tester.newFormTesterSameOrigin("form")
         formTester.submit("headerPanel:back")
         tester.assertRenderedPage(CodeListPage::class.java)
 
@@ -163,7 +163,7 @@ internal class CodeClassEditPageTest : BasePageTest<CodeClassEditPage>() {
     @Test
     fun clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
         tester.startPage(CodeClassEditPage(Model.of(ccd), LogoutPage(PageParameters()).pageReference))
-        val formTester = tester.newFormTesterSameSite("form")
+        val formTester = tester.newFormTesterSameOrigin("form")
         formTester.submit("headerPanel:back")
         tester.assertRenderedPage(LogoutPage::class.java)
     }
