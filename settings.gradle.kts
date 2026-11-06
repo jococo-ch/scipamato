@@ -30,6 +30,21 @@ dependencyResolutionManagement {
     }
 }
 
+gradle.beforeProject {
+    buildscript {
+        dependencies {
+            constraints {
+                classpath("tools.jackson.core:jackson-core") {
+                    version{ strictly("3.1.7") }
+                    because(
+                        "PINNED - com.optravis.jooq.gradle:jooq-gradle 3.1.4 - tools.jackson.core:... 3.1.5 -> 3.1.7"
+                    )
+                }
+            }
+        }
+    }
+}
+
 rootProject.name = "scipamato"
 
 val commonProjects = listOf(
