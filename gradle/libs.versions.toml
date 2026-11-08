@@ -25,7 +25,7 @@ licensePlugin = "3.1.5"
 # PINNED: org.springframework.boot:spring-boot-starte-4.1.0 - ch.qos.logback:logback-core 1.5.32 -> 1.5.35+
 logback = "1.6.6"
 lombokPlugin = "9.8.3"
-mockk = "1.14.11"
+mockk = "1.14.12"
 openfeign = "13.17"
 sonarqubePlugin = "7.5.0.8588"
 springBoot = "4.1.2"
