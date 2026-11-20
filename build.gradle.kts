@@ -40,13 +40,6 @@ plugins {
 extra["spring.cloudVersion"] = libs.versions.springCloud.get()
 extra["kotlin-coroutines.version"] = libs.versions.coroutines.get()
 
-dependencyManagement {
-    imports {
-        mavenBom(SpringBootPlugin.BOM_COORDINATES)
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("spring.cloudVersion")}")
-    }
-}
-
 val testModuleDirs = setOf("common/common-test", "common/common-persistence-jooq-test")
 val testPackages = testModuleDirs.map { "$it/**/*" }
 val generatedPackages: Set<String> = setOf(
@@ -98,6 +91,13 @@ subprojects {
     apply<JacocoPlugin>()
     apply<SonarQubePlugin>()
 
+    // The Spring Cloud BOM as a Gradle platform: it only sets minimum versions. Imported through
+    // dependencyManagement, it would pull feign, okhttp and bouncycastle in the modules using
+    // core-pubmed-api down to the train's versions, below the ones pinned in libs.versions.toml.
+    dependencies {
+        "implementation"(platform("org.springframework.cloud:spring-cloud-dependencies:${property("spring.cloudVersion")}"))
+    }
+
     sonarqube {
         properties {
             property(
@@ -139,8 +139,6 @@ subprojects {
         implementation(rootProject.libs.kotlinLogging)
 
         annotationProcessor(rootProject.libs.lombok)
-
-        runtimeOnly(rootProject.libs.logback.core)
 
         compileOnly(rootProject.libs.lombok)
         compileOnly(rootProject.libs.jsr305)
