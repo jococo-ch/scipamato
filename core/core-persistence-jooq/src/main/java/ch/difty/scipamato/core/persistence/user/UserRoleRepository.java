@@ -22,16 +22,14 @@ public interface UserRoleRepository {
      * Adds all {@link Role}s to the user with the provided id. If any {@link Role}
      * has already been assigned, the insert will be ignored. If the user has more
      * {@link Role}s persisted than what's in the provided list, those are not
-     * deleted and are also be returned in the returned list.
+     * deleted.
      *
      * @param userId
      *     the id of the user to assign the {@link Role}s to.
      * @param roles
      *     the {@link Role}s that need to be assigned to the user.
-     * @return all roles assigned to the user
      */
-    @NotNull
-    Set<Role> addNewUserRolesOutOf(@NotNull Integer userId, @NotNull Set<Role> roles);
+    void addNewUserRolesOutOf(@NotNull Integer userId, @NotNull Set<Role> roles);
 
     /**
      * Deletes any {@link Role}s the user might have assigned *except* those in the
