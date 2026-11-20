@@ -97,7 +97,7 @@ open class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
         newStudyTable: NewStudy,
         aliasedNewsStudySortField: Field<Int>,
     ): NewStudyTopic {
-        val map = newStudyRecords.map { r: Record13<Int, String, Int, Int, Int, Long, Int, String, String, String, Int, Timestamp, Timestamp> ->
+        val map = newStudyRecords.asIterable().map { r: Record13<Int, String, Int, Int, Int, Long, Int, String, String, String, Int, Timestamp, Timestamp> ->
             val sort = r.getValue(aliasedNewsStudySortField)
             ch.difty.scipamato.publ.entity.NewStudy(sort, r.getValue(newStudyTable.PAPER_NUMBER), r.getValue(newStudyTable.YEAR),
                 r.getValue(newStudyTable.AUTHORS), r.getValue(newStudyTable.HEADLINE),
