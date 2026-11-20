@@ -92,7 +92,7 @@ subprojects {
     apply<SonarQubePlugin>()
 
     // The Spring Cloud BOM as a Gradle platform: it only sets minimum versions. Imported through
-    // dependencyManagement, it would pull feign, okhttp and bouncycastle in the modules using
+    // dependencyManagement, it would pull feign and okhttp in the modules using
     // core-pubmed-api down to the train's versions, below the ones pinned in libs.versions.toml.
     dependencies {
         "implementation"(platform("org.springframework.cloud:spring-cloud-dependencies:${property("spring.cloudVersion")}"))
