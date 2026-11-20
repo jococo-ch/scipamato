@@ -31,3 +31,6 @@ public/public-web/src/main/resources/ch/difty/scipamato/publ/web/resources/fonts
 public/public-web/src/main/resources/ch/difty/scipamato/publ/web/resources/fonts/IcoMoon/
 public/public-web/src/main/resources/ch/difty/scipamato/publ/web/resources/fonts/Simplon/
 .kotlin/
+
+# session handovers of coding agents
+.scratch/
