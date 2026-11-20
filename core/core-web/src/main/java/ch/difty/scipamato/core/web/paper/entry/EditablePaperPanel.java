@@ -702,9 +702,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     private PaperAttachment convertToPaperAttachment(@NotNull final FileUpload upload) {
         final PaperAttachment pa = new PaperAttachment();
-        pa.setPaperId(EditablePaperPanel.this
-            .getModelObject()
-            .getId());
+        pa.setPaperId(getModelObject().getId());
         pa.setContent(upload.getBytes());
         pa.setContentType(upload.getContentType());
         pa.setSize(upload.getSize());
