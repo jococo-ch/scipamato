@@ -132,6 +132,7 @@ open class JooqNewsletterTopicRepo(
     ): List<NewsletterTopicDefinition> =
         rawRecords.map { (key, value) ->
             val translations = value
+                .asIterable()
                 .map { r: Record ->
                     NewsletterTopicTranslation(
                         r.getValue(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.ID),
