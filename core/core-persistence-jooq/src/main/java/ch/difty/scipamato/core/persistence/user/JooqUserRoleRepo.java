@@ -39,6 +39,14 @@ public class JooqUserRoleRepo implements UserRoleRepository {
     @Override
     @Cacheable(key = "#userId")
     public Set<Role> findRolesForUser(@NotNull final Integer userId) {
+        return fetchRolesForUser(userId);
+    }
+
+    /**
+     * Reads the roles directly from the database, bypassing the cache.
+     */
+    @NotNull
+    private Set<Role> fetchRolesForUser(@NotNull final Integer userId) {
         return new HashSet<>(dsl
             .select(USER_ROLE.ROLE_ID)
             .from(USER_ROLE)
@@ -57,7 +65,8 @@ public class JooqUserRoleRepo implements UserRoleRepository {
         step
             .onDuplicateKeyIgnore()
             .execute();
-        return findRolesForUser(userId);
+        // Must bypass the cache: the stale entry is only evicted after this method returns.
+        return fetchRolesForUser(userId);
     }
 
     @Override
