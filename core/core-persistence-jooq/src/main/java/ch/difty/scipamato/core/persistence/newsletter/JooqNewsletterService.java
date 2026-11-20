@@ -30,12 +30,16 @@ class JooqNewsletterService extends JooqEntityService<Integer, Newsletter, Newsl
     @Override
     @Transactional
     public void mergePaperIntoWipNewsletter(final long paperId) {
-        mergePaperIntoWipNewsletter(paperId, null);
+        doMergePaperIntoWipNewsletter(paperId, null);
     }
 
     @Override
     @Transactional
     public void mergePaperIntoWipNewsletter(final long paperId, @Nullable final Integer newsletterTopicId) {
+        doMergePaperIntoWipNewsletter(paperId, newsletterTopicId);
+    }
+
+    private void doMergePaperIntoWipNewsletter(final long paperId, @Nullable final Integer newsletterTopicId) {
         final Optional<Newsletter> opt = getRepository().getNewsletterInStatusWorkInProgress();
         opt.ifPresent(newsletter -> getRepository().mergePaperIntoNewsletter(newsletter.getId(), paperId, newsletterTopicId, "en"));
     }
