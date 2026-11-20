@@ -1,16 +1,17 @@
 package ch.difty.scipamato.core.web.user
 
+import ch.difty.scipamato.core.web.WicketTest
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
+import org.apache.wicket.core.util.lang.WicketObjects
 import org.apache.wicket.validation.Validatable
 import org.junit.jupiter.api.Test
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
-internal class CurrentPasswordMatchesValidatorTest {
+internal class CurrentPasswordMatchesValidatorTest : WicketTest() {
 
-    private val v = CurrentPasswordMatchesValidator(BCryptPasswordEncoder(), PW_ADMIN_ENCRYPTED)
+    private val v by lazy { CurrentPasswordMatchesValidator(PW_ADMIN_ENCRYPTED) }
 
     private lateinit var validatable: Validatable<String>
 
@@ -28,6 +29,14 @@ internal class CurrentPasswordMatchesValidatorTest {
         v.validate(validatable)
         validatable.isValid.shouldBeFalse()
         validatable.errors shouldHaveSize 1
+    }
+
+    @Test
+    fun afterSerializationRoundTrip_stillValidates() {
+        val clone = WicketObjects.cloneObject(v)
+        validatable = Validatable(PW_ADMIN)
+        clone.validate(validatable)
+        validatable.isValid.shouldBeTrue()
     }
 
     companion object {
