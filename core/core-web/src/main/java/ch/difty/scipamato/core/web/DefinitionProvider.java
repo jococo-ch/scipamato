@@ -22,7 +22,6 @@ public abstract class DefinitionProvider<T extends DefinitionEntity<?, ?>, F ext
 
     @java.io.Serial
     private static final long serialVersionUID = 1L;
-    private final        S    service;
 
     private F filter;
 
@@ -30,10 +29,12 @@ public abstract class DefinitionProvider<T extends DefinitionEntity<?, ?>, F ext
         Injector
             .get()
             .inject(this);
-        this.service = getService();
         this.filter = filter != null ? filter : newFilter();
     }
 
+    /**
+     * @return the service, typically a {@code @SpringBean} injected field of the subclass
+     */
     @NotNull
     protected abstract S getService();
 
@@ -45,12 +46,12 @@ public abstract class DefinitionProvider<T extends DefinitionEntity<?, ?>, F ext
         final Sort.Direction dir = getSort().isAscending() ? Sort.Direction.ASC : Sort.Direction.DESC;
         final String sortProp = getSort().getProperty();
         final PaginationContext pc = new PaginationRequest((int) offset, (int) size, dir, sortProp);
-        return service.findPageOfEntityDefinitions(filter, pc);
+        return getService().findPageOfEntityDefinitions(filter, pc);
     }
 
     @Override
     public long size() {
-        return service.countByFilter(filter);
+        return getService().countByFilter(filter);
     }
 
     @NotNull

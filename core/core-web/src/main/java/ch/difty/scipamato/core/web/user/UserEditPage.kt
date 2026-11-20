@@ -36,7 +36,6 @@ import org.apache.wicket.model.StringResourceModel
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.spring.injection.annot.SpringBean
 import org.apache.wicket.util.string.StringValue
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.wicketstuff.annotation.mount.MountPath
 
 private val log = logger()
@@ -58,9 +57,6 @@ private val log = logger()
 class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
 
     private val mode: Mode
-
-    @SpringBean
-    private lateinit var passwordEncoder: PasswordEncoder
 
     @SpringBean
     private lateinit var userService: UserService
@@ -163,7 +159,7 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
             isVisible = isInPasswordResetMode
             val currentPassword = this@UserEditPage.modelObject.password
             if (isInPasswordResetMode && currentPassword != null)
-                add(CurrentPasswordMatchesValidator(passwordEncoder, currentPassword))
+                add(CurrentPasswordMatchesValidator(currentPassword))
         }.also { queueFieldAndLabel(it) }
         val pw1Field = PasswordTextField(UserFields.PASSWORD.fieldName).apply {
             isRequired = isInPasswordResetMode

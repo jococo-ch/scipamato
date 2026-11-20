@@ -25,7 +25,7 @@ class PaperReviewDataSource(
     FILE_BASE_NAME,
     dataProvider
 ) {
-    override fun getReport(): JasperReport = PaperReviewReportResourceReference.get().getReport()
+    override fun getReport(): JasperReport = PaperReviewReportResourceReference.get().report
     override fun makeEntity(p: Paper): PaperReview = PaperReview(p, reportHeaderFields)
 
     companion object {

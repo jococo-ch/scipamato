@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.entity.search;
 
 import java.util.Arrays;
 
+import lombok.EqualsAndHashCode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author u.joss
  */
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class IntegerSearchTerm extends AbstractSearchTerm {
     @java.io.Serial
     private static final long serialVersionUID = 1L;

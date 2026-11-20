@@ -48,11 +48,10 @@ public abstract class AbstractRepo {
     @NotNull
     protected User getActiveUser() {
         final Authentication auth = getAuthentication();
-        if (auth != null && auth.getPrincipal() != null) {
-            return (User) auth.getPrincipal();
-        } else {
-            return User.NO_USER;
+        if (auth != null && auth.getPrincipal() instanceof User user) {
+            return user;
         }
+        return User.NO_USER;
     }
 
     @Nullable

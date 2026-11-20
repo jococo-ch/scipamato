@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import lombok.EqualsAndHashCode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -57,6 +58,7 @@ import org.jetbrains.annotations.Nullable;
  *     "http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
  */
 @SuppressWarnings("SameParameterValue")
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class StringSearchTerm extends AbstractSearchTerm {
     @java.io.Serial
     private static final long serialVersionUID = 1L;

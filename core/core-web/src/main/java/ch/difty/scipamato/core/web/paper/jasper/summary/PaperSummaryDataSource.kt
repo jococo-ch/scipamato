@@ -93,7 +93,7 @@ class PaperSummaryDataSource : JasperPaperDataSource<PaperSummary> {
         this.shortFieldConcatenator = shortFieldConcatenator
     }
 
-    override fun getReport(): JasperReport = PaperSummaryReportResourceReference.get().getReport()
+    override fun getReport(): JasperReport = PaperSummaryReportResourceReference.get().report
     override fun makeEntity(p: Paper): PaperSummary = PaperSummary(p, shortFieldConcatenator, reportHeaderFields)
 
     companion object {

@@ -69,6 +69,22 @@ internal class AbstractSearchTermTest {
     }
 
     @Test
+    fun equality_ofEachSubclass_withEqualFieldNameAndRawSearchTerm_ignoresDerivedFields() {
+        assertEqualityBetween(SearchTerm.newBooleanSearchTerm("fn", "true"), SearchTerm.newBooleanSearchTerm("fn", "true"))
+        assertEqualityBetween(SearchTerm.newIntegerSearchTerm("fn", "5-7"), SearchTerm.newIntegerSearchTerm("fn", "5-7"))
+        assertEqualityBetween(SearchTerm.newStringSearchTerm("fn", "foo* -bar"), SearchTerm.newStringSearchTerm("fn", "foo* -bar"))
+        assertEqualityBetween(SearchTerm.newAuditSearchTerm("created_by", "mkj"), SearchTerm.newAuditSearchTerm("created_by", "mkj"))
+    }
+
+    @Test
+    fun equality_ofDifferentSubclasses_withEqualFieldNameAndRawSearchTerm_differs() {
+        val integerTerm = SearchTerm.newIntegerSearchTerm("fn", "5")
+        val stringTerm = SearchTerm.newStringSearchTerm("fn", "5")
+        (integerTerm == stringTerm).shouldBeFalse()
+        (stringTerm == integerTerm).shouldBeFalse()
+    }
+
+    @Test
     fun equality_withSpecialCases() {
         val st1 = SearchTerm.newSearchTerm(12, 2, 3L, "fn3", "foo*")
         (st1 == st1).shouldBeTrue()

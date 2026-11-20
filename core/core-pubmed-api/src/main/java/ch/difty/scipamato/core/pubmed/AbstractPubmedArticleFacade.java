@@ -55,16 +55,18 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
     private StringBuilder parseIndividualAuthor(@NotNull final Author author) {
         final StringBuilder asb = new StringBuilder();
         for (final java.lang.Object o : author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()) {
-            if (o instanceof ForeName || o instanceof CollectiveName)
-                continue;
-            if (!asb.isEmpty())
-                asb.append(" ");
-            if (o instanceof LastName lastName)
-                asb.append(lastName.getvalue());
-            else if (o instanceof Initials initials)
-                asb.append(initials.getvalue());
-            else
-                asb.append(((Suffix) o).getvalue());
+            final String part = switch (o) {
+                case LastName lastName -> lastName.getvalue();
+                case Initials initials -> initials.getvalue();
+                case Suffix suffix -> suffix.getvalue();
+                // ForeName and CollectiveName are not part of the individual author name
+                default -> null;
+            };
+            if (part != null) {
+                if (!asb.isEmpty())
+                    asb.append(" ");
+                asb.append(part);
+            }
         }
         return asb;
     }

@@ -34,4 +34,22 @@ internal class AbstractRepoTest {
         }
         repo.activeUser shouldBeEqualTo User.NO_USER
     }
+
+    @Test
+    fun gettingActiveUser_withAuthenticationWithoutPrincipal_returnsDummyUser() {
+        repo = object : AbstractRepo(dslContext, dateTimeService) {
+            override fun getAuthentication(): Authentication = this@AbstractRepoTest.authentication
+        }
+        every { authentication.principal } returns null
+        repo.activeUser shouldBeEqualTo User.NO_USER
+    }
+
+    @Test
+    fun gettingActiveUser_withNonUserPrincipal_returnsDummyUser() {
+        repo = object : AbstractRepo(dslContext, dateTimeService) {
+            override fun getAuthentication(): Authentication = this@AbstractRepoTest.authentication
+        }
+        every { authentication.principal } returns "anonymousUser"
+        repo.activeUser shouldBeEqualTo User.NO_USER
+    }
 }

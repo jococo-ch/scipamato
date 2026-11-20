@@ -25,7 +25,7 @@ class PaperSummaryTableDataSource(
     FILE_NAME,
     dataProvider
 ) {
-    override fun getReport(): JasperReport = PaperSummaryTableReportResourceReference.get().getReport()
+    override fun getReport(): JasperReport = PaperSummaryTableReportResourceReference.get().report
     override fun makeEntity(p: Paper): PaperSummaryTable = PaperSummaryTable(p, reportHeaderFields)
 
     companion object {

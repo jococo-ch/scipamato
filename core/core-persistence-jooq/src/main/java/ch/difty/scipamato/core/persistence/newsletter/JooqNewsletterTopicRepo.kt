@@ -129,9 +129,8 @@ open class JooqNewsletterTopicRepo(
 
     private fun mapRawRecordsIntoNewsletterTopicDefinitions(
         rawRecords: Map<Int, Result<Record>>,
-    ): List<NewsletterTopicDefinition> {
-        val definitions: MutableList<NewsletterTopicDefinition> = ArrayList()
-        for ((key, value) in rawRecords) {
+    ): List<NewsletterTopicDefinition> =
+        rawRecords.map { (key, value) ->
             val translations = value
                 .map { r: Record ->
                     NewsletterTopicTranslation(
@@ -142,16 +141,12 @@ open class JooqNewsletterTopicRepo(
                     )
                 }
             val r = value.firstOrNull() ?: error("unable to find translation.")
-            definitions.add(
-                toTopicDefinition(
-                    id = key,
-                    version = r.getValue(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION),
-                    persistedTranslations = translations
-                )
+            toTopicDefinition(
+                id = key,
+                version = r.getValue(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION),
+                persistedTranslations = translations
             )
         }
-        return definitions
-    }
 
     override fun getMainLanguage(): String = dsl
         .select(Language.LANGUAGE.CODE)
@@ -209,7 +204,7 @@ open class JooqNewsletterTopicRepo(
             .set(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_MODIFIED_BY, userId)
             .returning()
             .fetchOne() ?: error("unable to find newsletter topic record")
-        val ntId = ntRecord.get(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID)
+        val ntId = ntRecord[ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID]
         val persistedTranslations = persistTranslations(entity, userId, ntId)
         val persistedEntity = toTopicDefinition(
             id = ntId,
@@ -222,14 +217,10 @@ open class JooqNewsletterTopicRepo(
 
     private fun persistTranslations(
         entity: NewsletterTopicDefinition, userId: Int, ntId: Int,
-    ): List<NewsletterTopicTranslation> {
-        val nttPersisted: MutableList<NewsletterTopicTranslation> = ArrayList()
-        entity.getTranslations(null).forEach { ntt ->
-            val nttRecord = insertAndGetNewsletterTopicTr(ntId, userId, ntt)
-            nttPersisted.add(toTopicTranslation(nttRecord))
+    ): List<NewsletterTopicTranslation> =
+        entity.getTranslations(null).map { ntt ->
+            toTopicTranslation(insertAndGetNewsletterTopicTr(ntId, userId, ntt))
         }
-        return nttPersisted
-    }
 
     override fun update(entity: NewsletterTopicDefinition): NewsletterTopicDefinition? {
         require(entity.id != null) { "entity.id must not be null" }

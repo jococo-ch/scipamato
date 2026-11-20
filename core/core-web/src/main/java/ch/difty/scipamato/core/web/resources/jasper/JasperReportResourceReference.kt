@@ -27,27 +27,29 @@ abstract class JasperReportResourceReference(
     val isCacheReport: Boolean,
 ) : PackageResourceReference(scope, "$name.jrxml"), Serializable {
 
-    private lateinit var report: JasperReport
+    private lateinit var compiledReport: JasperReport
 
     /**
-     * @return the compiled [JasperReport] object.
-     * @throws JasperReportException an unchecked runtime exception
-     *          wrapping two checked exceptions ([ResourceStreamNotFoundException] and [JRException])
+     * The compiled [JasperReport] object.
+     *
+     * Throws [JasperReportException], an unchecked runtime exception
+     * wrapping two checked exceptions ([ResourceStreamNotFoundException] and [JRException])
      */
-    fun getReport(): JasperReport {
-        if (!isCacheReport || !this::report.isInitialized) {
-            try {
-                compileReport()
-            } catch (e: JRException) {
-                throw JasperReportException(e)
+    val report: JasperReport
+        get() {
+            if (!isCacheReport || !this::compiledReport.isInitialized) {
+                try {
+                    compileReport()
+                } catch (e: JRException) {
+                    throw JasperReportException(e)
+                }
             }
+            return compiledReport
         }
-        return report
-    }
 
     @Throws(JRException::class)
     open fun compileReport() {
-        report = JasperCompileManager.compileReport(inputStream)
+        compiledReport = JasperCompileManager.compileReport(inputStream)
         log.info { "Successfully compiled JasperReport $name..." }
     }
 
