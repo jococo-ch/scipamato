@@ -24,11 +24,9 @@ dependencies {
     api(libs.spring.cloud.starter.openfeign) {
         exclude("com.netflix.archaius", "archaius-core")
     }
-    implementation(libs.commons.fileupload)
     implementation(libs.openfeign.jaxb)
     implementation(libs.openfeign.okhttp)
     implementation(libs.openfeign.slf4j)
-    implementation(libs.bouncycastle)
 
     // Object/XML mapping
     implementation(libs.spring.oxm)
