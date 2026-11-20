@@ -140,8 +140,6 @@ subprojects {
 
         annotationProcessor(rootProject.libs.lombok)
 
-        runtimeOnly(rootProject.libs.logback.core)
-
         compileOnly(rootProject.libs.lombok)
         compileOnly(rootProject.libs.jsr305)
 
