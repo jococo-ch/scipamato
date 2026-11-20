@@ -91,7 +91,7 @@ class PaperSummaryShortDataSource : JasperPaperDataSource<PaperSummaryShort?> {
         this.reportHeaderFields = reportHeaderFields
     }
 
-    override fun getReport(): JasperReport = PaperSummaryShortReportResourceReference.get().getReport()
+    override fun getReport(): JasperReport = PaperSummaryShortReportResourceReference.get().report
     override fun makeEntity(p: Paper): PaperSummaryShort = PaperSummaryShort(p, reportHeaderFields)
 
     companion object {

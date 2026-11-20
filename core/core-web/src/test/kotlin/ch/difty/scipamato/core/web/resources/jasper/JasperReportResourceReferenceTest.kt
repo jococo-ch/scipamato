@@ -49,7 +49,7 @@ internal abstract class JasperReportResourceReferenceTest<E : JasperReportResour
     @Test
     fun gettingReport() {
         val ref = resourceReference
-        ref.getReport().name shouldBeEqualTo reportBaseName
+        ref.report.name shouldBeEqualTo reportBaseName
     }
 
     /**

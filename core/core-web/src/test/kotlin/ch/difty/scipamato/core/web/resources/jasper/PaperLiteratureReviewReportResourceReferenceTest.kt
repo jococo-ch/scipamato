@@ -31,7 +31,7 @@ internal class PaperLiteratureReviewReportResourceReferenceTest :
             override val resourceStreamFromResource: IResourceStream?
                 get() = null
         }
-        invoking { rr.getReport() } shouldThrow
+        invoking { rr.report } shouldThrow
             JasperReportException::class withMessage "Unable to locate resource stream for jasper file 'baz.jrxml'"
     }
 
@@ -47,7 +47,7 @@ internal class PaperLiteratureReviewReportResourceReferenceTest :
             override fun getInputStream(rs: IResourceStream): InputStream =
                 throw ResourceStreamNotFoundException("boom")
         }
-        invoking { rr.getReport() } shouldThrow JasperReportException::class withMessage
+        invoking { rr.report } shouldThrow JasperReportException::class withMessage
             "org.apache.wicket.util.resource.ResourceStreamNotFoundException: boom"
     }
 
@@ -59,7 +59,7 @@ internal class PaperLiteratureReviewReportResourceReferenceTest :
             private val serialVersionUID: Long = 1L
             override fun compileReport(): Unit = throw JRException("boom")
         }
-        invoking { rr.getReport() } shouldThrow JasperReportException::class withMessage
+        invoking { rr.report } shouldThrow JasperReportException::class withMessage
             "net.sf.jasperreports.engine.JRException: boom"
     }
 }

@@ -25,7 +25,7 @@ class PaperReferenceAbstractDataSource(
     dataProvider,
 ) {
     override fun getParameterMap(): HashMap<String, Any> = hashMapOf("show_goal" to false)
-    override fun getReport(): JasperReport = PaperReferenceAbstractResourceReference.get().getReport()
+    override fun getReport(): JasperReport = PaperReferenceAbstractResourceReference.get().report
     override fun makeEntity(p: Paper): PaperReferenceAbstract = PaperReferenceAbstract(p, reportHeaderFields)
 
     companion object {
