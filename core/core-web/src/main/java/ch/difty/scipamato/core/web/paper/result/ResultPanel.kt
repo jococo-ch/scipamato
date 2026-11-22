@@ -39,13 +39,14 @@ import ch.difty.scipamato.core.web.paper.jasper.summarytable.PaperSummaryTableDa
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome7IconType
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome7IconTypeBuilder
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.toolbars.BootstrapHeadersToolbar
 import org.apache.wicket.AttributeModifier
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.ajax.markup.html.AjaxLink
 import org.apache.wicket.event.Broadcast
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn
+import org.apache.wicket.extensions.markup.html.repeater.data.table.NoRecordsToolbar
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn
 import org.apache.wicket.markup.html.link.ResourceLink
 import org.apache.wicket.model.IModel
@@ -104,7 +105,7 @@ abstract class ResultPanel protected constructor(
     }
 
     private fun makeAndQueueTable(id: String) {
-        results = object : BootstrapDefaultDataTable<PaperSlim, String>(
+        results = object : DataTable<PaperSlim, String>(
             id,
             makeTableColumns(),
             dataProvider,
@@ -119,6 +120,9 @@ abstract class ResultPanel protected constructor(
         }.apply {
             outputMarkupId = true
             add(TableBehavior().striped().hover())
+            addTopToolbar(PageJumpNavigationToolbar(this))
+            addTopToolbar(BootstrapHeadersToolbar(this, this@ResultPanel.dataProvider))
+            addBottomToolbar(NoRecordsToolbar(this))
         }.also {
             queue(it)
         }
