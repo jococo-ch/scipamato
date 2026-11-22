@@ -5,9 +5,21 @@ plugins {
     id("scipamato-integration-test")
 }
 
+fun Test.withSyncDatabaseMigrations() {
+    val migrations = mapOf(
+        "scipamato.it.core.migrations" to "core/core-persistence-jooq",
+        "scipamato.it.public.migrations" to "public/public-persistence-jooq",
+    )
+    migrations.forEach { (property, project) ->
+        val dirs = listOf("main/resources", "integration-test/resources")
+            .map { rootDir.resolve("$project/src/$it/db/migration") }
+        inputs.files(dirs).withPropertyName(property)
+        systemProperty(property, dirs.joinToString(",") { "filesystem:$it" })
+    }
+}
+
 testing {
     suites {
-        @Suppress("unused")
         val integrationTest = named<JvmTestSuite>("integrationTest") {
             dependencies {
                 implementation(libs.testcontainers.testcontainers)
@@ -19,22 +31,30 @@ testing {
             }
             targets {
                 all {
-                    testTask.configure {
-                        val migrations = mapOf(
-                            "scipamato.it.core.migrations" to "core/core-persistence-jooq",
-                            "scipamato.it.public.migrations" to "public/public-persistence-jooq",
-                        )
-                        migrations.forEach { (property, project) ->
-                            val dirs = listOf("main/resources", "integration-test/resources")
-                                .map { rootDir.resolve("$project/src/$it/db/migration") }
-                            inputs.files(dirs).withPropertyName(property)
-                            systemProperty(property, dirs.joinToString(",") { "filesystem:$it" })
-                        }
-                    }
+                    testTask.configure { withSyncDatabaseMigrations() }
+                }
+            }
+        }
+        // the ad-hoc test runs on the databases of the integration tests
+        @Suppress("unused")
+        val adhocTest = named<JvmTestSuite>("adhocTest") {
+            sources {
+                val integrationTestOutput = integrationTest.get().sources.output
+                compileClasspath += integrationTestOutput
+                runtimeClasspath += integrationTestOutput
+            }
+            targets {
+                all {
+                    testTask.configure { withSyncDatabaseMigrations() }
                 }
             }
         }
     }
+}
+
+configurations {
+    named("adhocTestImplementation") { extendsFrom(named("integrationTestImplementation").get()) }
+    named("adhocTestRuntimeOnly") { extendsFrom(named("integrationTestRuntimeOnly").get()) }
 }
 
 /**
