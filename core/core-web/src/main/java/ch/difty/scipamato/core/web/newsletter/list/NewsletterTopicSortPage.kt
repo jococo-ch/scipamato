@@ -34,6 +34,8 @@ class NewsletterTopicSortPage(
 
     private lateinit var topics: List<NewsletterNewsletterTopic>
 
+    private val order: IModel<String> = Model.of("")
+
     override fun onInitialize() {
         super.onInitialize()
 
@@ -44,7 +46,7 @@ class NewsletterTopicSortPage(
 
         queue(newHeader("header"))
         queue(Form<Unit>("form"))
-        queue(HiddenField("order", Model.of("")))
+        queue(HiddenField("order", order))
         queue(newSortable("sortable", topics))
         queue(newSubmitButton("submit"))
         queue(newCancelButton("cancel"))
@@ -74,6 +76,7 @@ class NewsletterTopicSortPage(
             private val serialVersionUID: Long = 1L
             override fun onSubmit(target: AjaxRequestTarget) {
                 super.onSubmit(target)
+                topics = sortedByOrder(topics, order.getObject())
                 alignSortToIndex(topics)
                 @Suppress("TooGenericExceptionCaught")
                 try {
@@ -88,6 +91,14 @@ class NewsletterTopicSortPage(
                 }
             }
         }
+
+    private fun sortedByOrder(
+        topics: List<NewsletterNewsletterTopic>,
+        order: String?
+    ): List<NewsletterNewsletterTopic> {
+        val ids = order.orEmpty().split(",").mapNotNull { it.trim().toIntOrNull() }
+        return topics.sortedBy { t -> ids.indexOf(t.newsletterTopicId).takeIf { it >= 0 } ?: Int.MAX_VALUE }
+    }
 
     private fun alignSortToIndex(topics: List<NewsletterNewsletterTopic>) {
         var index = 0
