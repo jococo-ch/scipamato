@@ -34,7 +34,7 @@ internal class PageJumpNavigationToolbarTest : FunSpec({
 
     fun startTable(): DataTable<Item, String> {
         val table = newTable()
-        tester.startComponentInPage(table, Markup.of("""<table wicket:id="table"></table>"""))
+        tester.startComponentInPage(table, Markup.of("""<table wicket:id="$TABLE_ID"></table>"""))
         return table
     }
 
@@ -85,11 +85,16 @@ internal class PageJumpNavigationToolbarTest : FunSpec({
     }
 })
 
+private const val TABLE_ID = "table"
 private const val ROWS_PER_PAGE = 10L
 private const val ITEM_COUNT = 45
-private const val FORM_PATH = "table:topToolbars:toolbars:1:span:navigator:jumpForm"
+private const val FORM_PATH = "$TABLE_ID:topToolbars:toolbars:1:span:navigator:jumpForm"
 
-internal data class Item(val name: String) : Serializable
+internal data class Item(val name: String) : Serializable {
+    companion object {
+        private const val serialVersionUID = 1L
+    }
+}
 
 private class ItemProvider : SortableDataProvider<Item, String>() {
     private val items = (1..ITEM_COUNT).map { Item("item$it") }
@@ -110,5 +115,3 @@ private fun newTable(): DataTable<Item, String> {
         addTopToolbar(PageJumpNavigationToolbar(this))
     }
 }
-
-private const val TABLE_ID = "table"

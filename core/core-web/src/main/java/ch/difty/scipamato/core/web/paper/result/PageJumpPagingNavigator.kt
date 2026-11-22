@@ -21,13 +21,16 @@ class PageJumpPagingNavigator(id: String, pageable: IPageable) : BootstrapPaging
         }
         add(object : Form<Unit>("jumpForm") {
             override fun onSubmit() {
-                pageNumber.modelObject?.let {
-                    pageable.currentPage = (it - 1).coerceIn(0L, maxOf(pageable.pageCount - 1, 0L))
-                }
+                pageNumber.modelObject?.let { jumpTo(it) }
             }
 
             private val serialVersionUID: Long = 1L
         }.apply { add(pageNumber) })
+    }
+
+    private fun jumpTo(pageNumber: Long) {
+        val lastPageIndex = maxOf(pageable.pageCount - 1, 0L)
+        pageable.currentPage = (pageNumber - 1).coerceIn(0L, lastPageIndex)
     }
 
     companion object {
