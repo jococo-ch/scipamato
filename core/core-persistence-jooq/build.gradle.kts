@@ -56,11 +56,12 @@ jooqGenerator {
 testing {
     suites {
         @Suppress("unused")
-        val integrationTest = named("integrationTest") {
+        val integrationTest = named<JvmTestSuite>("integrationTest") {
             dependencies {
-                implementation(libs.bundles.dbTest)
+                implementation(libs.testcontainers.testcontainers)
+                implementation(libs.testcontainers.junitJupiter)
+                implementation(libs.testcontainers.postgresql)
                 runtimeOnly(libs.postgresql)
-                annotationProcessor(libs.lombok)
             }
         }
     }
@@ -76,6 +77,8 @@ dependencies {
     implementation(libs.postgresql)
 
     implementation(libs.spring.security.core)
+
+    compileOnly(libs.jetbrainsAnnotations)
 
     testImplementation(libs.spring.boot.starter.jooq.test)
     testImplementation(libs.lombok)
