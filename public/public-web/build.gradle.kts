@@ -5,19 +5,28 @@ description = "SciPaMaTo-Public :: Web Project"
 plugins {
     alias(libs.plugins.springBoot).apply(true)
     id("application-properties-filter")
-//    id("scipamato-integration-test")
+    id("scipamato-integration-test")
 }
 
-//testing {
-//    suites {
-//        val integrationTest = named("integrationTest") {
-//            dependencies {
-//                implementation(libs.bundles.dbTest)
-//                runtimeOnly(libs.postgresql)
-//            }
-//        }
-//    }
-//}
+testing {
+    suites {
+        @Suppress("unused")
+        val integrationTest = named<JvmTestSuite>("integrationTest") {
+            // jar is disabled for web projects, so project() alone puts no main classes on the classpath;
+            // main goes before the libraries, as in the boot jar, so its application.properties wins
+            sources {
+                compileClasspath += sourceSets.main.get().output
+                runtimeClasspath = output + sourceSets.main.get().output + configurations.named(runtimeClasspathConfigurationName).get()
+            }
+            dependencies {
+                implementation(libs.testcontainers.testcontainers)
+                implementation(libs.testcontainers.junitJupiter)
+                implementation(libs.testcontainers.postgresql)
+                runtimeOnly(libs.postgresql)
+            }
+        }
+    }
+}
 
 /**
  * Make the static wicket resources that reside next to the java classes in src{main,test} available.

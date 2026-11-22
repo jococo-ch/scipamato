@@ -6,17 +6,6 @@ plugins {
     id("scipamato-adhoc-test")
 }
 
-testing {
-    suites {
-        named("integrationTest") {
-            dependencies {
-                annotationProcessor(libs.lombok)
-                runtimeOnly(libs.lombok)
-            }
-        }
-    }
-}
-
 dependencies {
     implementation(project(":common-utils"))
 

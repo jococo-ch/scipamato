@@ -9,6 +9,7 @@ jacoco = "0.8.16"
 jasperreports = "7.1.1"
 java = "21"
 jakartaElApi = "6.0.1"
+jetbrainsAnnotations = "26.1.0"
 jaxbPlugin = "9.0.0"
 jooqPlugin = "3.1.4"
 jsr305 = "3.0.2"
@@ -47,6 +48,7 @@ jasperreports = { module = "net.sf.jasperreports:jasperreports", version.ref = "
 jasperreports-jdt = { module = "net.sf.jasperreports:jasperreports-jdt", version.ref = "jasperreports" }
 jasperreports-fonts = { module = "net.sf.jasperreports:jasperreports-fonts", version.ref = "jasperreports" }
 jasperreports-pdf = { module = "net.sf.jasperreports:jasperreports-pdf", version.ref = "jasperreports" }
+jetbrainsAnnotations = { module = "org.jetbrains:annotations", version.ref = "jetbrainsAnnotations" }
 jakarta-el-api = { module = "jakarta.el:jakarta.el-api", version.ref = "jakartaElApi" }
 jakarta-servletApi = { module = "jakarta.servlet:jakarta.servlet-api" }
 jakarta-bind-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api" }
@@ -116,7 +118,6 @@ plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.
 
 [bundles]
 caching = ["spring-boot-starter-cache", "cacheApi"]
-dbTest = ["testcontainers-testcontainers", "testcontainers-junitJupiter", "testcontainers-postgresql"]
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektPlugin" }
