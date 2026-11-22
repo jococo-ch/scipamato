@@ -48,7 +48,7 @@ internal class DataSourceConfigIntegrationTest @Autowired constructor(
         dataSource shouldBeInstanceOf TransactionAwareDataSourceProxy::class
         dataSource.isWrapperFor(HikariDataSource::class.java).shouldBeTrue()
 
-        config.executeListenerProviders() shouldHaveSize 2
+        config.executeListenerProviders() shouldHaveSize 1
         config.executeListenerProviders()[0].provide() shouldBeInstanceOf ExceptionTranslatorExecuteListener::class
 
         config.transactionProvider() shouldBeInstanceOf SpringTransactionProvider::class
