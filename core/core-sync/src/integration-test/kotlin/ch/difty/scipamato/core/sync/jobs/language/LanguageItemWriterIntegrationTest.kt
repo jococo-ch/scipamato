@@ -10,7 +10,7 @@ import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
-import java.sql.Timestamp
+import java.time.LocalDateTime
 
 private const val CODE_EXISTING = "de"
 private const val CODE_NEW = "es"
@@ -18,7 +18,7 @@ private const val CODE_NEW = "es"
 internal class LanguageItemWriterIntegrationTest : AbstractItemWriterIntegrationTest() {
 
     private val writer by lazy { LanguageItemWriter(dsl) }
-    private val synched = Timestamp.valueOf("2026-01-02 03:04:05")
+    private val synched = LocalDateTime.parse("2026-01-02T03:04:05")
 
     @Test
     fun insertingNewLanguage() {

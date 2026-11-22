@@ -10,7 +10,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import java.sql.Date
+import java.time.LocalDate
 
 internal class NewsletterInsertSetStepSetterTest : InsertSetStepSetterTest<NewsletterRecord, Newsletter>() {
 
@@ -32,7 +32,7 @@ internal class NewsletterInsertSetStepSetterTest : InsertSetStepSetterTest<Newsl
     override fun stepSetFixtureExceptAudit() {
         every { step.set(NEWSLETTER.ISSUE, NewsletterRecordMapperTest.ISSUE) } returns moreStep
         every {
-            moreStep.set(NEWSLETTER.ISSUE_DATE, Date.valueOf(NewsletterRecordMapperTest.ISSUE_DATE))
+            moreStep.set(NEWSLETTER.ISSUE_DATE, LocalDate.parse(NewsletterRecordMapperTest.ISSUE_DATE))
         } returns moreStep
         every {
             moreStep.set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id)
@@ -52,7 +52,7 @@ internal class NewsletterInsertSetStepSetterTest : InsertSetStepSetterTest<Newsl
 
     override fun verifySettingFieldsExceptKeyAndAudit() {
         verify { step.set(NEWSLETTER.ISSUE, NewsletterRecordMapperTest.ISSUE) }
-        verify { moreStep.set(NEWSLETTER.ISSUE_DATE, Date.valueOf(NewsletterRecordMapperTest.ISSUE_DATE)) }
+        verify { moreStep.set(NEWSLETTER.ISSUE_DATE, LocalDate.parse(NewsletterRecordMapperTest.ISSUE_DATE)) }
         verify { moreStep.set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id) }
     }
 

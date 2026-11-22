@@ -21,10 +21,10 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.transaction.PlatformTransactionManager
-import java.sql.Date
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 /**
@@ -100,7 +100,7 @@ abstract class SyncConfig<T: Any, R : UpdatableRecordImpl<R>?>(
             .transactionManager(transactionManager)
             .build()
 
-    abstract fun lastSynchedField(): TableField<R, Timestamp>
+    abstract fun lastSynchedField(): TableField<R, LocalDateTime>
 
     private fun pseudoForeignKeyConstraintStep(): Step =
         StepBuilder(topic + "PseudoForeignKeyStep", jobRepository)
@@ -161,15 +161,15 @@ abstract class SyncConfig<T: Any, R : UpdatableRecordImpl<R>?>(
     }
 
     @Throws(SQLException::class)
-    fun getTimestamp(field: TableField<*, Timestamp?>, rs: ResultSet): Timestamp? = rs.getTimestamp(field.name)
+    fun getTimestamp(field: TableField<*, LocalDateTime?>, rs: ResultSet): LocalDateTime? = rs.getObject(field.name, LocalDateTime::class.java)
 
     @Throws(SQLException::class)
-    fun getTimestamp(alias: String, rs: ResultSet): Timestamp? = rs.getTimestamp(alias)
+    fun getTimestamp(alias: String, rs: ResultSet): LocalDateTime? = rs.getObject(alias, LocalDateTime::class.java)
 
     @Throws(SQLException::class)
-    fun getDate(field: TableField<*, Date?>, rs: ResultSet): Date? = rs.getDate(field.name)
+    fun getDate(field: TableField<*, LocalDate?>, rs: ResultSet): LocalDate? = rs.getObject(field.name, LocalDate::class.java)
 
-    fun getNow(): Timestamp = dateTimeService.currentTimestamp
+    fun getNow(): LocalDateTime = dateTimeService.currentDateTime
 
     companion object {
         val PUBLICATION_STATUS_PUBLISHED = PublicationStatus.PUBLISHED.id

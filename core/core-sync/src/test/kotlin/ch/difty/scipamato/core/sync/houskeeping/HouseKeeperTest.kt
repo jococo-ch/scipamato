@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.StepContribution
 import org.springframework.batch.infrastructure.repeat.RepeatStatus
-import java.sql.Timestamp
 import java.time.LocalDateTime
 
 internal class HouseKeeperTest {
@@ -29,7 +28,7 @@ internal class HouseKeeperTest {
     private val tableMock = mockk<Table<CodeClassRecord>>()
     private val deleteUsingStep = mockk<DeleteUsingStep<CodeClassRecord>>()
     private val deleteCondStepMock = mockk<DeleteConditionStep<CodeClassRecord>>()
-    private val lastSynchedField = mockk<TableField<CodeClassRecord, Timestamp>>()
+    private val lastSynchedField = mockk<TableField<CodeClassRecord, LocalDateTime>>()
     private val contributionMock = mockk<StepContribution>()
     private val chunkContextMock = mockk<ChunkContext>()
 
@@ -45,7 +44,7 @@ internal class HouseKeeperTest {
     private fun commonTestFixture() {
         every { lastSynchedField.table } returns tableMock
         val conditionMock = mockk<Condition>()
-        every { lastSynchedField.lessThan(any<Timestamp>()) } returns conditionMock
+        every { lastSynchedField.lessThan(any<LocalDateTime>()) } returns conditionMock
         every { dslContextMock.deleteFrom(tableMock) } returns deleteUsingStep
         every { dateTimeServiceMock.currentDateTime } returns TS
         every { deleteUsingStep.where(conditionMock) } returns deleteCondStepMock

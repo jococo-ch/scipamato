@@ -271,7 +271,7 @@ open class JooqNewsletterTopicRepo(
         .update(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC)
         .set(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION, currentVersion + 1)
         .set(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_MODIFIED_BY, userId)
-        .set(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_MODIFIED, ts)
+        .set(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_MODIFIED, now())
         .where(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID.eq(entity.id))
         .and(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION.eq(currentVersion))
         .returning()
@@ -318,7 +318,7 @@ open class JooqNewsletterTopicRepo(
         .set(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE, ntt.langCode)
         .set(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE, ntt.title)
         .set(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LAST_MODIFIED_BY, userId)
-        .set(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LAST_MODIFIED, ts)
+        .set(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LAST_MODIFIED, now())
         .set(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION, currentNttVersion + 1)
         .where(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.ID.eq(ntt.id))
         .and(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION.eq(currentNttVersion))
@@ -441,7 +441,7 @@ open class JooqNewsletterTopicRepo(
     }
 
     override fun saveSortedNewsletterTopics(newsletterId: Int, topics: List<NewsletterNewsletterTopic>) {
-        val ts = dateTimeService.currentTimestamp
+        val ts = dateTimeService.currentDateTime
         topics
             .filter { newsletterId == it.newsletterId }
             .forEach { t: NewsletterNewsletterTopic ->

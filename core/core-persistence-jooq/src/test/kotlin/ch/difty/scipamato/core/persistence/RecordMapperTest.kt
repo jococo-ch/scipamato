@@ -8,7 +8,7 @@ import org.jooq.Record
 import org.jooq.RecordMapper
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
-import java.sql.Timestamp
+import java.time.LocalDateTime
 
 abstract class RecordMapperTest<R : Record, E : CoreEntity> {
 
@@ -53,9 +53,9 @@ abstract class RecordMapperTest<R : Record, E : CoreEntity> {
 
     private fun assertAuditFieldsOf(e: E) {
         e.version shouldBeEqualTo VERSION
-        e.created shouldBeEqualTo CREATED.toLocalDateTime()
+        e.created shouldBeEqualTo CREATED
         e.createdBy shouldBeEqualTo CREATED_BY
-        e.lastModified shouldBeEqualTo LAST_MOD.toLocalDateTime()
+        e.lastModified shouldBeEqualTo LAST_MOD
         e.lastModifiedBy shouldBeEqualTo LAST_MOD_BY
 
         // not enriched by service
@@ -66,9 +66,9 @@ abstract class RecordMapperTest<R : Record, E : CoreEntity> {
 
     companion object {
         const val VERSION = 1
-        val CREATED = Timestamp(1469999999999L)
+        val CREATED: LocalDateTime = LocalDateTime.parse("2016-07-31T21:19:59.999")
         const val CREATED_BY = 1
-        val LAST_MOD = Timestamp(1479999999999L)
+        val LAST_MOD: LocalDateTime = LocalDateTime.parse("2016-11-24T15:06:39.999")
         const val LAST_MOD_BY = 2
 
         /**
@@ -89,8 +89,8 @@ abstract class RecordMapperTest<R : Record, E : CoreEntity> {
          * the mocked entity
          */
         fun auditExtendedFixtureFor(entityMock: CoreEntity) {
-            every { entityMock.created } returns CREATED.toLocalDateTime()
-            every { entityMock.lastModified } returns LAST_MOD.toLocalDateTime()
+            every { entityMock.created } returns CREATED
+            every { entityMock.lastModified } returns LAST_MOD
             every { entityMock.version } returns VERSION
         }
     }

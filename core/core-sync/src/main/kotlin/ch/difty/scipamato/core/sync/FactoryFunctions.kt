@@ -2,8 +2,8 @@
 
 package ch.difty.scipamato.core.sync
 
-import java.sql.Date
-import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 fun newPublicCode(
     code: String?,
@@ -13,9 +13,9 @@ fun newPublicCode(
     comment: String?,
     sort: Int?,
     version: Int?,
-    created: Timestamp?,
-    lastModified: Timestamp?,
-    lastSynched: Timestamp?,
+    created: LocalDateTime?,
+    lastModified: LocalDateTime?,
+    lastSynched: LocalDateTime?,
 ): PublicCode = PublicCode(
     code, langCode, codeClassId, name, comment, sort, version, created, lastModified, lastSynched
 )
@@ -26,9 +26,9 @@ fun newPublicCodeClass(
     name: String?,
     description: String?,
     version: Int?,
-    created: Timestamp?,
-    lastModified: Timestamp?,
-    lastSynched: Timestamp?,
+    created: LocalDateTime?,
+    lastModified: LocalDateTime?,
+    lastSynched: LocalDateTime?,
 ): PublicCodeClass = PublicCodeClass(
     codeClassId, langCode, name, description, version, created, lastModified, lastSynched
 )
@@ -39,9 +39,9 @@ fun newPublicKeyword(
     langCode: String?,
     name: String?,
     version: Int?,
-    created: Timestamp?,
-    lastModified: Timestamp?,
-    lastSynched: Timestamp?,
+    created: LocalDateTime?,
+    lastModified: LocalDateTime?,
+    lastSynched: LocalDateTime?,
     searchOverride: String?,
 ): PublicKeyword = PublicKeyword(
     id, keywordId, langCode, name, version, created, lastModified, lastSynched, searchOverride
@@ -49,7 +49,7 @@ fun newPublicKeyword(
 
 fun newPublicLanguage(
     code: String?,
-    lastSynched: Timestamp?,
+    lastSynched: LocalDateTime?,
     mainLanguage: Boolean?,
 ): PublicLanguage = PublicLanguage(
     code, lastSynched, mainLanguage
@@ -58,11 +58,11 @@ fun newPublicLanguage(
 fun newPublicNewsletter(
     id: Int?,
     issue: String?,
-    issueDate: Date?,
+    issueDate: LocalDate?,
     version: Int?,
-    created: Timestamp?,
-    lastModified: Timestamp?,
-    lastSynched: Timestamp?,
+    created: LocalDateTime?,
+    lastModified: LocalDateTime?,
+    lastSynched: LocalDateTime?,
 ): PublicNewsletter = PublicNewsletter(
     id, issue, issueDate, version, created, lastModified, lastSynched
 )
@@ -72,9 +72,9 @@ fun newPublicNewsletterTopic(
     langCode: String?,
     title: String?,
     version: Int?,
-    created: Timestamp?,
-    lastModified: Timestamp?,
-    lastSynched: Timestamp?,
+    created: LocalDateTime?,
+    lastModified: LocalDateTime?,
+    lastSynched: LocalDateTime?,
 ): PublicNewsletterTopic = PublicNewsletterTopic(
     id, langCode, title, version, created, lastModified, lastSynched
 )
@@ -89,9 +89,9 @@ fun newPublicNewStudy(
     headline: String?,
     description: String?,
     version: Int?,
-    created: Timestamp?,
-    lastModified: Timestamp?,
-    lastSynched: Timestamp?,
+    created: LocalDateTime?,
+    lastModified: LocalDateTime?,
+    lastSynched: LocalDateTime?,
 ): PublicNewStudy = PublicNewStudy(
     newsletterId, paperNumber, newsletterTopicId, sort, year, authors, headline, description,
     version, created, lastModified, lastSynched
@@ -102,9 +102,9 @@ fun newPublicNewStudyTopic(
     newsletterTopicId: Int?,
     sort: Int?,
     version: Int?,
-    created: Timestamp?,
-    lastModified: Timestamp?,
-    lastSynched: Timestamp?,
+    created: LocalDateTime?,
+    lastModified: LocalDateTime?,
+    lastSynched: LocalDateTime?,
 ): PublicNewStudyTopic = PublicNewStudyTopic(
     newsletterId, newsletterTopicId, sort, version, created, lastModified, lastSynched
 )
@@ -115,9 +115,9 @@ fun newPublicNewStudyPageLink(
     title: String?,
     url: String?,
     version: Int?,
-    created: Timestamp?,
-    lastModified: Timestamp?,
-    lastSynched: Timestamp?,
+    created: LocalDateTime?,
+    lastModified: LocalDateTime?,
+    lastSynched: LocalDateTime?,
 ): PublicNewStudyPageLink = PublicNewStudyPageLink(
     langCode, sort, title, url, version, created, lastModified, lastSynched
 )
@@ -136,12 +136,12 @@ fun newPublicPaper(
     result: String?,
     comment: String?,
     version: Int?,
-    created: Timestamp?,
-    lastModified: Timestamp?,
+    created: LocalDateTime?,
+    lastModified: LocalDateTime?,
     codesPopulation: Array<Short>?,
     codesStudyDesign: Array<Short>?,
     codes: Array<String>?,
-    lastSynched: Timestamp?,
+    lastSynched: LocalDateTime?,
 ): PublicPaper = PublicPaper(
     id, number, pmId, authors, title, location, publicationYear, goals, methods, population, result,
     comment, version, created, lastModified, codesPopulation, codesStudyDesign, codes, lastSynched

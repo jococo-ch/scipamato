@@ -9,7 +9,6 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
-import java.sql.Timestamp
 import java.time.LocalDateTime
 
 private const val ID_EXISTING = 1
@@ -42,7 +41,7 @@ internal class CodeClassItemWriterIntegrationTest : AbstractItemWriterIntegratio
         fetch(ID_EXISTING).shouldNotBeNull().description shouldBeEqualTo "foo"
     }
 
-    private fun now() = Timestamp.valueOf(LocalDateTime.now())
+    private fun now() = LocalDateTime.now()
 
     private fun fetch(id: Int): PublicCodeClass? = dsl
         .selectFrom(CODE_CLASS)

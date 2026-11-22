@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 /**
@@ -69,7 +69,7 @@ open class NewStudyPageLinkSyncConfig(
         lastSynched = getNow(),
     )
 
-    override fun lastSynchedField(): TableField<NewStudyPageLinkRecord, Timestamp> =
+    override fun lastSynchedField(): TableField<NewStudyPageLinkRecord, LocalDateTime> =
         PublicNewStudyPageLinkTable.NEW_STUDY_PAGE_LINK.LAST_SYNCHED
 
     companion object {

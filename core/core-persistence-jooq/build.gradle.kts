@@ -41,7 +41,7 @@ jooqGenerator {
     generatorConfig = JooqGeneratorConfig(
         generatorType = GeneratorType.Java,
         deprecateUnknownTypes = true,
-        javaTimeTypes = false,
+        javaTimeTypes = true,
         daos = false,
         pojos = false,
     )

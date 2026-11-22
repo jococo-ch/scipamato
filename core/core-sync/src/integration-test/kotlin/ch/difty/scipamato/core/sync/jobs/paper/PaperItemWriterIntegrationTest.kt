@@ -8,7 +8,6 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
-import java.sql.Timestamp
 import java.time.LocalDateTime
 
 private const val NUMBER_EXISTING = 1L
@@ -27,7 +26,7 @@ internal class PaperItemWriterIntegrationTest : AbstractItemWriterIntegrationTes
         writer.writeOne(
             newPublicPaper(
                 NUMBER_NEW, NUMBER_NEW, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, arrayOf(1, 2), arrayOf(), arrayOf("F1"), Timestamp.valueOf(LocalDateTime.now())
+                null, null, null, arrayOf(1, 2), arrayOf(), arrayOf("F1"), LocalDateTime.now()
             )
         )
 

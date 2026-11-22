@@ -12,8 +12,8 @@ import org.jooq.Record13
 import org.jooq.Result
 import org.jooq.impl.DSL
 import org.springframework.stereotype.Repository
-import java.sql.Date
-import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Repository
 open class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
@@ -74,7 +74,7 @@ open class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
     @Suppress("MaxLineLength")
     /* Walks through the recordset and extracts the NewStudyTopic with all associated NewStudies */
     private fun processDbRecords(
-        map: Map<Record, Result<Record13<Int, String, Int, Int, Int, Long, Int, String, String, String, Int, Timestamp, Timestamp>>>,
+        map: Map<Record, Result<Record13<Int, String, Int, Int, Int, Long, Int, String, String, String, Int, LocalDateTime, LocalDateTime>>>,
         titleOrBlankField: Field<String>, nstSort: Field<Int>,
         ns: NewStudy, nsSort: Field<Int>,
     ): List<NewStudyTopic> =
@@ -93,11 +93,11 @@ open class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
     @Suppress("MaxLineLength")
     private fun newNewStudyTopic(
         newStudyTopicSortValue: Int, newStudyTopicTitleValue: String,
-        newStudyRecords: Result<Record13<Int, String, Int, Int, Int, Long, Int, String, String, String, Int, Timestamp, Timestamp>>,
+        newStudyRecords: Result<Record13<Int, String, Int, Int, Int, Long, Int, String, String, String, Int, LocalDateTime, LocalDateTime>>,
         newStudyTable: NewStudy,
         aliasedNewsStudySortField: Field<Int>,
     ): NewStudyTopic {
-        val map = newStudyRecords.asIterable().map { r: Record13<Int, String, Int, Int, Int, Long, Int, String, String, String, Int, Timestamp, Timestamp> ->
+        val map = newStudyRecords.asIterable().map { r: Record13<Int, String, Int, Int, Int, Long, Int, String, String, String, Int, LocalDateTime, LocalDateTime> ->
             val sort = r.getValue(aliasedNewsStudySortField)
             ch.difty.scipamato.publ.entity.NewStudy(sort, r.getValue(newStudyTable.PAPER_NUMBER), r.getValue(newStudyTable.YEAR),
                 r.getValue(newStudyTable.AUTHORS), r.getValue(newStudyTable.HEADLINE),
@@ -131,7 +131,7 @@ open class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
         .from(ch.difty.scipamato.publ.db.tables.Newsletter.NEWSLETTER)
         .orderBy(ch.difty.scipamato.publ.db.tables.Newsletter.NEWSLETTER.ISSUE_DATE.desc())
         .limit(newsletterCount)
-        .map { r -> Newsletter(r[0] as Int, r[1] as String?, (r[2] as Date?)?.toLocalDate()) }
+        .map { r -> Newsletter(r[0] as Int, r[1] as String?, r[2] as LocalDate?) }
 
     @Suppress("MagicNumber")
     override fun findNewStudyPageLinks(languageCode: String): List<NewStudyPageLink> = dsl

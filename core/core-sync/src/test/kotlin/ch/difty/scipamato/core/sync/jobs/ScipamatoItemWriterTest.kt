@@ -8,8 +8,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.jooq.DSLContext
 import org.junit.jupiter.api.Test
 import org.springframework.batch.infrastructure.item.Chunk
-import java.sql.Timestamp
-import java.time.Instant
+import java.time.LocalDateTime
 
 internal class ScipamatoItemWriterTest {
 
@@ -19,12 +18,12 @@ internal class ScipamatoItemWriterTest {
 
     private val l1 = PublicLanguage().apply {
         code = "2"
-        lastSynched = Timestamp.from(Instant.now())
+        lastSynched = LocalDateTime.now()
         mainLanguage = true
     }
     private val l2 = PublicLanguage().apply {
         code = "3"
-        lastSynched = Timestamp.from(Instant.now())
+        lastSynched = LocalDateTime.now()
         mainLanguage = true
     }
 

@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 internal class LanguageSyncConfigTest {
@@ -58,7 +58,7 @@ internal class LanguageSyncConfigTest {
         val resultSet = mockk<ResultSet> {
             every { getString("code") } returns "mycode"
             every { getBoolean("main_language") } returns true
-            every { getTimestamp("last_synched") } returns Timestamp.valueOf("2020-04-04 12:13:14")
+            every { getObject("last_synched", LocalDateTime::class.java) } returns LocalDateTime.parse("2020-04-04T12:13:14")
             every { wasNull() } returns false
         }
 
@@ -66,7 +66,7 @@ internal class LanguageSyncConfigTest {
 
         language.code shouldBeEqualTo "mycode"
         language.mainLanguage shouldBeEqualTo true
-        language.lastSynched.toString() shouldBeEqualTo "2016-12-09 06:02:13.0"
+        language.lastSynched.toString() shouldBeEqualTo "2016-12-09T06:02:13"
     }
 
     @Test

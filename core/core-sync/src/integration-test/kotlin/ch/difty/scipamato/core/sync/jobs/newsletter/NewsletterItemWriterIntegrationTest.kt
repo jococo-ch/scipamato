@@ -8,8 +8,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
-import java.sql.Date
-import java.sql.Timestamp
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 private const val ID_EXISTING = 1
@@ -25,7 +24,7 @@ internal class NewsletterItemWriterIntegrationTest : AbstractItemWriterIntegrati
 
         writer.writeOne(
             newPublicNewsletter(
-                ID_NEW, "issue", Date.valueOf("2018-06-14"), null, null, null, Timestamp.valueOf(LocalDateTime.now())
+                ID_NEW, "issue", LocalDate.parse("2018-06-14"), null, null, null, LocalDateTime.now()
             )
         )
 

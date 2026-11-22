@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 internal class NewStudyTopicSyncConfigTest {
@@ -60,9 +60,9 @@ internal class NewStudyTopicSyncConfigTest {
             every { getInt("newsletter_topic_id") } returns 2
             every { getInt("sort") } returns 3
             every { getInt("version") } returns 4
-            every { getTimestamp("created") } returns Timestamp.valueOf("2020-04-04 12:13:14")
-            every { getTimestamp("NTTLM") } returns Timestamp.valueOf("2020-04-04 13:14:15")
-            every { getTimestamp("NNTLM") } returns Timestamp.valueOf("2020-04-04 13:14:16")
+            every { getObject("created", LocalDateTime::class.java) } returns LocalDateTime.parse("2020-04-04T12:13:14")
+            every { getObject("NTTLM", LocalDateTime::class.java) } returns LocalDateTime.parse("2020-04-04T13:14:15")
+            every { getObject("NNTLM", LocalDateTime::class.java) } returns LocalDateTime.parse("2020-04-04T13:14:16")
             every { wasNull() } returns false
         }
 
@@ -72,9 +72,9 @@ internal class NewStudyTopicSyncConfigTest {
         newStudyTopic.newsletterTopicId shouldBeEqualTo 2
         newStudyTopic.sort shouldBeEqualTo 3
         newStudyTopic.version shouldBeEqualTo 4
-        newStudyTopic.created.toString() shouldBeEqualTo "2020-04-04 12:13:14.0"
-        newStudyTopic.lastModified.toString() shouldBeEqualTo "2020-04-04 13:14:16.0"
-        newStudyTopic.lastSynched.toString() shouldBeEqualTo "2016-12-09 06:02:13.0"
+        newStudyTopic.created.toString() shouldBeEqualTo "2020-04-04T12:13:14"
+        newStudyTopic.lastModified.toString() shouldBeEqualTo "2020-04-04T13:14:16"
+        newStudyTopic.lastSynched.toString() shouldBeEqualTo "2016-12-09T06:02:13"
     }
 
     @Suppress("MaxLineLength")
@@ -122,16 +122,17 @@ internal class NewStudyTopicSyncConfigTest {
         makeEntity(nttLastModified = LATER, nntLastModified = EARLIER).lastModified shouldBeEqualTo LATER
     }
 
-    private fun makeEntity(sortIsNull: Boolean = false, nttLastModified: Timestamp?, nntLastModified: Timestamp?) =
+    private fun makeEntity(sortIsNull: Boolean = false, nttLastModified: LocalDateTime?, nntLastModified: LocalDateTime?) =
         config.makeEntity(mockk(relaxed = true) {
             every { getInt("sort") } returns if (sortIsNull) 0 else 1
             every { wasNull() } returnsMany listOf(false, false, sortIsNull, false)
-            every { getTimestamp("NTTLM") } returns nttLastModified
-            every { getTimestamp("NNTLM") } returns nntLastModified
+            every { getObject(any<String>(), LocalDateTime::class.java) } returns null
+            every { getObject("NTTLM", LocalDateTime::class.java) } returns nttLastModified
+            every { getObject("NNTLM", LocalDateTime::class.java) } returns nntLastModified
         })
 
     private companion object {
-        val EARLIER: Timestamp = Timestamp.valueOf("2020-04-04 13:14:15")
-        val LATER: Timestamp = Timestamp.valueOf("2020-04-04 13:14:16")
+        val EARLIER: LocalDateTime = LocalDateTime.parse("2020-04-04T13:14:15")
+        val LATER: LocalDateTime = LocalDateTime.parse("2020-04-04T13:14:16")
     }
 }

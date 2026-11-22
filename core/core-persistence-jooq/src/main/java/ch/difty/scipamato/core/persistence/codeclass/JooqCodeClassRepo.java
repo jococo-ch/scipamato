@@ -232,7 +232,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             .onDuplicateKeyUpdate()
             .set(CODE_CLASS.CREATED_BY, userId)
             .set(CODE_CLASS.LAST_MODIFIED_BY, userId)
-            .set(CODE_CLASS.LAST_MODIFIED, getTs())
+            .set(CODE_CLASS.LAST_MODIFIED, now())
             .set(CODE_CLASS.VERSION, CODE_CLASS.VERSION.add(1))
             .returning()
             .fetchOne();
@@ -339,7 +339,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             .set(CODE_CLASS_TR.NAME, ct.getName())
             .set(CODE_CLASS_TR.DESCRIPTION, ct.getDescription())
             .set(CODE_CLASS_TR.LAST_MODIFIED_BY, userId)
-            .set(CODE_CLASS_TR.LAST_MODIFIED, getTs())
+            .set(CODE_CLASS_TR.LAST_MODIFIED, now())
             .set(CODE_CLASS_TR.VERSION, currentCctVersion + 1)
             .where(CODE_CLASS_TR.ID.eq(ct.getId()))
             .and(CODE_CLASS_TR.VERSION.eq(currentCctVersion))

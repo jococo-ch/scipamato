@@ -2,8 +2,6 @@ package ch.difty.scipamato.core.persistence.newsletter;
 
 import static ch.difty.scipamato.core.db.tables.Newsletter.NEWSLETTER;
 
-import java.sql.Date;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jooq.InsertSetMoreStep;
@@ -30,7 +28,7 @@ public class NewsletterInsertSetStepSetter implements InsertSetStepSetter<Newsle
     public InsertSetMoreStep<NewsletterRecord> setNonKeyFieldsFor(@NotNull final InsertSetStep<NewsletterRecord> step, @NotNull final Newsletter e) {
         return step
             .set(NEWSLETTER.ISSUE, e.getIssue())
-            .set(NEWSLETTER.ISSUE_DATE, Date.valueOf(e.getIssueDate()))
+            .set(NEWSLETTER.ISSUE_DATE, e.getIssueDate())
             .set(NEWSLETTER.PUBLICATION_STATUS, e
                 .getPublicationStatus()
                 .getId())

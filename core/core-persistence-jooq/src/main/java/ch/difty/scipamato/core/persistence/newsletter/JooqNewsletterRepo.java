@@ -6,7 +6,7 @@ import static ch.difty.scipamato.core.db.tables.NewsletterTopicTr.NEWSLETTER_TOP
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -175,7 +175,7 @@ public class JooqNewsletterRepo extends
     @Override
     public Optional<Paper.NewsletterLink> mergePaperIntoNewsletter(final int newsletterId, final long paperId,
         @Nullable final Integer newsletterTopicId, @NotNull final String languageCode) {
-        final Timestamp ts = getDateTimeService().getCurrentTimestamp();
+        final LocalDateTime ts = now();
         final int count = tryInserting(newsletterId, paperId, newsletterTopicId, ts);
         return handleInsertedNewsletter(count, newsletterId, paperId, languageCode);
 
@@ -216,7 +216,7 @@ public class JooqNewsletterRepo extends
     }
 
     // package-private for stubbing
-    int tryInserting(final int newsletterId, final long paperId, @Nullable final Integer newsletterTopicId, @Nullable final Timestamp ts) {
+    int tryInserting(final int newsletterId, final long paperId, @Nullable final Integer newsletterTopicId, @Nullable final LocalDateTime ts) {
         final int inserted = getDsl()
             .insertInto(PAPER_NEWSLETTER)
             .columns(PAPER_NEWSLETTER.PAPER_ID, PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, PAPER_NEWSLETTER.VERSION,

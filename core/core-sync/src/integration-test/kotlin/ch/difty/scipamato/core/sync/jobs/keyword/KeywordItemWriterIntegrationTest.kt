@@ -8,7 +8,6 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
-import java.sql.Timestamp
 import java.time.LocalDateTime
 
 private const val ID_EXISTING = 8
@@ -25,7 +24,7 @@ internal class KeywordItemWriterIntegrationTest : AbstractItemWriterIntegrationT
 
         writer.writeOne(
             newPublicKeyword(
-                ID_NEW, ID_NEW, LANG_CODE, "foo", null, null, null, Timestamp.valueOf(LocalDateTime.now()), null
+                ID_NEW, ID_NEW, LANG_CODE, "foo", null, null, null, LocalDateTime.now(), null
             )
         )
 

@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 /**
@@ -65,7 +65,7 @@ open class LanguageSyncConfig(
         )
     }
 
-    override fun lastSynchedField(): TableField<LanguageRecord, Timestamp> =
+    override fun lastSynchedField(): TableField<LanguageRecord, LocalDateTime> =
         PublicLanguageTable.LANGUAGE.LAST_SYNCHED
 
     companion object {
