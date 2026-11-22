@@ -13,8 +13,12 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
+import org.amshove.kluent.shouldNotContain
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.boot.test.system.CapturedOutput
+import org.springframework.boot.test.system.OutputCaptureExtension
 import org.springframework.oxm.UnmarshallingFailureException
 import org.springframework.oxm.jaxb.Jaxb2Marshaller
 import javax.xml.transform.stream.StreamSource
@@ -201,6 +205,25 @@ internal class PubmedXmlServiceTest {
         pr.errorMessage shouldBeEqualTo "Status 400 BAD_REQUEST: API key invalid"
 
         verify { pubMedMock.articleWithId(pmId.toString()) }
+    }
+
+    @Test
+    @ExtendWith(OutputCaptureExtension::class)
+    fun gettingPubmedArticleWithPmidAndApiKey_withFeignError_neitherReportsNorLogsApiKey(output: CapturedOutput) {
+        val pmId = 25395026
+        val apiKey = "mysecretkey"
+        val msg = "[429 Too Many Requests] during [GET] to [https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi" +
+            "?db=pubmed&id=$pmId&api_key=$apiKey&retmode=xml&version=2.0] [PubMed#articleWithId(String,String)]: " +
+            """[{"error":"API rate limit exceeded","api-key":"$apiKey"}]"""
+        feignExceptionFixture(429, msg)
+        every { feignExceptionMock.message } returns msg
+        every { pubMedMock.articleWithId(pmId.toString(), apiKey) } throws feignExceptionMock
+
+        val pr = service.getPubmedArticleWithPmidAndApiKey(pmId, apiKey)
+
+        pr.errorMessage shouldNotContain apiKey
+        output.out shouldNotContain apiKey
+        verify { pubMedMock.articleWithId(pmId.toString(), apiKey) }
     }
 
     private fun feignExceptionFixture(status: Int, msg: String) {
