@@ -47,8 +47,6 @@ open class RefDataSyncJobLauncher(
     @Qualifier("syncKeywordJob") private val syncKeywordJob: Job, private val warner: Warner,
 ) : SyncJobLauncher {
 
-    private var jobSuccess: BatchStatus = BatchStatus.UNKNOWN
-
     val jobParameters: JobParameters
         get() = JobParametersBuilder()
             .addDate("runDate", Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()), true)
@@ -70,18 +68,20 @@ open class RefDataSyncJobLauncher(
             warner.findNewsletterswithUnsynchronizedPapers()?.let {
                 setWarning(it)
             }
-            jobOperator.start(syncLanguageJob, jobParameters).handle("languages", setSuccess, setFailure)
-            jobOperator.start(syncNewStudyPageLinkJob, jobParameters).handle("newStudyPage_links", setSuccess, setFailure)
-            jobOperator.start(syncCodeClassJob, jobParameters).handle("code_classes", setSuccess, setFailure)
-            jobOperator.start(syncCodeJob, jobParameters).handle("codes", setSuccess, setFailure)
-            jobOperator.start(syncPaperJob, jobParameters).handle("papers", setSuccess, setFailure)
-            jobOperator.start(syncNewsletterJob, jobParameters).handle("newsletters", setSuccess, setFailure)
-            jobOperator.start(syncNewsletterTopicJob, jobParameters).handle("newsletterTopics", setSuccess, setFailure)
-            jobOperator.start(syncNewStudyTopicJob, jobParameters).handle("newStudyTopics", setSuccess, setFailure)
-            jobOperator.start(syncNewStudyJob, jobParameters).handle("newStudies", setSuccess, setFailure)
-            jobOperator.start(syncKeywordJob, jobParameters).handle("keywords", setSuccess, setFailure)
+            val completed = listOf(
+                jobOperator.start(syncLanguageJob, jobParameters).handle("languages", setSuccess, setFailure),
+                jobOperator.start(syncNewStudyPageLinkJob, jobParameters).handle("newStudyPage_links", setSuccess, setFailure),
+                jobOperator.start(syncCodeClassJob, jobParameters).handle("code_classes", setSuccess, setFailure),
+                jobOperator.start(syncCodeJob, jobParameters).handle("codes", setSuccess, setFailure),
+                jobOperator.start(syncPaperJob, jobParameters).handle("papers", setSuccess, setFailure),
+                jobOperator.start(syncNewsletterJob, jobParameters).handle("newsletters", setSuccess, setFailure),
+                jobOperator.start(syncNewsletterTopicJob, jobParameters).handle("newsletterTopics", setSuccess, setFailure),
+                jobOperator.start(syncNewStudyTopicJob, jobParameters).handle("newStudyTopics", setSuccess, setFailure),
+                jobOperator.start(syncNewStudyJob, jobParameters).handle("newStudies", setSuccess, setFailure),
+                jobOperator.start(syncKeywordJob, jobParameters).handle("keywords", setSuccess, setFailure),
+            ).all { it }
 
-            log.info { "Job finished ${if (jobSuccess.isUnsuccessful) "with issues" else "successfully"}." }
+            log.info { "Job finished ${if (completed) "successfully" else "with issues"}." }
             setDone()
         } catch (ex: Exception) {
             log.error(ex) { "Job terminated." }
@@ -93,17 +93,15 @@ open class RefDataSyncJobLauncher(
         topic: String,
         setSuccess: (String) -> Unit,
         setFailure: (String) -> Unit,
-    ) {
+    ): Boolean {
         val msg = String.format(
             Locale.US,
             "Job $id has returned with exitCode ${exitStatus.exitCode} (" +
                 "status ${this.status.name}" +
                 "): ${stepExecutions.sumOf { it.writeCount }} $topic were synchronized.",
         )
-        if (this.status == BatchStatus.COMPLETED) {
-            setSuccess(msg)
-        } else {
-            setFailure(msg)
-        }
+        val completed = status == BatchStatus.COMPLETED
+        if (completed) setSuccess(msg) else setFailure(msg)
+        return completed
     }
 }

@@ -9,11 +9,15 @@ import io.mockk.verify
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContain
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.boot.test.system.CapturedOutput
+import org.springframework.boot.test.system.OutputCaptureExtension
 import org.springframework.batch.core.BatchStatus
 import org.springframework.batch.core.ExitStatus
 import org.springframework.batch.core.job.Job
@@ -190,6 +194,32 @@ internal class RefDataSyncJobLauncherTest {
 
         assertAllJobsSuccessfulWithNoUnsynchedPapers(expectedMessages)
 
+        verifyMocks(jobMap)
+    }
+
+    @Test
+    @ExtendWith(OutputCaptureExtension::class)
+    fun launching_withAllJobsCompleted_logsSuccess(output: CapturedOutput) {
+        every { warner.findUnsynchronizedPapers() } returns null
+        every { warner.findNewsletterswithUnsynchronizedPapers() } returns null
+        messagesWithAllStepsSuccessful(jobMap)
+
+        launcher.launch(setSuccess, setFailure, setWarning, setDone)
+
+        output.out shouldContain "Job finished successfully."
+        verifyMocks(jobMap)
+    }
+
+    @Test
+    @ExtendWith(OutputCaptureExtension::class)
+    fun launching_withFailingStep_logsIssues(output: CapturedOutput) {
+        every { warner.findUnsynchronizedPapers() } returns null
+        every { warner.findNewsletterswithUnsynchronizedPapers() } returns null
+        messagesWithFailingStepInPosition3(jobMap)
+
+        launcher.launch(setSuccess, setFailure, setWarning, setDone)
+
+        output.out shouldContain "Job finished with issues."
         verifyMocks(jobMap)
     }
 
