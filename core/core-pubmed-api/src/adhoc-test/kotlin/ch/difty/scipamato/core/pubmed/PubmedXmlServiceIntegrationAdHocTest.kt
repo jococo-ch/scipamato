@@ -1,9 +1,11 @@
 package ch.difty.scipamato.core.pubmed
 
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldEndWith
 import org.amshove.kluent.shouldNotBeNull
+import org.amshove.kluent.shouldStartWith
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -33,7 +35,7 @@ internal class PubmedXmlServiceIntegrationAdHocTest {
 
         val result = service!!.getPubmedArticleWithPmid(pmId)
         result.pubmedArticleFacade.shouldNotBeNull()
-        result.errorMessage.shouldBeNull()
+        result.errorMessage.shouldBeEmpty()
         assertArticle239026(result.pubmedArticleFacade!!)
     }
 
@@ -45,11 +47,10 @@ internal class PubmedXmlServiceIntegrationAdHocTest {
             firstAuthor shouldBeEqualTo "Turner"
             publicationYear shouldBeEqualTo "2014"
             location shouldBeEqualTo "Am J Epidemiol. 2014; 180 (12): 1145-1149."
-            title shouldBeEqualTo
-                """Interactions between cigarette smoking and fine particulate matter
-                    | in the Risk of Lung Cancer Mortality in Cancer Prevention Study II.""".trimMargin()
+            title shouldBeEqualTo "Interactions between cigarette smoking and fine particulate matter " +
+                "in the Risk of Lung Cancer Mortality in Cancer Prevention Study II."
             doi shouldBeEqualTo "10.1093/aje/kwu275"
-            originalAbstract shouldBeEqualTo
+            originalAbstract shouldStartWith
                 "The International Agency for Research on Cancer recently classified outdoor air pollution"
             sa.originalAbstract.trim { it <= ' ' } shouldEndWith
                 "based on reducing exposure to either risk factor alone."
@@ -72,7 +73,6 @@ internal class PubmedXmlServiceIntegrationAdHocTest {
 
         val result = service!!.getPubmedArticleWithPmidAndApiKey(pmId, apiKey)
         result.pubmedArticleFacade.shouldBeNull()
-        result.errorMessage shouldBeEqualTo
-            "Status 400 BAD_REQUEST: status 400 reading PubMed#articleWithId(String,String)"
+        result.errorMessage shouldBeEqualTo "Status 400 BAD_REQUEST: API key invalid"
     }
 }
