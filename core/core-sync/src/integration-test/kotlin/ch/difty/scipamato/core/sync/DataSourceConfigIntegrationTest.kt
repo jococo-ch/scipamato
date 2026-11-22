@@ -20,7 +20,6 @@ import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy
 internal class DataSourceConfigIntegrationTest @Autowired constructor(
     @Qualifier("coreConfiguration") private val coreConfiguration: Configuration,
     @Qualifier("publicConfiguration") private val publicConfiguration: Configuration,
-    @Qualifier("batchConfiguration") private val batchConfiguration: Configuration,
     private val warner: Warner,
 ) : AbstractIntegrationTest() {
 
@@ -29,9 +28,6 @@ internal class DataSourceConfigIntegrationTest @Autowired constructor(
 
     @Test
     fun publicConfigIsProperlyWired() = assertConfiguration(publicConfiguration)
-
-    @Test
-    fun batchConfigIsProperlyWired() = assertConfiguration(batchConfiguration)
 
     @Test
     fun warnerIsWired() {

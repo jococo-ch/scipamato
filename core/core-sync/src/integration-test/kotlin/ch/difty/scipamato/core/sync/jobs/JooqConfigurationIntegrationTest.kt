@@ -19,7 +19,6 @@ import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy
 internal class JooqConfigurationIntegrationTest @Autowired constructor(
     @Qualifier("publicConfiguration") private val jooqPublicConfig: Configuration,
     @Qualifier("coreConfiguration") private val jooqCoreConfig: Configuration,
-    @Qualifier("batchConfiguration") private val jooqBatchConfig: Configuration,
 ) : AbstractIntegrationTest() {
 
     @Test
@@ -27,9 +26,6 @@ internal class JooqConfigurationIntegrationTest @Autowired constructor(
 
     @Test
     fun jooqCoreConfigIsProperlyWired() = assertConfiguration(jooqCoreConfig)
-
-    @Test
-    fun jooqBatchConfigIsProperlyWired() = assertConfiguration(jooqBatchConfig)
 
     private fun assertConfiguration(config: Configuration) {
         config.dialect() shouldBeEqualTo SQLDialect.POSTGRES
