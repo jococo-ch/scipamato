@@ -31,7 +31,6 @@ springMockk = "5.0.1"
 univocityParsers = "2.9.1"
 wicket = "10.12.0"
 wicketBootstrap = "7.0.16"
-wicketJqueryUi = "10.0.0-M1"
 wicketSpringBootStarter = "5.0.0"
 wicketstuff = "10.12.0"
 
@@ -109,8 +108,6 @@ wicketBootstrap-core = { module = "de.agilecoders.wicket:wicket-bootstrap-core",
 wicketBootstrap-extensions = { module = "de.agilecoders.wicket:wicket-bootstrap-extensions", version.ref = "wicketBootstrap" }
 wicketBootstrap-sass = { module = "de.agilecoders.wicket:wicket-bootstrap-sass", version.ref = "wicketBootstrap" }
 wicketBootstrap-themes = { module = "de.agilecoders.wicket:wicket-bootstrap-themes", version.ref = "wicketBootstrap" }
-wicketJqueryUi = { module = "com.googlecode.wicket-jquery-ui:wicket-jquery-ui", version.ref = "wicketJqueryUi" }
-wicketJqueryUi-theme-uilightness = { module = "com.googlecode.wicket-jquery-ui:wicket-jquery-ui-theme-uilightness", version.ref = "wicketJqueryUi" }
 wicketstuff-annotation = { module = "org.wicketstuff:wicketstuff-annotation", version.ref = "wicketstuff" }
 wicketstuff-jasperreports = { module = "org.wicketstuff:wicketstuff-jasperreports", version.ref = "wicketstuff" }
 
