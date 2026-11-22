@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.web.paper.result
 
 import de.agilecoders.wicket.core.Bootstrap
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn
@@ -47,6 +48,22 @@ internal class PageJumpNavigationToolbarTest : FunSpec({
         jumpTo("3")
 
         table.currentPage shouldBe 2L
+    }
+
+    context("a page number out of range is limited to the existing pages") {
+        withData(
+            nameFn = { (input, expectedPageIndex) -> "$input -> page index $expectedPageIndex" },
+            "0" to 0L,
+            "-3" to 0L,
+            "6" to 4L,
+            "99" to 4L,
+        ) { (input, expectedPageIndex) ->
+            val table = startTable()
+
+            jumpTo(input)
+
+            table.currentPage shouldBe expectedPageIndex
+        }
     }
 })
 
