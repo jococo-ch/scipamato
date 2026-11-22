@@ -12,10 +12,10 @@ import com.ninjasquad.springmockk.MockkBean
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.dropdown.MenuBookmarkablePageLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.verify
+import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
 import org.apache.wicket.markup.html.WebMarkupContainer
 import org.apache.wicket.markup.html.form.Form
 import org.junit.jupiter.api.AfterEach
@@ -61,7 +61,7 @@ internal abstract class PaperListPageTest : BasePageTest<PaperListPage>() {
 
     fun assertResultPanel(b: String) {
         tester.assertComponent(b, ResultPanel::class.java)
-        tester.assertComponent("$b:table", BootstrapDefaultDataTable::class.java)
+        tester.assertComponent("$b:table", DataTable::class.java)
     }
 
     fun assertPageLinkButton(index: Int, position: String, expectedLabelText: String?) {

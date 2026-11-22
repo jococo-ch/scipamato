@@ -8,7 +8,6 @@ import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.web.common.PanelTest
 import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.verify
@@ -16,6 +15,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.apache.wicket.ajax.markup.html.AjaxLink
+import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
 import org.apache.wicket.markup.html.link.ResourceLink
 import org.apache.wicket.markup.html.panel.Panel
 import org.apache.wicket.util.tester.TagTester
@@ -68,7 +68,7 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
         val b = PANEL_ID
         tester.assertComponent(b, Panel::class.java)
         var bb = "$b:table"
-        tester.assertComponent(bb, BootstrapDefaultDataTable::class.java)
+        tester.assertComponent(bb, DataTable::class.java)
         assertTableRow("$bb:body:rows:1:cells")
         bb = "$b:summaryLink"
         tester.assertComponent(bb, ResourceLink::class.java)
@@ -133,6 +133,22 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
         titleTagTester.name shouldBeEqualTo "i"
 
         verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
+        verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
+    }
+
+    @Test
+    fun withMoreThanOnePage_offersToJumpToAPage() {
+        every { paperSlimServiceMock.countBySearchOrder(searchOrder) } returns 2 * ROWS_PER_PAGE
+
+        tester.startComponentInPage(makePanel())
+
+        tester.assertComponent(
+            "$PANEL_ID:table:topToolbars:toolbars:1:span:navigator",
+            PageJumpPagingNavigator::class.java
+        )
+
+        verify { paperSlimServiceMock.countBySearchOrder(searchOrder) }
         verify { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
     }
