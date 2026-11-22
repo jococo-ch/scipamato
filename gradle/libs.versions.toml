@@ -30,7 +30,7 @@ springDependencyManagementPlugin = "1.1.7"
 springMockk = "5.0.1"
 univocityParsers = "2.9.1"
 wicket = "10.12.0"
-wicketBootstrap = "7.0.16"
+wicketBootstrap = "8.0.1"
 wicketSpringBootStarter = "5.0.0"
 wicketstuff = "10.12.0"
 
