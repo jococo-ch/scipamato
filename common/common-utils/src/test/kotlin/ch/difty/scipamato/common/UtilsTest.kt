@@ -2,21 +2,10 @@ package ch.difty.scipamato.common
 
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
-import java.sql.Timestamp
 
 private const val PROPERTY_KEY = "propertyKey"
 
 internal class UtilsTest {
-
-    //region:toLocalDateTime
-
-    @Test
-    fun tsOf_withNonNullDate() {
-        val ts = Timestamp.valueOf("2017-01-03 13:55:12.123")
-        ts.toLocalDateTime().toTimestamp() shouldBeEqualTo ts
-    }
-
-    //endregion
 
     //region:asProperty
 

@@ -1,17 +1,10 @@
 package ch.difty.scipamato.common
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import java.sql.Timestamp
-import java.time.LocalDateTime
 
 fun logger() = KotlinLogging.logger {}
 
 private val log = logger()
-
-/**
- * Converts a [LocalDateTime] into a [Timestamp].
- */
-fun LocalDateTime.toTimestamp(): Timestamp = Timestamp.valueOf(this)
 
 /**
  * Derive an enum of type [T] from a configuration [this@toProperty], all [values] of the enum (`T.values`),

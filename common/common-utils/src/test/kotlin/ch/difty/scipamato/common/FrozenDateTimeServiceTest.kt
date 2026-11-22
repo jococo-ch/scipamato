@@ -13,11 +13,6 @@ internal class FrozenDateTimeServiceTest {
     }
 
     @Test
-    fun gettingTimestamp() {
-        service.currentTimestamp.toString() shouldBeEqualTo "2016-12-09 06:02:13.0"
-    }
-
-    @Test
     fun gettingCurrentDate() {
         service.currentDate.toString() shouldBeEqualTo "2016-12-09"
     }
