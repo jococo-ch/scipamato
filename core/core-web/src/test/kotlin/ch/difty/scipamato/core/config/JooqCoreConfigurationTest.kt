@@ -85,10 +85,6 @@ internal class JooqCoreConfigurationTest {
     @Qualifier("publicConfiguration")
     private lateinit var jooqPublicConfig: Configuration
 
-    @Autowired
-    @Qualifier("batchConfiguration")
-    private lateinit var jooqBatchConfig: Configuration
-
     @Test
     @Throws(SQLException::class)
     fun assertJooqPublicConfigIsProperlyWired() {
@@ -99,12 +95,6 @@ internal class JooqCoreConfigurationTest {
     @Throws(SQLException::class)
     fun assertJooqCoreConfigIsProperlyWired() {
         assertConfiguration(jooqCoreConfig)
-    }
-
-    @Test
-    @Throws(SQLException::class)
-    fun assertJooqBatchConfigIsProperlyWired() {
-        assertConfiguration(jooqBatchConfig)
     }
 
     @Throws(SQLException::class)

@@ -11,5 +11,5 @@ open class TestApplication {
 
     @Bean
     @Primary
-    open fun dateTimeService(): DateTimeService = FrozenDateTimeService()
+    open fun frozenDateTimeService(): DateTimeService = FrozenDateTimeService()
 }

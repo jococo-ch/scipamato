@@ -35,7 +35,7 @@ internal class HikariDatasourceTestSettingsIntegrationTest : AbstractIntegration
         ds.connectionTimeout shouldBeEqualTo 10000
         ds.idleTimeout shouldBeEqualTo 600000
         ds.maxLifetime shouldBeEqualTo 1800000
-        ds.minimumIdle shouldBeEqualTo -1
+        ds.minimumIdle shouldBeEqualTo 2
         ds.maximumPoolSize shouldBeEqualTo 2
         ds.poolName shouldBeEqualTo "SciPaMaTo-Batch-HikariCP"
         ds.isReadOnly.shouldBeFalse()

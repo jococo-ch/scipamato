@@ -43,13 +43,6 @@ internal class DataSourceConfigTest {
     }
 
     @Test
-    fun batchConfiguration() {
-        val config = config.batchConfiguration()
-        val connectionProvider = config.connectionProvider()
-        connectionProvider shouldBeInstanceOf DataSourceConnectionProvider::class
-    }
-
-    @Test
     fun dslContext() {
         val context = config.dslContext()
         context.shouldNotBeNull()
@@ -58,12 +51,6 @@ internal class DataSourceConfigTest {
     @Test
     fun publicDslContext() {
         val context = config.publicDslContext()
-        context.shouldNotBeNull()
-    }
-
-    @Test
-    fun batchDslContext() {
-        val context = config.batchDslContext()
         context.shouldNotBeNull()
     }
 

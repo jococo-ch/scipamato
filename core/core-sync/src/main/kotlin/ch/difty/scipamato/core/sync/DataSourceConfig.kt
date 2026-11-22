@@ -151,24 +151,6 @@ open class DataSourceConfig(
         DataSourceTransactionManager(batchDataSource())
 
     @Bean
-    open fun batchTransactionProvider(): SpringTransactionProvider =
-        SpringTransactionProvider(batchTransactionManager())
-
-    /**
-     * @return [org.jooq.Configuration] for spring batch
-     */
-    @Bean
-    open fun batchConfiguration(): org.jooq.Configuration =
-        newJooqConfiguration(batchDataSource(), batchTransactionProvider())
-
-    /**
-     * @return [DSLContext] for batch on scipamato-core
-     */
-    @Bean
-    open fun batchDslContext(): DSLContext =
-        DSL.using(batchConfiguration())
-
-    @Bean
     open fun unsynchronizedEntitiesWarner(@Qualifier("dslContext") jooqCore: DSLContext): Warner =
         UnsynchronizedEntitiesWarner(jooqCore)
 }
