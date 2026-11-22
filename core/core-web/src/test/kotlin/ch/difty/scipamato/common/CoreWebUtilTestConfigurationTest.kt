@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test
 internal class CoreWebUtilTestConfigurationTest {
 
     @Test
-    fun dateTimeService() {
+    fun frozenDateTimeService() {
         val uc = CoreWebUtilTestConfiguration()
-        uc.dateTimeService() shouldBeInstanceOf FrozenDateTimeService::class
+        uc.frozenDateTimeService() shouldBeInstanceOf FrozenDateTimeService::class
     }
 }

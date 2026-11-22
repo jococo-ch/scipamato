@@ -9,5 +9,5 @@ open class CoreWebUtilTestConfiguration {
 
     @Bean
     @Primary
-    open fun dateTimeService(): DateTimeService = FrozenDateTimeService()
+    open fun frozenDateTimeService(): DateTimeService = FrozenDateTimeService()
 }
