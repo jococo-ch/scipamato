@@ -42,8 +42,6 @@ dependencies {
     implementation(project(":common-wicket"))
     implementation(libs.spring.boot.starter.security)
     implementation(libs.coroutines.core)
-    implementation(libs.wicketJqueryUi)
-    implementation(libs.wicketJqueryUi.theme.uilightness)
     implementation(libs.wicketstuff.jasperreports) {
         exclude("net.sf.jasperreports", "jasperreports")
         exclude("commons-logging", "commons-logging")

@@ -6,16 +6,20 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic
 import ch.difty.scipamato.core.web.authentication.LoginPage
 import ch.difty.scipamato.core.web.common.BasePageTest
 import ch.difty.scipamato.core.web.paper.list.PaperListPage
-import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import io.mockk.every
 import io.mockk.verify
 import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldContain
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotContain
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
+import org.apache.wicket.markup.html.WebMarkupContainer
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
+import org.apache.wicket.util.tester.TagTester
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
@@ -49,7 +53,7 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
         val b = "form"
         tester.assertComponent(b, Form::class.java)
         var bb = "$b:sortable"
-        tester.assertComponent(bb, Sortable::class.java)
+        tester.assertComponent(bb, WebMarkupContainer::class.java)
         bb += ":items:"
         for (i in topics.indices) tester.assertLabel("$bb$i:item", "topic" + (i + 1))
         bb = "$b:submit"
@@ -104,6 +108,31 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
         tester.assertNoInfoMessage()
         verify { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(NEWSLETTER_ID) }
         verify { newsletterTopicServiceMock.saveSortedNewsletterTopics(NEWSLETTER_ID, topics) }
+    }
+
+    @Test
+    fun renderedTopics_areSortableWithJQueryUi_andWriteTheirOrderIntoTheOrderField() {
+        tester.startPage(makePage())
+        val listId = tester.getComponentFromLastRenderedPage("form:sortable").markupId
+        val orderId = tester.getComponentFromLastRenderedPage("form:order").markupId
+        val response = tester.lastResponseAsString
+
+        response shouldContain "webjars/jquery-ui/"
+        response shouldNotContain "com.googlecode.wicket.jquery.ui"
+        response shouldContain "$('#$listId').sortable("
+        response shouldContain "$('#$orderId').val("
+        for (t in topics)
+            TagTester.createTagsByAttribute(response, "data-id", t.newsletterTopicId.toString(), false)
+                .shouldHaveSize(1)
+    }
+
+    @Test
+    fun clickSubmit_withTopicOrderChangedInBrowser_savesTopicsInThatOrder() {
+        tester.startPage(makePage())
+        tester.newFormTester("form").setValue("order", "2,1")
+        tester.executeAjaxEvent("form:submit", "click")
+        tester.assertNoErrorMessage()
+        verify { newsletterTopicServiceMock.saveSortedNewsletterTopics(NEWSLETTER_ID, listOf(topics[1], topics[0])) }
     }
 
     @Test
