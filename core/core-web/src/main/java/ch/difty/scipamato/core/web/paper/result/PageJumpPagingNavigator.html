@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:wicket="https://wicket.apache.org">
+<wicket:panel>
+    <li wicket:id="firstItem" class="page-item"><a wicket:id="first" class="page-link first">&lt;&lt;</a></li>
+    <li wicket:id="prevItem" class="page-item"><a wicket:id="prev" class="page-link prev" rel="prev">&lt;</a></li>
+    <li wicket:id="navigation" class="page-item"><a wicket:id="pageLink">
+        <wicket:container wicket:id="pageNumber">5</wicket:container>
+    </a></li>
+    <li wicket:id="nextItem" class="page-item"><a wicket:id="next" class="page-link next" rel="next">&gt;</a></li>
+    <li wicket:id="lastItem" class="page-item"><a wicket:id="last" class="page-link last">&gt;&gt;</a></li>
+    <li class="page-item">
+        <form wicket:id="jumpForm" class="d-flex">
+            <input wicket:id="pageNumber" type="number" class="form-control form-control-sm"/>
+        </form>
+    </li>
+</wicket:panel>
+</html>
