@@ -54,6 +54,15 @@ internal class PubmedArticleResultTest {
     }
 
     @Test
+    fun withNoFacade_withStatus400_withCurrentFeignMessage_messageIsHttpStatusPlusErrorTag() {
+        val status = HttpStatus.BAD_REQUEST
+        val msg =
+            """[400 ] during [GET] to [https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=25395026&api_key=xxx&retmode=xml&version=2.0] [PubMed#articleWithId(String,String)]: [{"error":"API key invalid","api-key":"xxx","type":"invalid",
+                |"status":"unknown"}]""".trimMargin()
+        assertPar(PubmedArticleResult(null, status, msg), null, "Status 400 BAD_REQUEST: API key invalid")
+    }
+
+    @Test
     fun withNoFacade_withStatus400_witValidMessage_messageIsHttpStatusPlusRawMessage() {
         val status = HttpStatus.BAD_REQUEST
         val msg = "status 400 reading PubMed#articleWithId(String,String); content:\nbar"
