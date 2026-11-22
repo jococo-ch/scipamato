@@ -2,6 +2,39 @@ description = "SciPaMaTo-Core :: Synchronization Project"
 
 plugins {
     id("scipamato-adhoc-test")
+    id("scipamato-integration-test")
+}
+
+testing {
+    suites {
+        @Suppress("unused")
+        val integrationTest = named<JvmTestSuite>("integrationTest") {
+            dependencies {
+                implementation(libs.testcontainers.testcontainers)
+                implementation(libs.testcontainers.junitJupiter)
+                implementation(libs.testcontainers.postgresql)
+                implementation(libs.flyway.core)
+                runtimeOnly(libs.flyway.postgresql)
+                runtimeOnly(libs.postgresql)
+            }
+            targets {
+                all {
+                    testTask.configure {
+                        val migrations = mapOf(
+                            "scipamato.it.core.migrations" to "core/core-persistence-jooq",
+                            "scipamato.it.public.migrations" to "public/public-persistence-jooq",
+                        )
+                        migrations.forEach { (property, project) ->
+                            val dirs = listOf("main/resources", "integration-test/resources")
+                                .map { rootDir.resolve("$project/src/$it/db/migration") }
+                            inputs.files(dirs).withPropertyName(property)
+                            systemProperty(property, dirs.joinToString(",") { "filesystem:$it" })
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 /**
@@ -33,8 +66,6 @@ dependencies {
     testImplementation(testFixtures(project(":common-utils")))
 
     testAnnotationProcessor(libs.lombok)
-
-//    integrationTestRuntimeOnly(libs.postgresql)
 }
 
 tasks {

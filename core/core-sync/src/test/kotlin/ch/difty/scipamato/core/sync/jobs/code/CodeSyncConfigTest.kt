@@ -5,12 +5,14 @@ import io.mockk.every
 import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
+import org.amshove.kluent.shouldBeTrue
 import org.jooq.DSLContext
 import org.jooq.SQLDialect
 import org.jooq.impl.DSL
 import org.jooq.tools.jdbc.MockConnection
 import org.jooq.tools.jdbc.MockDataProvider
 import org.junit.jupiter.api.Test
+import org.springframework.batch.core.job.parameters.RunIdIncrementer
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
@@ -40,6 +42,15 @@ internal class CodeSyncConfigTest {
     @Test
     fun jobName() {
         config.jobName shouldBeEqualTo "syncCodeJob"
+    }
+
+    @Test
+    fun job() {
+        val job = config.syncCodeJob()
+
+        job.name shouldBeEqualTo "syncCodeJob"
+        job.jobParametersIncrementer shouldBeInstanceOf RunIdIncrementer::class
+        job.isRestartable.shouldBeTrue()
     }
 
     @Test

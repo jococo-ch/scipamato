@@ -95,6 +95,16 @@ internal class NewStudySyncConfigTest {
     }
 
     @Test
+    fun makingEntity_withSingleAuthor_usesFirstAuthorOnly() {
+        val resultSet = mockk<ResultSet>(relaxed = true) {
+            every { getString("first_author") } returns "Yano"
+            every { getString("authors") } returns "Yano E."
+        }
+
+        config.makeEntity(resultSet).authors shouldBeEqualTo "Yano"
+    }
+
+    @Test
     fun pseudoFkDcs() {
         config.pseudoFkDcs.toString() shouldBeEqualTo
             """delete from "public"."new_study"
