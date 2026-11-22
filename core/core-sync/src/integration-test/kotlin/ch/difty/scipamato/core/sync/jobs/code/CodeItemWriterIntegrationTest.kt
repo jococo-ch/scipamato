@@ -8,7 +8,6 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
-import java.sql.Timestamp
 import java.time.LocalDateTime
 
 private const val CODE_EXISTING = "1F"
@@ -27,7 +26,7 @@ internal class CodeItemWriterIntegrationTest : AbstractItemWriterIntegrationTest
 
         writer.writeOne(
             newPublicCode(
-                CODE_NEW, LANG_CODE, CODE_CLASS_NEW, CODE_NEW, null, SORT_NEW, null, null, null, Timestamp.valueOf(LocalDateTime.now())
+                CODE_NEW, LANG_CODE, CODE_CLASS_NEW, CODE_NEW, null, SORT_NEW, null, null, null, LocalDateTime.now()
             )
         )
 

@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 /**
@@ -106,7 +106,7 @@ open class NewStudySyncConfig(
         return if (authorString?.contains(",") == true) "$firstAuthorString et al." else firstAuthorString ?: "n.a"
     }
 
-    override fun lastSynchedField(): TableField<NewStudyRecord, Timestamp> = NewStudy.NEW_STUDY.LAST_SYNCHED
+    override fun lastSynchedField(): TableField<NewStudyRecord, LocalDateTime> = NewStudy.NEW_STUDY.LAST_SYNCHED
 
     override val pseudoFkDcs: DeleteConditionStep<NewStudyRecord>?
         get() = jooqPublic

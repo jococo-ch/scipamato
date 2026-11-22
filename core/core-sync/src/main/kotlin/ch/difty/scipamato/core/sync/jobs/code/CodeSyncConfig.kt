@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 /**
@@ -100,7 +100,7 @@ open class CodeSyncConfig(
         lastSynched = getNow(),
     )
 
-    override fun lastSynchedField(): TableField<CodeRecord, Timestamp> =
+    override fun lastSynchedField(): TableField<CodeRecord, LocalDateTime> =
         PublicCodeTable.CODE.LAST_SYNCHED
 
     override val pseudoFkDcs: DeleteConditionStep<CodeRecord>?

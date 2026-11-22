@@ -5,7 +5,6 @@ import ch.difty.scipamato.core.entity.keyword.KeywordTranslation
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.junit.jupiter.api.Test
-import java.sql.Timestamp
 import java.time.LocalDateTime
 
 internal class AuditFieldsTest {
@@ -22,8 +21,8 @@ internal class AuditFieldsTest {
     @Test
     fun instantiating_withNonNullValues_providesValues() {
         val af = AuditFields(
-            Timestamp.valueOf("2017-01-01 10:11:12.123"), 1,
-            Timestamp.valueOf("2017-01-02 10:11:12.123"), 2, 3
+            LocalDateTime.parse("2017-01-01T10:11:12.123"), 1,
+            LocalDateTime.parse("2017-01-02T10:11:12.123"), 2, 3
         )
         af.created shouldBeEqualTo LocalDateTime.parse("2017-01-01T10:11:12.123")
         af.createdBy shouldBeEqualTo 1

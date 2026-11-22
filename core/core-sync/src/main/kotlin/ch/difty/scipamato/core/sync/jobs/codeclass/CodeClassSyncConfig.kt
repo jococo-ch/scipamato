@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 /**
@@ -71,7 +71,7 @@ open class CodeClassSyncConfig(
         lastSynched = getNow(),
     )
 
-    override fun lastSynchedField(): TableField<CodeClassRecord, Timestamp> =
+    override fun lastSynchedField(): TableField<CodeClassRecord, LocalDateTime> =
         PublicCodeClassTable.CODE_CLASS.LAST_SYNCHED
 
     companion object {

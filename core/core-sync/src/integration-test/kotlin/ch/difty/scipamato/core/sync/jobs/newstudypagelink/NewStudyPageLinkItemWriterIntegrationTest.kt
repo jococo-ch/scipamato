@@ -8,7 +8,6 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
-import java.sql.Timestamp
 import java.time.LocalDateTime
 
 private const val LANG_CODE = "de"
@@ -26,7 +25,7 @@ internal class NewStudyPageLinkItemWriterIntegrationTest : AbstractItemWriterInt
 
         writer.writeOne(
             newPublicNewStudyPageLink(
-                LANG_CODE, SORT_NEW, "foo", "https://a.b", null, null, null, Timestamp.valueOf(LocalDateTime.now())
+                LANG_CODE, SORT_NEW, "foo", "https://a.b", null, null, null, LocalDateTime.now()
             )
         )
 

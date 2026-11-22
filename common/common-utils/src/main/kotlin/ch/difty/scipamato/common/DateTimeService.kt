@@ -1,6 +1,5 @@
 package ch.difty.scipamato.common
 
-import java.sql.Timestamp
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -10,7 +9,6 @@ import java.time.LocalDateTime
 interface DateTimeService {
     val currentDateTime: LocalDateTime
     val currentDate: LocalDate
-    val currentTimestamp: Timestamp
 }
 
 /**
@@ -19,8 +17,6 @@ interface DateTimeService {
 class CurrentDateTimeService : DateTimeService {
     override val currentDateTime: LocalDateTime
         get() = LocalDateTime.now()
-    override val currentTimestamp: Timestamp
-        get() = Timestamp(System.currentTimeMillis())
     override val currentDate: LocalDate
         get() = LocalDate.now()
 }

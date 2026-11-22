@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 internal class CodeClassSyncConfigTest {
@@ -61,8 +61,8 @@ internal class CodeClassSyncConfigTest {
             every { getString("name") } returns "myname"
             every { getString("description") } returns "mydescription"
             every { getInt("version") } returns 2
-            every { getTimestamp("created") } returns Timestamp.valueOf("2020-04-04 12:13:14")
-            every { getTimestamp("last_modified") } returns Timestamp.valueOf("2020-04-04 13:14:15")
+            every { getObject("created", LocalDateTime::class.java) } returns LocalDateTime.parse("2020-04-04T12:13:14")
+            every { getObject("last_modified", LocalDateTime::class.java) } returns LocalDateTime.parse("2020-04-04T13:14:15")
             every { wasNull() } returns false
         }
 
@@ -73,9 +73,9 @@ internal class CodeClassSyncConfigTest {
         codeClass.name shouldBeEqualTo "myname"
         codeClass.description shouldBeEqualTo "mydescription"
         codeClass.version shouldBeEqualTo 2
-        codeClass.created.toString() shouldBeEqualTo "2020-04-04 12:13:14.0"
-        codeClass.lastModified.toString() shouldBeEqualTo "2020-04-04 13:14:15.0"
-        codeClass.lastSynched.toString() shouldBeEqualTo "2016-12-09 06:02:13.0"
+        codeClass.created.toString() shouldBeEqualTo "2020-04-04T12:13:14"
+        codeClass.lastModified.toString() shouldBeEqualTo "2020-04-04T13:14:15"
+        codeClass.lastSynched.toString() shouldBeEqualTo "2016-12-09T06:02:13"
     }
 
     @Suppress("MaxLineLength")

@@ -12,7 +12,7 @@ import io.mockk.verify
 import org.amshove.kluent.shouldBeFalse
 import org.jooq.TableField
 import org.junit.jupiter.api.Test
-import java.sql.Timestamp
+import java.time.LocalDateTime
 
 internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, Newsletter, Int,
     ch.difty.scipamato.core.db.tables.Newsletter, NewsletterRecordMapper, NewsletterFilter>() {
@@ -103,7 +103,7 @@ internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, New
                 newsletterId: Int,
                 paperId: Long,
                 newsletterTopicId: Int?,
-                ts: Timestamp?
+                ts: LocalDateTime?
             ): Int = 0
         }
         repo.mergePaperIntoNewsletter(1, 2L, 3, "en").isPresent.shouldBeFalse()

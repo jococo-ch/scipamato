@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 /**
@@ -76,7 +76,7 @@ open class NewsletterTopicSyncConfig(
         lastSynched = getNow(),
     )
 
-    override fun lastSynchedField(): TableField<NewsletterTopicRecord, Timestamp> =
+    override fun lastSynchedField(): TableField<NewsletterTopicRecord, LocalDateTime> =
         PublicNewsletterTopicTable.NEWSLETTER_TOPIC.LAST_SYNCHED
 
     companion object {

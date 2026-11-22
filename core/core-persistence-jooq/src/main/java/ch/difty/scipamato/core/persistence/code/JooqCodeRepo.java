@@ -286,7 +286,7 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
             .set(CODE.INTERNAL, codeDefinition.isInternal())
             .set(CODE.CREATED_BY, userId)
             .set(CODE.LAST_MODIFIED_BY, userId)
-            .set(CODE.LAST_MODIFIED, getTs())
+            .set(CODE.LAST_MODIFIED, now())
             .set(CODE.VERSION, CODE.VERSION.add(1))
             .returning()
             .fetchOne();
@@ -396,7 +396,7 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
             .set(CODE_TR.NAME, ct.getName())
             .set(CODE_TR.COMMENT, ct.getComment())
             .set(CODE_TR.LAST_MODIFIED_BY, userId)
-            .set(CODE_TR.LAST_MODIFIED, getTs())
+            .set(CODE_TR.LAST_MODIFIED, now())
             .set(CODE_TR.VERSION, currentNttVersion + 1)
             .where(CODE_TR.ID.eq(ct.getId()))
             .and(CODE_TR.VERSION.eq(currentNttVersion))

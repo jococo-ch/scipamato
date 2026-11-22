@@ -14,9 +14,9 @@ import org.jooq.tools.jdbc.MockDataProvider
 import org.junit.jupiter.api.Test
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.transaction.PlatformTransactionManager
-import java.sql.Date
 import java.sql.ResultSet
-import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 internal class NewsletterSyncConfigTest {
@@ -59,10 +59,10 @@ internal class NewsletterSyncConfigTest {
         val resultSet = mockk<ResultSet> {
             every { getInt("id") } returns 1
             every { getString("issue") } returns "myissue"
-            every { getDate("issue_date") } returns Date(345097788394)
+            every { getObject("issue_date", LocalDate::class.java) } returns LocalDate.parse("1980-12-08")
             every { getInt("version") } returns 3
-            every { getTimestamp("created") } returns Timestamp.valueOf("2020-04-04 12:13:14")
-            every { getTimestamp("last_modified") } returns Timestamp.valueOf("2020-04-04 13:14:15")
+            every { getObject("created", LocalDateTime::class.java) } returns LocalDateTime.parse("2020-04-04T12:13:14")
+            every { getObject("last_modified", LocalDateTime::class.java) } returns LocalDateTime.parse("2020-04-04T13:14:15")
             every { wasNull() } returns false
         }
 
@@ -72,9 +72,9 @@ internal class NewsletterSyncConfigTest {
         newsletter.issue shouldBeEqualTo "myissue"
         newsletter.issueDate.toString() shouldBeEqualTo "1980-12-08"
         newsletter.version shouldBeEqualTo 3
-        newsletter.created.toString() shouldBeEqualTo "2020-04-04 12:13:14.0"
-        newsletter.lastModified.toString() shouldBeEqualTo "2020-04-04 13:14:15.0"
-        newsletter.lastSynched.toString() shouldBeEqualTo "2016-12-09 06:02:13.0"
+        newsletter.created.toString() shouldBeEqualTo "2020-04-04T12:13:14"
+        newsletter.lastModified.toString() shouldBeEqualTo "2020-04-04T13:14:15"
+        newsletter.lastSynched.toString() shouldBeEqualTo "2016-12-09T06:02:13"
     }
 
     @Suppress("MaxLineLength")

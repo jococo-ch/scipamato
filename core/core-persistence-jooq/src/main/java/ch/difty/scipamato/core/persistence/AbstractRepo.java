@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.persistence;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.jetbrains.annotations.NotNull;
@@ -74,15 +73,7 @@ public abstract class AbstractRepo {
     }
 
     /**
-     * @return the current date as {@link Timestamp}
-     */
-    @NotNull
-    protected Timestamp getTs() {
-        return getDateTimeService().getCurrentTimestamp();
-    }
-
-    /**
-     * @return the current date as {@link Timestamp}
+     * @return the current date and time as {@link LocalDateTime}
      */
     @NotNull
     protected LocalDateTime now() {

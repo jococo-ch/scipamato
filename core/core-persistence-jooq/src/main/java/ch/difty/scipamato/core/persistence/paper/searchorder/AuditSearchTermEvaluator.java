@@ -4,7 +4,6 @@ import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -116,16 +115,16 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         final LocalDateTime ldt2 = LocalDateTime.parse(token
             .getDateSqlData()
             .substring(20), DateTimeFormatter.ofPattern(DATE_FORMAT));
-        addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt1)), DSL.val(Timestamp.valueOf(ldt2)), conditions);
+        addToConditions(token, DSL.field(fieldName), DSL.val(ldt1), DSL.val(ldt2), conditions);
     }
 
     private void handleSingleDate(@NotNull final ConditionalSupplier conditions, @NotNull final Token token, @NotNull final String fieldName) {
         final LocalDateTime ldt = LocalDateTime.parse(Objects.requireNonNull(token.getDateSqlData()), DateTimeFormatter.ofPattern(DATE_FORMAT));
-        addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt)), DSL.val(Timestamp.valueOf(ldt)), conditions);
+        addToConditions(token, DSL.field(fieldName), DSL.val(ldt), DSL.val(ldt), conditions);
     }
 
-    private void addToConditions(@NotNull final Token token, @NotNull final Field<Object> field, @NotNull final Field<Timestamp> value1,
-        @NotNull final Field<Timestamp> value2, @NotNull final ConditionalSupplier conditions) {
+    private void addToConditions(@NotNull final Token token, @NotNull final Field<Object> field, @NotNull final Field<LocalDateTime> value1,
+        @NotNull final Field<LocalDateTime> value2, @NotNull final ConditionalSupplier conditions) {
         switch (token.getType().matchType) {
         case RANGE:
             conditions.add(() -> field.between(value1, value2));

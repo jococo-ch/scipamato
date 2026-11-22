@@ -242,11 +242,11 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
                 .insertInto(PAPER_NEWSLETTER)
                 .columns(PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.PAPER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, PAPER_NEWSLETTER.HEADLINE,
                     PAPER_NEWSLETTER.CREATED, PAPER_NEWSLETTER.CREATED_BY)
-                .values(nl.getNewsletterId(), paper.getId(), nl.getTopicId(), nl.getHeadline(), getTs(), getUserId())
+                .values(nl.getNewsletterId(), paper.getId(), nl.getTopicId(), nl.getHeadline(), now(), getUserId())
                 .onDuplicateKeyUpdate()
                 .set(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, nl.getTopicId())
                 .set(PAPER_NEWSLETTER.HEADLINE, nl.getHeadline())
-                .set(PAPER_NEWSLETTER.LAST_MODIFIED, getTs())
+                .set(PAPER_NEWSLETTER.LAST_MODIFIED, now())
                 .set(PAPER_NEWSLETTER.LAST_MODIFIED_BY, getUserId())
                 .where(PAPER_NEWSLETTER.NEWSLETTER_ID
                     .eq(nl.getNewsletterId())
@@ -411,14 +411,14 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             .columns(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE,
                 PAPER_ATTACHMENT.CREATED, PAPER_ATTACHMENT.CREATED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.LAST_MODIFIED_BY,
                 PAPER_ATTACHMENT.VERSION)
-            .values(pa.getPaperId(), pa.getName(), pa.getContent(), pa.getContentType(), pa.getSize(), getDateTimeService().getCurrentTimestamp(),
-                getUserId(), getDateTimeService().getCurrentTimestamp(), getUserId(), 1)
+            .values(pa.getPaperId(), pa.getName(), pa.getContent(), pa.getContentType(), pa.getSize(), now(),
+                getUserId(), now(), getUserId(), 1)
             .onConflict(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME)
             .doUpdate()
             .set(PAPER_ATTACHMENT.CONTENT, pa.getContent())
             .set(PAPER_ATTACHMENT.CONTENT_TYPE, pa.getContentType())
             .set(PAPER_ATTACHMENT.SIZE, pa.getSize())
-            .set(PAPER_ATTACHMENT.LAST_MODIFIED, getDateTimeService().getCurrentTimestamp())
+            .set(PAPER_ATTACHMENT.LAST_MODIFIED, now())
             .set(PAPER_ATTACHMENT.LAST_MODIFIED_BY, getUserId())
             .set(PAPER_ATTACHMENT.VERSION, PAPER_ATTACHMENT.VERSION.plus(1))
             .execute();

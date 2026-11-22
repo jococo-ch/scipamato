@@ -11,7 +11,6 @@ import org.amshove.kluent.shouldBeNull
 import org.jooq.RecordMapper
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
-import java.sql.Date
 import java.time.LocalDate
 
 internal class NewsletterRecordMapperTest : RecordMapperTest<NewsletterRecord, Newsletter>() {
@@ -22,7 +21,7 @@ internal class NewsletterRecordMapperTest : RecordMapperTest<NewsletterRecord, N
     override fun makeRecord(): NewsletterRecord = NewsletterRecord().apply {
         id = ID
         issue = ISSUE
-        issueDate = Date.valueOf(ISSUE_DATE)
+        issueDate = LocalDate.parse(ISSUE_DATE)
         publicationStatus = PUBLICATION_STATUS.id
     }
 

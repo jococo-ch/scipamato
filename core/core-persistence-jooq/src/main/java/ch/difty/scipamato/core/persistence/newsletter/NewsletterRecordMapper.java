@@ -36,11 +36,7 @@ public class NewsletterRecordMapper extends EntityRecordMapper<NewsletterRecord,
     protected void mapFields(@NotNull final NewsletterRecord from, @NotNull final Newsletter to) {
         to.setId(from.getId());
         to.setIssue(from.getIssue());
-        to.setIssueDate(from.getIssueDate() != null ?
-            from
-                .getIssueDate()
-                .toLocalDate() :
-            null);
+        to.setIssueDate(from.getIssueDate());
         to.setPublicationStatus(PublicationStatus.Companion.byId(from.getPublicationStatus()));
     }
 }

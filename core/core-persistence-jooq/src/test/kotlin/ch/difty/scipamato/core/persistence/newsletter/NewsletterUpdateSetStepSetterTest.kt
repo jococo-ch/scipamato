@@ -11,7 +11,7 @@ import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import java.sql.Date
+import java.time.LocalDate
 
 internal class NewsletterUpdateSetStepSetterTest : UpdateSetStepSetterTest<NewsletterRecord, Newsletter>() {
 
@@ -30,7 +30,7 @@ internal class NewsletterUpdateSetStepSetterTest : UpdateSetStepSetterTest<Newsl
 
     override fun stepSetFixtureExceptAudit() {
         every { step.set(NEWSLETTER.ISSUE, ISSUE) } returns moreStep
-        every { moreStep.set(NEWSLETTER.ISSUE_DATE, Date.valueOf(ISSUE_DATE)) } returns moreStep
+        every { moreStep.set(NEWSLETTER.ISSUE_DATE, LocalDate.parse(ISSUE_DATE)) } returns moreStep
         every { moreStep.set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id) } returns moreStep
     }
 
@@ -50,7 +50,7 @@ internal class NewsletterUpdateSetStepSetterTest : UpdateSetStepSetterTest<Newsl
 
     override fun verifyStepSettingExceptAudit() {
         verify { step.set(NEWSLETTER.ISSUE, ISSUE) }
-        verify { moreStep.set(NEWSLETTER.ISSUE_DATE, Date.valueOf(ISSUE_DATE)) }
+        verify { moreStep.set(NEWSLETTER.ISSUE_DATE, LocalDate.parse(ISSUE_DATE)) }
         verify { moreStep.set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id) }
     }
 

@@ -1,6 +1,5 @@
 package ch.difty.scipamato.common
 
-import java.sql.Timestamp
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -12,9 +11,6 @@ class FrozenDateTimeService : DateTimeService {
 
     override val currentDateTime: LocalDateTime
         get() = FROZEN
-
-    override val currentTimestamp: Timestamp
-        get() = Timestamp.valueOf(FROZEN)
 
     override val currentDate: LocalDate
         get() = LocalDate.from(FROZEN)

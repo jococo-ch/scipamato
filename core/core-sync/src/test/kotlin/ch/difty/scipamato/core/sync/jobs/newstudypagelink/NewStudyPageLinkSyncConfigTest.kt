@@ -68,7 +68,7 @@ internal class NewStudyPageLinkSyncConfigTest {
         link.sort shouldBeEqualTo 1
         link.title shouldBeEqualTo "mytitle"
         link.url shouldBeEqualTo "myurl"
-        link.lastSynched.toString() shouldBeEqualTo "2016-12-09 06:02:13.0"
+        link.lastSynched.toString() shouldBeEqualTo "2016-12-09T06:02:13"
     }
 
     @Suppress("MaxLineLength")

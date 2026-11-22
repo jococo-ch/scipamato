@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 private const val NTTLM = "NTTLM"
@@ -106,14 +106,14 @@ open class NewStudyTopicSyncConfig(
         nttLastModified: String,
         nntLastModified: String,
         rs: ResultSet,
-    ): Timestamp? {
+    ): LocalDateTime? {
         val ts1 = getTimestamp(nttLastModified, rs)
         val ts2 = getTimestamp(nntLastModified, rs)
         if (ts1 == null || ts2 == null) return ts1 ?: ts2
-        return if (ts1.after(ts2)) ts1 else ts2
+        return if (ts1.isAfter(ts2)) ts1 else ts2
     }
 
-    override fun lastSynchedField(): TableField<NewStudyTopicRecord, Timestamp> =
+    override fun lastSynchedField(): TableField<NewStudyTopicRecord, LocalDateTime> =
         NewStudyTopic.NEW_STUDY_TOPIC.LAST_SYNCHED
 
     override val pseudoFkDcs: DeleteConditionStep<NewStudyTopicRecord>?

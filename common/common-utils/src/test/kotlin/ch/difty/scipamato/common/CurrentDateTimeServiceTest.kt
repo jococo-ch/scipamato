@@ -25,12 +25,4 @@ internal class CurrentDateTimeServiceTest {
         val ld = dts.currentDate
         ld shouldBeEqualTo snapshot
     }
-
-    @Test
-    fun gettingCurrentTimeStamp() {
-        val snapshot = LocalDateTime.now()
-        val ldt = dts.currentTimestamp.toLocalDateTime()
-        ldt.shouldBeOnOrAfter(snapshot.minusSeconds(1))
-        ldt.shouldBeOnOrBefore(snapshot.plusSeconds(1))
-    }
 }

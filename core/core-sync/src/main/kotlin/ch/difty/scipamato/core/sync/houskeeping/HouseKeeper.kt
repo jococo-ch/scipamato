@@ -10,7 +10,7 @@ import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.StepContribution
 import org.springframework.batch.core.step.tasklet.Tasklet
 import org.springframework.batch.infrastructure.repeat.RepeatStatus
-import java.sql.Timestamp
+import java.time.LocalDateTime
 
 private val log = logger()
 
@@ -39,7 +39,7 @@ private val log = logger()
 @Slf4j
 class HouseKeeper<R : UpdatableRecordImpl<*>?>(
     private val jooqPublic: DSLContext,
-    private val lastSynchedField: TableField<R, Timestamp>,
+    private val lastSynchedField: TableField<R, LocalDateTime>,
     private val dateTimeService: DateTimeService,
     private val graceTimeInMinutes: Int,
     private val entityName: String
@@ -49,7 +49,7 @@ class HouseKeeper<R : UpdatableRecordImpl<*>?>(
         contribution: StepContribution,
         chunkContext: ChunkContext
     ): RepeatStatus {
-        val cutOff = Timestamp.valueOf(dateTimeService.currentDateTime.minusMinutes(graceTimeInMinutes.toLong()))
+        val cutOff = dateTimeService.currentDateTime.minusMinutes(graceTimeInMinutes.toLong())
 
         val result = jooqPublic
             .deleteFrom(lastSynchedField.table)

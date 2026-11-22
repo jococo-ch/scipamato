@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 /**
@@ -138,7 +138,7 @@ open class PaperSyncConfig(
         .getArray(alias)
         .array as Array<String>
 
-    override fun lastSynchedField(): TableField<PaperRecord, Timestamp> = PublicPaperTable.PAPER.LAST_SYNCHED
+    override fun lastSynchedField(): TableField<PaperRecord, LocalDateTime> = PublicPaperTable.PAPER.LAST_SYNCHED
 
     companion object {
         private const val TOPIC = "paper"
