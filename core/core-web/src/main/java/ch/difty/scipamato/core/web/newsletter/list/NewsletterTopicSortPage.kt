@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.web.newsletter.list
 import ch.difty.scipamato.core.entity.newsletter.Newsletter
 import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic
 import ch.difty.scipamato.core.persistence.NewsletterTopicService
+import ch.difty.scipamato.core.web.behavior.SortableBehavior
 import ch.difty.scipamato.core.web.common.BasePage
 import ch.difty.scipamato.core.web.paper.list.PaperListPage
 import com.googlecode.wicket.jquery.ui.JQueryIcon
@@ -46,8 +47,9 @@ class NewsletterTopicSortPage(
 
         queue(newHeader("header"))
         queue(Form<Unit>("form"))
-        queue(HiddenField("order", order))
-        queue(newSortable("sortable", topics))
+        val orderField = HiddenField("order", order)
+        queue(orderField)
+        queue(newSortable("sortable", topics).add(SortableBehavior(orderField)))
         queue(newSubmitButton("submit"))
         queue(newCancelButton("cancel"))
     }
