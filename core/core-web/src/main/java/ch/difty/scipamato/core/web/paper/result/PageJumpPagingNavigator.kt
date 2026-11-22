@@ -16,7 +16,7 @@ class PageJumpPagingNavigator(id: String, pageable: IPageable) : BootstrapPaging
         val pageNumber = NumberTextField("pageNumber", Model<Long>(), Long::class.javaObjectType)
         add(object : Form<Unit>("jumpForm") {
             override fun onSubmit() {
-                // not yet implemented
+                pageNumber.modelObject?.let { pageable.currentPage = it - 1 }
             }
 
             private val serialVersionUID: Long = 1L
