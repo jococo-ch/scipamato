@@ -6,7 +6,6 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic
 import ch.difty.scipamato.core.web.authentication.LoginPage
 import ch.difty.scipamato.core.web.common.BasePageTest
 import ch.difty.scipamato.core.web.paper.list.PaperListPage
-import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import io.mockk.every
 import io.mockk.verify
@@ -16,6 +15,7 @@ import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotContain
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
+import org.apache.wicket.markup.html.WebMarkupContainer
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
@@ -53,7 +53,7 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
         val b = "form"
         tester.assertComponent(b, Form::class.java)
         var bb = "$b:sortable"
-        tester.assertComponent(bb, Sortable::class.java)
+        tester.assertComponent(bb, WebMarkupContainer::class.java)
         bb += ":items:"
         for (i in topics.indices) tester.assertLabel("$bb$i:item", "topic" + (i + 1))
         bb = "$b:submit"
