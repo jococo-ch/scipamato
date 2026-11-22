@@ -33,8 +33,7 @@ open class DataSourceConfig(
     private val jooqProperties: JooqProperties
 ) {
 
-    @Bean
-    open fun settings(): Settings =
+    private fun settings(): Settings =
         DefaultConfiguration()
             .settings()
             .withExecuteWithOptimisticLocking(true)
