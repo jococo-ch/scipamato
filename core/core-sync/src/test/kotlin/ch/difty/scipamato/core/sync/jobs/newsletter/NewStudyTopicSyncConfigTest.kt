@@ -5,6 +5,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
+import org.amshove.kluent.shouldBeNull
 import org.jooq.DSLContext
 import org.jooq.SQLDialect
 import org.jooq.impl.DSL
@@ -93,5 +94,44 @@ internal class NewStudyTopicSyncConfigTest {
             |  select distinct "public"."newsletter_topic"."id"
             |  from "public"."newsletter_topic"
             |)""".trimMargin()
+    }
+
+    @Test
+    fun makingEntity_withNullSort_usesMaxInt() {
+        makeEntity(sortIsNull = true, nttLastModified = EARLIER, nntLastModified = EARLIER)
+            .sort shouldBeEqualTo Int.MAX_VALUE
+    }
+
+    @Test
+    fun makingEntity_withBothLastModifiedNull() {
+        makeEntity(nttLastModified = null, nntLastModified = null).lastModified.shouldBeNull()
+    }
+
+    @Test
+    fun makingEntity_withNttLastModifiedNull_usesNnt() {
+        makeEntity(nttLastModified = null, nntLastModified = EARLIER).lastModified shouldBeEqualTo EARLIER
+    }
+
+    @Test
+    fun makingEntity_withNntLastModifiedNull_usesNtt() {
+        makeEntity(nttLastModified = EARLIER, nntLastModified = null).lastModified shouldBeEqualTo EARLIER
+    }
+
+    @Test
+    fun makingEntity_withNttLastModifiedLater_usesNtt() {
+        makeEntity(nttLastModified = LATER, nntLastModified = EARLIER).lastModified shouldBeEqualTo LATER
+    }
+
+    private fun makeEntity(sortIsNull: Boolean = false, nttLastModified: Timestamp?, nntLastModified: Timestamp?) =
+        config.makeEntity(mockk(relaxed = true) {
+            every { getInt("sort") } returns if (sortIsNull) 0 else 1
+            every { wasNull() } returnsMany listOf(false, false, sortIsNull, false)
+            every { getTimestamp("NTTLM") } returns nttLastModified
+            every { getTimestamp("NNTLM") } returns nntLastModified
+        })
+
+    private companion object {
+        val EARLIER: Timestamp = Timestamp.valueOf("2020-04-04 13:14:15")
+        val LATER: Timestamp = Timestamp.valueOf("2020-04-04 13:14:16")
     }
 }

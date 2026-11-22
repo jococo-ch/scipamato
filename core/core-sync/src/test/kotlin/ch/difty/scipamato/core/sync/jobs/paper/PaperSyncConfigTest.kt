@@ -5,6 +5,7 @@ import ch.difty.scipamato.core.db.Tables.CODE
 import ch.difty.scipamato.core.sync.code.CodeAggregator
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldBeNull
@@ -124,5 +125,26 @@ internal class PaperSyncConfigTest {
     @Test
     fun pseudoFkDcs() {
         config.pseudoFkDcs.shouldBeNull()
+    }
+
+    @Test
+    fun settingInternalCodes() {
+        verify { codeAggregator.setInternalCodes(emptyList()) }
+    }
+
+    @Test
+    fun makingEntity_withNullNumericColumns() {
+        val resultSet = mockk<ResultSet>(relaxed = true) {
+            every { getArray("codes") } returns mockk { every { array } returns arrayOf("mycodes") }
+            every { wasNull() } returns true
+        }
+
+        val paper = config.makeEntity(resultSet)
+
+        paper.id.shouldBeNull()
+        paper.number.shouldBeNull()
+        paper.pmId.shouldBeNull()
+        paper.publicationYear.shouldBeNull()
+        paper.version.shouldBeNull()
     }
 }
