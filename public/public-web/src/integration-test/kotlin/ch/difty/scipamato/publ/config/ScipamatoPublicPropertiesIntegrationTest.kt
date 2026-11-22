@@ -61,11 +61,10 @@ internal class ScipamatoPublicPropertiesIntegrationTest : AbstractIntegrationTes
         appProperties.authorsAbbreviatedMaxLength shouldBeEqualTo 60
     }
 
-    @get:Test
-    val isResponsiveIframeSupportEnabled: Unit
-        get() {
-            appProperties.isResponsiveIframeSupportEnabled.shouldBeFalse()
-        }
+    @Test
+    fun isResponsiveIframeSupportEnabled() {
+        appProperties.isResponsiveIframeSupportEnabled.shouldBeFalse()
+    }
 
     @Test
     fun numberOfPreviousNewslettersInArchive() {
