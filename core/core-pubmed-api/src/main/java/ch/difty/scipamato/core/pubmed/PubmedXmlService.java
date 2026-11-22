@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.regex.Pattern;
 
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,8 @@ import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
 @Service
 @Slf4j
 public class PubmedXmlService implements PubmedArticleService {
+
+    private static final Pattern API_KEY = Pattern.compile("(api_key=|\"api-key\":\")[^&\"\\]\\s]*");
 
     private final Unmarshaller unmarshaller;
     private final PubMed       pubMed;
@@ -76,12 +79,17 @@ public class PubmedXmlService implements PubmedArticleService {
         try {
             return new PubmedArticleFeignResult(articleSetSupplier.get());
         } catch (final FeignException fex) {
-            log.error("feign exception: {}", fex.getMessage());
+            log.error("feign exception: {}", withoutApiKey(fex.getMessage()));
             return new PubmedArticleFeignResult(fex);
         } catch (final Exception ex) {
             log.error("Unexpected error: {}", ex.getMessage());
             return new PubmedArticleFeignResult(ex.getMessage());
         }
+    }
+
+    @Nullable
+    private static String withoutApiKey(@Nullable final String message) {
+        return message == null ? null : API_KEY.matcher(message).replaceAll("$1***");
     }
 
     /**
@@ -152,7 +160,7 @@ public class PubmedXmlService implements PubmedArticleService {
 
         PubmedArticleFeignResult(@NotNull final FeignException ex) {
             pubmedArticleSet = null;
-            errorMessage = ex.getLocalizedMessage();
+            errorMessage = withoutApiKey(ex.getLocalizedMessage());
             httpStatus = HttpStatus.resolve(ex.status());
         }
 
