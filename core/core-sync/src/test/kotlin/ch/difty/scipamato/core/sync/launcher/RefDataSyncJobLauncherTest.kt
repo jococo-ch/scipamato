@@ -211,6 +211,19 @@ internal class RefDataSyncJobLauncherTest {
     }
 
     @Test
+    @ExtendWith(OutputCaptureExtension::class)
+    fun launching_withFailingStep_logsIssues(output: CapturedOutput) {
+        every { warner.findUnsynchronizedPapers() } returns null
+        every { warner.findNewsletterswithUnsynchronizedPapers() } returns null
+        messagesWithFailingStepInPosition3(jobMap)
+
+        launcher.launch(setSuccess, setFailure, setWarning, setDone)
+
+        output.out shouldContain "Job finished with issues."
+        verifyMocks(jobMap)
+    }
+
+    @Test
     fun launching_withFailingStep_failsJob() {
         every { warner.findUnsynchronizedPapers() } returns null
         every { warner.findNewsletterswithUnsynchronizedPapers() } returns null
