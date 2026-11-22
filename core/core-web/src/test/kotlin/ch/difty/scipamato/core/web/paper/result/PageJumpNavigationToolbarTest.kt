@@ -65,6 +65,10 @@ internal class PageJumpNavigationToolbarTest : FunSpec({
             val field = TagTester.createTagByAttribute(tester.lastResponseAsString, "name", "pageNumber")
             field.getAttribute("placeholder") shouldBe placeholder
             field.getAttribute("title") shouldBe title
+
+            val label = TagTester.createTagByName(tester.lastResponseAsString, "label")
+            label.getAttribute("for") shouldBe field.getAttribute("id")
+            label.value shouldBe title
         }
     }
 
