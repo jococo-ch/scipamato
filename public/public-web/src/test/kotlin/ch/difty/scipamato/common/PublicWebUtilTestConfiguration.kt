@@ -9,7 +9,7 @@ open class PublicWebUtilTestConfiguration {
 
     @Bean
     @Primary
-    open fun dateTimeService(): DateTimeService {
+    open fun frozenDateTimeService(): DateTimeService {
         return FrozenDateTimeService()
     }
 }
