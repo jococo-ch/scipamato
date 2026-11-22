@@ -12,8 +12,10 @@ import org.apache.wicket.markup.Markup
 import org.apache.wicket.mock.MockApplication
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
+import org.apache.wicket.util.tester.TagTester
 import org.apache.wicket.util.tester.WicketTester
 import java.io.Serializable
+import java.util.Locale
 
 internal class PageJumpNavigationToolbarTest : FunSpec({
 
@@ -48,6 +50,22 @@ internal class PageJumpNavigationToolbarTest : FunSpec({
         jumpTo("3")
 
         table.currentPage shouldBe 2L
+    }
+
+    context("the page number field is labelled in the session language") {
+        withData(
+            nameFn = { (locale, placeholder, title) -> "$locale: $placeholder / $title" },
+            Triple(Locale.ENGLISH, "Page", "Jump to page"),
+            Triple(Locale.GERMAN, "Seite", "Zu Seite springen"),
+        ) { (locale, placeholder, title) ->
+            tester.session.locale = locale
+
+            startTable()
+
+            val field = TagTester.createTagByAttribute(tester.lastResponseAsString, "name", "pageNumber")
+            field.getAttribute("placeholder") shouldBe placeholder
+            field.getAttribute("title") shouldBe title
+        }
     }
 
     context("a page number out of range is limited to the existing pages") {
