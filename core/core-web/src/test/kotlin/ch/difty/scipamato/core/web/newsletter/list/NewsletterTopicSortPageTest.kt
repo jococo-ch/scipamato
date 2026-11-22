@@ -107,6 +107,15 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
     }
 
     @Test
+    fun clickSubmit_withTopicOrderChangedInBrowser_savesTopicsInThatOrder() {
+        tester.startPage(makePage())
+        tester.newFormTester("form").setValue("order", "2,1")
+        tester.executeAjaxEvent("form:submit", "click")
+        tester.assertNoErrorMessage()
+        verify { newsletterTopicServiceMock.saveSortedNewsletterTopics(NEWSLETTER_ID, listOf(topics[1], topics[0])) }
+    }
+
+    @Test
     fun clickSubmit_withSaveThrowing_addsErrorMessage_andStaysOnPage() {
         every { newsletterTopicServiceMock.saveSortedNewsletterTopics(NEWSLETTER_ID, topics) } throws
             RuntimeException("boom")

@@ -15,9 +15,11 @@ import org.apache.wicket.PageReference
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.form.Form
+import org.apache.wicket.markup.html.form.HiddenField
 import org.apache.wicket.markup.html.list.ListItem
 import org.apache.wicket.markup.html.panel.EmptyPanel
 import org.apache.wicket.model.IModel
+import org.apache.wicket.model.Model
 import org.apache.wicket.model.StringResourceModel
 import org.apache.wicket.spring.injection.annot.SpringBean
 
@@ -42,6 +44,7 @@ class NewsletterTopicSortPage(
 
         queue(newHeader("header"))
         queue(Form<Unit>("form"))
+        queue(HiddenField("order", Model.of("")))
         queue(newSortable("sortable", topics))
         queue(newSubmitButton("submit"))
         queue(newCancelButton("cancel"))
