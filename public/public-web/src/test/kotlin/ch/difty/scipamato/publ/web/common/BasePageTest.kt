@@ -10,16 +10,11 @@ abstract class BasePageTest<T : BasePage<*>?> : WicketTest() {
     fun assertPage() {
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)
+        tester.lastResponseAsString shouldNotContain " style=\""
         assertSpecificComponents()
         tester.assertNoErrorMessage()
         tester.assertNoInfoMessage()
         doVerify()
-    }
-
-    @Test
-    fun renderedPage_hasNoInlineStyleAttribute() {
-        tester.startPage(makePage())
-        tester.lastResponseAsString shouldNotContain " style=\""
     }
 
     /**
