@@ -1,1 +1,13 @@
 @CHARSET "UTF-8";
+
+.search-tab-form {
+    margin-top: 1ex;
+}
+
+.search-buttons {
+    bottom: -0.8em;
+}
+
+.search-results {
+    min-height: 10em;
+}

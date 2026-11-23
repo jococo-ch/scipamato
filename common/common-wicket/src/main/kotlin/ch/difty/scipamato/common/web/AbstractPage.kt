@@ -12,6 +12,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession
 import org.apache.wicket.bean.validation.PropertyValidator
 import org.apache.wicket.devutils.debugbar.DebugBar
+import org.apache.wicket.markup.head.CssHeaderItem
 import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.markup.head.MetaDataHeaderItem
 import org.apache.wicket.markup.head.PriorityHeaderItem
@@ -24,6 +25,7 @@ import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 import org.apache.wicket.model.StringResourceModel
 import org.apache.wicket.request.mapper.parameter.PageParameters
+import org.apache.wicket.request.resource.CssResourceReference
 import org.apache.wicket.settings.DebugSettings
 import org.apache.wicket.spring.injection.annot.SpringBean
 
@@ -66,6 +68,7 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
             render(PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("X-UA-Compatible", "IE=edge")))
             render(PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("viewport", "width=device-width, initial-scale=1")))
             render(PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("Content-Type", "text/html; charset=UTF-8")))
+            render(CssHeaderItem.forReference(CssResourceReference(AbstractPage::class.java, "AbstractPage.css")))
         }
     }
 
