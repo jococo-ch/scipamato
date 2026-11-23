@@ -67,8 +67,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.3.3++...++main[Full Changelog]
+{url-cl}2.4.0++...++main[Full Changelog]
 
+////
 .Added
 
 .Changed
@@ -76,14 +77,53 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Deprecated
 
 .Removed
-- CodeQL
 
-////
 .Fixed
 
 .Security
 
 ////
+
+
+[[v2.4.0]]
+== {url-tree}2.4.0[2.4.0] -- 2026-11-23
+
+{url-cl}2.3.3++...++2.4.0[Full Changelog]
+
+.Added
+- {url-issues}120[#120] Jump to an entered page in the paper result table
+
+.Changed
+- Bumped
+  spring-boot (4.2.0), spring-cloud (2026.0.0), spring-cloud-starter,
+  wicket (11.0.0), wicketstuff (11.0.0), wicket-bootstrap (8.0.1),
+  feign, spring-boot-admin-starter-client,
+  jasperreports,
+  kotlin-logging, logback-core, bcprov-jdk18on,
+  kotest, mockk, jacoco,
+  gradle,
+  gradle-plugins lombok, license-report, sonarqube,
+  github actions: setup-java, docker/login-action, codeql-action, gradle-actions
+- Pinned jackson to 3.1.7
+- Replaced wicket-jquery-ui with jQuery UI from wicket-bootstrap
+- {url-issues}192[#192] Generate jOOQ classes with java.time types
+- {url-issues}115[#115] Reactivated the integration tests of core-sync
+- {url-issues}116[#116] Reactivated the integration tests of core-web and public-web
+- Disallowed bean definition overriding in core-web, core-sync and public
+- Fixed remaining SonarCloud issues
+
+.Removed
+- CodeQL
+- Obsolete version pins of commons-fileupload, bouncycastle and logback
+
+.Fixed
+- {url-issues}120[#120] Sonar issues in the page jump navigator markup
+- Initialize the batch schema through the batch data source again
+- Extract the PubMed error from the current Feign 400 message
+- Log whether all sync jobs completed
+
+.Security
+- Neither report nor log the PubMed API key on Feign errors
 
 
 [[v2.3.3]]
