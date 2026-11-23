@@ -1,6 +1,7 @@
 package ch.difty.scipamato.publ
 
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.string.shouldContain
 import org.apache.wicket.mock.MockApplication
@@ -14,6 +15,8 @@ internal class PublicContentSecurityPolicyTest : FunSpec({
     beforeTest {
         tester = WicketTester(object : MockApplication() {
             override fun init() {
+                // WebApplication defaults to a strict blocking policy; MockApplication disables it.
+                cspSettings.blocking().strict()
                 cspSettings.configurePublicContentSecurityPolicy()
                 super.init()
             }
@@ -30,5 +33,9 @@ internal class PublicContentSecurityPolicyTest : FunSpec({
         policy shouldContain "default-src 'none'"
         policy shouldContain "script-src 'strict-dynamic' 'nonce-"
         policy shouldContain "report-uri"
+    }
+
+    test("pages carry no blocking policy yet") {
+        tester.lastResponse.getHeader("Content-Security-Policy").shouldBeNull()
     }
 })
