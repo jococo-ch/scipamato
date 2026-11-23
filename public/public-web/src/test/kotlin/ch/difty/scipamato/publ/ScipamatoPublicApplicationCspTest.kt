@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test
 class ScipamatoPublicApplicationCspTest : WicketTest() {
 
     @Test
-    fun applicationPages_carryTheReportOnlyPolicy() {
+    fun applicationPages_carryTheBlockingPolicy() {
         tester.startPage(LoginPage::class.java)
 
-        val policy = tester.lastResponse.getHeader("Content-Security-Policy-Report-Only")
+        val policy = tester.lastResponse.getHeader("Content-Security-Policy")
         policy.shouldNotBeNull()
         policy shouldContain "default-src 'none'"
     }
