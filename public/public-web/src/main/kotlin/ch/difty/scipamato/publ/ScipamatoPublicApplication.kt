@@ -25,8 +25,7 @@ open class ScipamatoPublicApplication(
     override fun newSession(request: Request, response: Response): Session = ScipamatoPublicSession(request)
 
     override fun init() {
-        // temporarily disable CSP TODO consider activating
-        cspSettings.blocking().disabled()
+        cspSettings.configurePublicContentSecurityPolicy()
         super.init()
 
         // enable putting JavaScript into Footer Container
