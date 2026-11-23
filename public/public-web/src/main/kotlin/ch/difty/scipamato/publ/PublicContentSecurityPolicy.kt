@@ -6,6 +6,5 @@ import org.apache.wicket.csp.ContentSecurityPolicySettings
  * Configures the Content Security Policy of SciPaMaTo-Public.
  */
 fun ContentSecurityPolicySettings.configurePublicContentSecurityPolicy() {
-    blocking().disabled()
-    reporting().strict().reportBack()
+    blocking().strict()
 }
