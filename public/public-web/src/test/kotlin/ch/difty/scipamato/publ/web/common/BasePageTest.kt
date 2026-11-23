@@ -1,6 +1,7 @@
 package ch.difty.scipamato.publ.web.common
 
 import ch.difty.scipamato.publ.web.WicketTest
+import org.amshove.kluent.shouldNotContain
 import org.junit.jupiter.api.Test
 
 abstract class BasePageTest<T : BasePage<*>?> : WicketTest() {
@@ -13,6 +14,12 @@ abstract class BasePageTest<T : BasePage<*>?> : WicketTest() {
         tester.assertNoErrorMessage()
         tester.assertNoInfoMessage()
         doVerify()
+    }
+
+    @Test
+    fun renderedPage_hasNoInlineStyleAttribute() {
+        tester.startPage(makePage())
+        tester.lastResponseAsString shouldNotContain " style=\""
     }
 
     /**
