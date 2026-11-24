@@ -6,11 +6,13 @@ import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade
 import ch.difty.scipamato.common.web.pages.MenuBuilder
 import ch.difty.scipamato.core.config.ApplicationCoreProperties
 import ch.difty.scipamato.core.entity.User
+import ch.difty.scipamato.core.web.resources.JQueryCompatJavaScriptResourceReference
 import ch.difty.scipamato.core.web.resources.MainCssResourceReference
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome7CssReference
 import org.apache.wicket.markup.head.CssHeaderItem
 import org.apache.wicket.markup.head.IHeaderResponse
+import org.apache.wicket.markup.head.JavaScriptHeaderItem
 import org.apache.wicket.model.IModel
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.spring.injection.annot.SpringBean
@@ -50,6 +52,7 @@ abstract class BasePage<T> : AbstractPage<T> {
         super.renderHead(response)
         response.render(CssHeaderItem.forReference(MainCssResourceReference.get()))
         response.render(CssHeaderItem.forReference(FontAwesome7CssReference.instance()))
+        response.render(JavaScriptHeaderItem.forReference(JQueryCompatJavaScriptResourceReference))
     }
 
     override fun addLinksTo(nb: Navbar) {
