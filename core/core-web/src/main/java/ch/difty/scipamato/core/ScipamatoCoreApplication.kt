@@ -2,6 +2,7 @@ package ch.difty.scipamato.core
 
 import ch.difty.scipamato.common.logger
 import ch.difty.scipamato.common.web.AbstractPage
+import ch.difty.scipamato.common.web.component.table.OrderByLinkStyleReplacer
 import ch.difty.scipamato.core.web.sync.ISyncTask
 import ch.difty.scipamato.core.web.sync.TasksRunnable
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication
@@ -30,8 +31,8 @@ open class ScipamatoCoreApplication : WicketBootSecuredWebApplication() {
     private val executorService = Executors.newSingleThreadExecutor()
 
     override fun init() {
-        // TODO consider making it CSP compliant
-        cspSettings.blocking().disabled()
+        cspSettings.configureCoreContentSecurityPolicy()
+        componentInstantiationListeners.add(OrderByLinkStyleReplacer())
 
         super.init()
 

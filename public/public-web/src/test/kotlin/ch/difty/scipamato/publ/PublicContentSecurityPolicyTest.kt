@@ -36,6 +36,11 @@ internal class PublicContentSecurityPolicyTest : FunSpec({
         policy shouldContain "style-src 'nonce-"
     }
 
+    test("the policy allows data: images, which Bootstrap's navbar toggler icon uses") {
+        tester.lastResponse.getHeader("Content-Security-Policy")
+            .shouldNotBeNull() shouldContain "img-src 'self' data:;"
+    }
+
     test("the blocking policy does not report back to the application") {
         tester.lastResponse.getHeader("Content-Security-Policy").shouldNotBeNull() shouldNotContain "report-uri"
     }

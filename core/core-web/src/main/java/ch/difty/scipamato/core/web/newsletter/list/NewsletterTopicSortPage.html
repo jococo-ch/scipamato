@@ -3,15 +3,6 @@
 <head>
     <wicket:head>
         <title>Newsletter Topic Sort Order</title>
-        <style type="text/css">
-            .sortable {
-                width: 60%;
-            }
-
-            .sortable li {
-                cursor: move;
-            }
-        </style>
     </wicket:head>
 </head>
 <body>
@@ -20,7 +11,7 @@
             <h2 wicket:id="header"></h2>
             <form wicket:id="form" class="border">
                 <input type="hidden" wicket:id="order"/>
-                <ul wicket:id="sortable" class="sortable list-group">
+                <ul wicket:id="sortable" class="topic-sortable list-group">
                     <li wicket:id="items" class="list-group-item">
                         <i wicket:id="icon"></i>
                         <span wicket:id="item" class="item">[label]</span>

@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.web.common
 
 import ch.difty.scipamato.core.web.WicketTest
+import org.amshove.kluent.shouldNotContain
 import org.junit.jupiter.api.Test
 
 abstract class BasePageTest<T : BasePage<*>> : WicketTest() {
@@ -9,6 +10,7 @@ abstract class BasePageTest<T : BasePage<*>> : WicketTest() {
     fun assertPage() {
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)
+        tester.lastResponseAsString shouldNotContain " style=\""
         assertSpecificComponents()
         tester.assertNoErrorMessage()
         tester.assertNoInfoMessage()

@@ -71,9 +71,18 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Serve Font Awesome from the webjar instead of the CDN in SciPaMaTo-Public
+- Serve Font Awesome from the webjar instead of the CDN in SciPaMaTo-Core
+
+.Fixed
+- Restore uploading attachments and the date picker of the newsletter issue
+  date in SciPaMaTo-Core, broken since 2.4.0 by jQuery 4 (wicket 11)
 
 .Security
 - {url-issues}220[#220] Enforce a strict Content Security Policy on SciPaMaTo-Public
+- {url-issues}220[#220] Allow `data:` images in the Content Security Policy of
+  SciPaMaTo-Public, for the navbar toggler icon in narrow windows
+- {url-issues}1328[#1328] Enforce a strict Content Security Policy on SciPaMaTo-Core;
+  the preview and progress bar of the attachment upload lose their sizing
 
 ////
 .Added
