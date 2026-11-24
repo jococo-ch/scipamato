@@ -49,7 +49,6 @@ internal class AjaxCsvDownloadTest : WicketTest() {
         tester.startComponentInPage(l)
         tester.clickLink(l)
         targetDummy.javaScripts.size shouldBeEqualTo 1
-        targetDummy.javaScripts.contains("""setTimeout("window.location.href='./page?2-1.0-l'", 100);""")
     }
 
     @Test
