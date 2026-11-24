@@ -19,3 +19,45 @@
 .table {
     margin-bottom: 0.3rem
 }
+
+.field-offset {
+    margin-top: 1.5em;
+}
+
+.field-offset-padding {
+    padding-top: 1.5em;
+}
+
+.paper-cell {
+    float: none;
+    display: table-cell;
+}
+
+.pubmed-retrieval {
+    margin-top: 3em;
+}
+
+.report-links {
+    margin-top: 0.5em;
+}
+
+.tab-first-row {
+    margin-top: 10px;
+}
+
+.page-jump-number {
+    width: 6em;
+}
+
+.readonly-field {
+    background-color: #eeeeee;
+    opacity: 1;
+}
+
+.topic-sortable {
+    width: 60%;
+}
+
+.topic-sortable li {
+    cursor: move;
+}
