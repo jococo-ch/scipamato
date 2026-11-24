@@ -28,7 +28,7 @@ sealed class AjaxDownload(private val addAntiCache: Boolean) : AbstractAjaxBehav
      */
     fun initiate(target: AjaxRequestTarget) {
         target.appendJavaScript(
-            """setTimeout("window.location.href='${callbackUrl.toUrl(addAntiCache)}'", 100);"""
+            """setTimeout(function () { window.location.href = '${callbackUrl.toUrl(addAntiCache)}'; }, 100);"""
         )
     }
 
