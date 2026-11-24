@@ -1,6 +1,7 @@
 package ch.difty.scipamato
 
 import ch.difty.scipamato.common.web.AbstractPage
+import ch.difty.scipamato.common.web.component.table.OrderByLinkStyleReplacer
 import ch.difty.scipamato.core.ScipamatoSession
 import ch.difty.scipamato.core.web.paper.list.PaperListPage
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication
@@ -20,6 +21,7 @@ open class TestApplication : WicketBootSecuredWebApplication() {
     override fun getHomePage(): Class<out Page?> = PaperListPage::class.java
 
     override fun init() {
+        componentInstantiationListeners.add(OrderByLinkStyleReplacer())
         super.init()
 
         // enable putting JavaScript into Footer Container
