@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core
 
+import org.apache.wicket.csp.CSPDirective
 import org.apache.wicket.csp.ContentSecurityPolicySettings
 
 /**
@@ -7,5 +8,5 @@ import org.apache.wicket.csp.ContentSecurityPolicySettings
  */
 fun ContentSecurityPolicySettings.configureCoreContentSecurityPolicy() {
     blocking().disabled()
-    reporting().strict().reportBack()
+    reporting().strict().reportBack().add(CSPDirective.IMG_SRC, "data:")
 }
