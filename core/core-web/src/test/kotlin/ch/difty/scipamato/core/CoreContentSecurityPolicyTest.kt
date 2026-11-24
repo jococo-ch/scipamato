@@ -35,6 +35,11 @@ internal class CoreContentSecurityPolicyTest : FunSpec({
         policy shouldContain "report-uri"
     }
 
+    test("the policy allows data: images, which Bootstrap's navbar toggler icon uses") {
+        tester.lastResponse.getHeader("Content-Security-Policy-Report-Only")
+            .shouldNotBeNull() shouldContain "img-src 'self' data:;"
+    }
+
     test("pages carry no blocking policy yet") {
         tester.lastResponse.getHeader("Content-Security-Policy").shouldBeNull()
     }
