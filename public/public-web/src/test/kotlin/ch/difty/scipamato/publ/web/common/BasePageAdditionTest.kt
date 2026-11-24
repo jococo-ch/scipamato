@@ -95,6 +95,14 @@ class BasePageAdditionTest : WicketTest() {
     }
 
     @Test
+    fun page_rendersFontAwesomeFromWebjar_notFromCdn() {
+        tester.startPage(newPageWithParameters(pp))
+
+        tester.lastResponseAsString shouldContain "webjars/font-awesome/"
+        tester.lastResponseAsString shouldNotContain "use.fontawesome.com"
+    }
+
+    @Test
     fun page_withResponsiveIframeSupportEnabled_rendersPym() {
         assertPym(true)
     }

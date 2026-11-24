@@ -4,13 +4,13 @@
 <html xmlns:wicket="https://wicket.apache.org">
 <body>
     <wicket:extend>
-        <div class="container-fluid" style="padding-left: 0px;">
+        <div class="container-fluid ps-0">
             <form wicket:id="searchForm">
                 <div class="row">
                     <div class="col-sm-10 col-md-11">
                         <div wicket:id="tabs" class="tabpanel ">[tabbed panel here]</div>
                     </div>
-                    <div class="col-sm-2 col-md-1" style="bottom: -0.8em;">
+                    <div class="col-sm-2 col-md-1 search-buttons">
                         <div class="row row-no-gutters">
                             <a wicket:id="help">[Help]</a>
                         </div>
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </form>
-            <div class="row" style="min-height: 10em;">
+            <div class="row search-results">
                 <div class="col-md-12">
                     <table class="dataview" wicket:id="results"></table>
                 </div>

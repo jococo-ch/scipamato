@@ -2,6 +2,7 @@ package ch.difty.scipamato.publ
 
 import ch.difty.scipamato.common.logger
 import ch.difty.scipamato.common.web.AbstractPage
+import ch.difty.scipamato.common.web.component.table.OrderByLinkStyleReplacer
 import ch.difty.scipamato.publ.config.ScipamatoPublicProperties
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication
 import org.apache.wicket.Session
@@ -25,8 +26,8 @@ open class ScipamatoPublicApplication(
     override fun newSession(request: Request, response: Response): Session = ScipamatoPublicSession(request)
 
     override fun init() {
-        // temporarily disable CSP TODO consider activating
-        cspSettings.blocking().disabled()
+        cspSettings.configurePublicContentSecurityPolicy()
+        componentInstantiationListeners.add(OrderByLinkStyleReplacer())
         super.init()
 
         // enable putting JavaScript into Footer Container

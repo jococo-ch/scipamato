@@ -16,6 +16,8 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.verify
+import org.amshove.kluent.shouldContain
+import org.amshove.kluent.shouldNotContain
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.link.Link
 import org.apache.wicket.request.mapper.parameter.PageParameters
@@ -146,6 +148,21 @@ class PublicPageTest : BasePageTest<PublicPage>() {
         verify { paperService.countByFilter(any()) }
         verify { paperService.findPageByFilter(any(), any()) }
         // used in navigateable
+        verify(exactly = 3) { paperService.findPageOfNumbersByFilter(any(), any()) }
+    }
+
+    @Test
+    fun clickingQuery_rendersResultsWithoutInlineStyleAttribute() {
+        tester.startPage(makePage())
+        tester
+            .newFormTesterSameOrigin("searchForm")
+            .submit("query")
+
+        tester.lastResponseAsString shouldContain "orderByLink"
+        tester.lastResponseAsString shouldNotContain " style=\""
+
+        verify { paperService.countByFilter(any()) }
+        verify { paperService.findPageByFilter(any(), any()) }
         verify(exactly = 3) { paperService.findPageOfNumbersByFilter(any(), any()) }
     }
 
