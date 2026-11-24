@@ -69,6 +69,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 {url-cl}2.4.0++...++main[Full Changelog]
 
+.Changed
+- Serve Font Awesome from the webjar instead of the CDN in SciPaMaTo-Public
+
+.Security
+- {url-issues}220[#220] Enforce a strict Content Security Policy on SciPaMaTo-Public
+
 ////
 .Added
 
