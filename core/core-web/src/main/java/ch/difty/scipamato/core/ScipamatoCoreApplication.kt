@@ -30,8 +30,7 @@ open class ScipamatoCoreApplication : WicketBootSecuredWebApplication() {
     private val executorService = Executors.newSingleThreadExecutor()
 
     override fun init() {
-        // TODO consider making it CSP compliant
-        cspSettings.blocking().disabled()
+        cspSettings.configureCoreContentSecurityPolicy()
 
         super.init()
 
