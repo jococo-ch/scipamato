@@ -67,11 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.4.1++...++main[Full Changelog]
-
-.Fixed
-- {url-issues}220[#220] Load the commercial fonts and icons of SciPaMaTo-Public again:
-  the Content Security Policy blocked the font stylesheets they import
+{url-cl}2.4.2++...++main[Full Changelog]
 
 ////
 .Added
@@ -87,6 +83,16 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v2.4.2]]
+== {url-tree}2.4.2[2.4.2] -- 2026-11-25
+
+{url-cl}2.4.1++...++2.4.2[Full Changelog]
+
+.Fixed
+- {url-issues}220[#220] Load the commercial fonts and icons of SciPaMaTo-Public again:
+  the Content Security Policy blocked the font stylesheets they import
 
 
 [[v2.4.1]]
