@@ -69,6 +69,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 {url-cl}2.4.1++...++main[Full Changelog]
 
+.Fixed
+- {url-issues}220[#220] Load the commercial fonts and icons of SciPaMaTo-Public again:
+  the Content Security Policy blocked the font stylesheets they import
+
 ////
 .Added
 

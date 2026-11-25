@@ -41,6 +41,11 @@ internal class PublicContentSecurityPolicyTest : FunSpec({
             .shouldNotBeNull() shouldContain "img-src 'self' data:;"
     }
 
+    test("the policy allows stylesheets of the application, which the commercial font stylesheets @import") {
+        tester.lastResponse.getHeader("Content-Security-Policy")
+            .shouldNotBeNull() shouldContain Regex("style-src 'nonce-[^';]+' 'self';")
+    }
+
     test("the blocking policy does not report back to the application") {
         tester.lastResponse.getHeader("Content-Security-Policy").shouldNotBeNull() shouldNotContain "report-uri"
     }
